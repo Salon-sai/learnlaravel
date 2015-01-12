@@ -41,6 +41,14 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 		'as'	=> 'r.order.finshed',
 		'uses'	=> 'App\Controllers\Restaurant\OrderController@finishedOrder'
 	));
+	Route::get('advanced', array(
+		'as' 	=> 'r.advanced',
+		'uses'	=> 'App\Controllers\Restaurant\DescriptionController@advancedSetting'
+	));
+	Route::post('change/{id}', array(
+		'as' 	=> 'r.status.change',
+		'uses' 	=> 'App\Controllers\Restaurant\DescriptionController@changestatus'
+	));
 });
 
 Route::get('logout', array(

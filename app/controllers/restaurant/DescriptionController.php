@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Controllers\Restaurant;
+use View, Sentry, Notification;
+use App\Validators\RestaurantValidator;
 
-class DescriptionController extends BaseController {
+class DescriptionController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -58,7 +60,8 @@ class DescriptionController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		// $restaurant = Sentry
+		return View::make('restaurant.description.edit')
+			->with('restaurant', Sentry::getUser());
 	}
 
 	/**
@@ -70,7 +73,21 @@ class DescriptionController extends BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$validation = new RestaurantValidator;
+		if($validation->passes()){
+			$description 				 = Description::find($id);
+			$description->name 			 = Input::get('name');
+			$description->telephone	  	 = Input::get('telephone');
+			$description->scale 		 = Input::get('scale');
+			$description->location_label = Input::get('location_label');
+			$description->description 	 = Input::get('description');
+			// $description->status 		 = Input::get('status');
+			$description->save();
+			Notification::success('mofity the description success');
+			return Redirect::route('admin.restaurant.index');
+		}
+		return Redirect::back()
+			->withInput()->withErrors($validation->errors);
 	}
 
 	/**
@@ -85,4 +102,7 @@ class DescriptionController extends BaseController {
 		//
 	}
 
+	public function advancedSetting(){
+		return View::make('restaurant.description.advanced');
+	}
 }

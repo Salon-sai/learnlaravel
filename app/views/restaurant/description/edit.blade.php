@@ -12,93 +12,87 @@
 
 <div class="container">
 	{{ Form::open(array(
-		'url'	=> URL::route('r.food.update', $food->id),
+		'url'	=> URL::route('r.description.update', $restaurant->description->id),
 		'class' => 'form-horizontal',
 		'role'	=> 'form',
 		'method'=> 'put'
 	))}}
 		<div class="form-group form-group-lg">
-			<label class="col-sm-2 control-label">Food Name</label>
+			<label class="col-sm-2 control-label">Restaurants Name</label>
 			<div class="col-sm-10">
-				{{Form::text('name',$food->name, array(
+				{{Form::text('name',$restaurant->description->name, array(
 					'class'			=> 'form-control',
-					'placeholder'	=> 'Food Name'
+					'placeholder'	=> 'Restaurant Name'
 				))}}
 			</div>
 		</div>
 		<div class="form-group form-group-lg">
-			<label class="col-sm-2 control-label">Price</label>
+			<label class="col-sm-2 control-label">Telephone</label>
 			<div class="col-sm-10">
-				{{Form::text('price',$food->price, array(
+				{{Form::text('telephone',$restaurant->description->telephone, array(
 					'class'			=> 'form-control',
-					'placeholder'	=> 'Price'
+					'placeholder'	=> 'Telephone'
 				))}}
 			</div>
 		</div>
 		<div class="form-group form-group-lg">
-			<label class="col-sm-2 control-label">Store</label>
+			<label class="col-sm-2 control-label">Service Scale</label>
 			<div class="col-sm-10">
-				{{Form::text('store',$food->store, array(
+				{{Form::text('scale',$restaurant->description->scale, array(
 					'class'			=> 'form-control',
-					'placeholder'	=> 'Store'
+					'placeholder'	=> 'Scale'
+				))}}
+			</div>
+		</div>
+		<div class="form-group form-group-lg">
+			<label class="col-sm-2 control-label">Location</label>
+			<div class="col-sm-10">
+				{{Form::text('location_label',$restaurant->description->location_label, array(
+					'class'			=> 'form-control',
+					'placeholder'	=> 'Location'
 				))}}
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Description</label>
 			<div class="col-sm-10">
-				{{Form::textarea('description', $food->description, array(
+				{{Form::textarea('description', $restaurant->description->description, array(
 					'rows'			=> '5',
 					'class'			=> 'form-control',
 					'placeholder'	=> 'Description'
 				))}}
 			</div>
 		</div>
-		<div class="form-group form-group-lg">
-			<label class="col-sm-2 control-label">Food Picture</label>
-			<div class="col-sm-10">
-				{{Form::file('picture')}}
-			</div>
-		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Status</label>
 			<div class="col-sm-10">
-				@if($food->status)
-					<label>
-					<input type="radio" name="status" value="Grounding" checked />Grounding
-					</label>
-					<label>
-					<input type="radio" name="status" value="undercarriage"/>undercarriage
-					</label>
-				@else
-					<label>
-					<input type="radio" name="status" value="Grounding" />Grounding
-					</label>
-					<label>
-					<input type="radio" name="status" value="undercarriage" checked/>undercarriage
-					</label>
-				@endif
-			</div>
-		</div>
-		<div class="form-group form-group-lg">
-			<label class="col-sm-2 control-label">Categories</label>
-			<div class="checkbox col-sm-10">
-				@foreach($categories as $category)
-					<label class="checkbox-inline">
-						@if(true)
-							<input type="checkbox" name="categoriesId[]" value="{{$category->id}}"/>{{$category->name}}
-						@endif
-					</label>
-				@endforeach
+				<div class="switch" data-on="success" data-off="warning" data-on-label="Open" data-off-label="Close">
+					@if($restaurant->description->status)
+						<input type="checkbox" name="status" checked />
+					@else
+						<input type="checkbox" name="status" />
+					@endif
+				</div>
 			</div>
 		</div>
 		<div class="form-actions text-center">
 			{{Form::submit('Update Food', array(
 				'class'		=> 'btn btn-lg btn-info',
 			))}}
+			<a href="{{URL::route('r.advanced')}}" class="btn btn-link">Advanced Setting</a>
 		</div>
 	{{Form::close()}}
 </div>
+<link rel="stylesheet" href="{{ URL::asset('css/bootstrap-switch.min.css')}}">
+<script type="text/javascript" src="{{ URL::asset('js/bootstrap-switch.min.js')}}"></script>
+<script type="text/javascript">
+	$("[name='status']").bootstrapSwitch();
 
-
+	$("[name='status']").on('switch-change', function(e, data){
+			    var $el = $(data.el)
+  				, value = data.value;
+				console.log(e, $el, value);
+	});
+	
+</script>
 @stop
