@@ -18,7 +18,7 @@ class CheckController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		$echoStr = Input::get('echostr');
 	}
 
 	/**
