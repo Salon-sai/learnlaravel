@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Restaurant;
 
-use View;
+use View, Sentry;
 
 class OrderController extends \BaseController {
 
@@ -13,7 +13,9 @@ class OrderController extends \BaseController {
 	 * @return Response
 	 */
 	public function index()
-	{
+	{	
+		$restaurant = Sentry::getUser();
+		// $orders 	= $restaurant->foods->orders
 		return View::make('restaurant.order.index');
 	}
 

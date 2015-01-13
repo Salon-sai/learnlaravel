@@ -99,4 +99,9 @@
 		</div>
 	{{Form::close()}}
 </div>
+<link rel="stylesheet" href="{{URL::asset('css/bootstrap-switch.min.css')}}">
+<script type="text/javascript" src="{{URL::asset('js/bootstrap-switch.min.js')}}"></script>
+<script type="text/javascript">
+	
+</script>
 @stop

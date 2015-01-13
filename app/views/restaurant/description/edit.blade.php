@@ -66,17 +66,17 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Status</label>
 			<div class="col-sm-10">
-				<div class="switch" data-on="success" data-off="warning" data-on-label="Open" data-off-label="Close">
+				<div class="switch">
 					@if($restaurant->description->status)
-						<input type="checkbox" name="status" checked />
+						<input data-on-color="primary" data-off-color="danger" data-on-text="Open" data-off-text="Close" type="checkbox" name="status" checked />
 					@else
-						<input type="checkbox" name="status" />
+						<input data-on-color="primary" data-off-color="danger" data-on-text="Open" data-off-text="Close" type="checkbox" name="status" />
 					@endif
 				</div>
 			</div>
 		</div>
 		<div class="form-actions text-center">
-			{{Form::submit('Update Food', array(
+			{{Form::submit('Update', array(
 				'class'		=> 'btn btn-lg btn-info',
 			))}}
 			<a href="{{URL::route('r.advanced')}}" class="btn btn-link">Advanced Setting</a>

@@ -11,7 +11,7 @@ class AuthController extends \BaseController {
 			if(Sentry::getUser()->hasAccess('manager'))
 				return Redirect::to('admin/');
 			else if(Sentry::getUser()->hasAccess('restaurant'))
-				return Redirect::to('restaurant/');
+				return Redirect::to('r/');
 		}
 		if($type == 'admin')
 			return View::make('admin.auth.login');

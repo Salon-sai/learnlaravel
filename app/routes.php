@@ -49,6 +49,10 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 		'as' 	=> 'r.status.change',
 		'uses' 	=> 'App\Controllers\Restaurant\DescriptionController@changestatus'
 	));
+	Route::post('food/change', array(
+		'as'	=> 'r.food.status.change',
+		'uses' 	=> 'App\Controllers\Restaurant\FoodController@changestatus'
+	));
 });
 
 Route::get('logout', array(

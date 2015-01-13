@@ -32,7 +32,7 @@
 			<tr>
 				<td>Actived</td>
 				<td>
-				@if($restaurant->actived)
+				@if($restaurant->activated)
 					Y
 				@else N
 				@endif
@@ -42,7 +42,7 @@
 				<td>Status</td>
 				<td>
 					@if($restaurant->description->status == -1)
-
+						
 					@elseif($restaurant->description->status == 0)
 						Closed
 					@elseif($restaurant->description->status == 1)

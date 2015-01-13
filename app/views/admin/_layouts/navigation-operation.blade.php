@@ -2,7 +2,7 @@
 	@if(Sentry::check() && Sentry::getUser()->hasAccess('manager'))
 		<div class="col-sm-3 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
-				<li class="{{Request::is('admin/restaurant') ? 'active' : null}}"><a href="#">Restaurant</a></li>
+				<li class="{{Request::is('admin/restaurant') ? 'active' : null}}"><a href="{{URL::route('admin.restaurant.index')}}">Restaurant</a></li>
 				<li><a href="{{Request::is('admin/restaurant/checkapply') ? 'active' : null}}">Check The Application</a></li>
 			</ul>
 			<ul class="nav nav-sidebar">

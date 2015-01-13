@@ -26,11 +26,13 @@
 				<td>{{$food->price}}</td>
 				<td>{{$food->picture}}</td>
 				<td>
-					@if($food->status)
-						Grounding
-					@else
-						undercarriage
-					@endif
+					<div class="switch">
+						@if($food->status)
+							<input change-id="{{$food->id}}" data-on-color="success"  data-on-text="UP" data-off-text="DOWN" type="checkbox" name="status" checked />
+						@else
+							<input change-id="{{$food->id}}" data-on-color="success" data-on-text="UP" data-off-text="DOWN" type="checkbox" name="status" />
+						@endif
+					</div>
 				</td>
 				<td>{{$food->updated_at}}</td>
 				<td>
@@ -42,7 +44,34 @@
 		</tbody>
 	</table>
 </div>
+<link rel="stylesheet" href="{{URL::asset('css/bootstrap-switch.min.css')}}">
+<script type="text/javascript" src="{{URL::asset('js/bootstrap-switch.min.js')}}"></script>
 <script type="text/javascript">
+	
+	$("[name='status']").bootstrapSwitch();
+
+	$("[name='status']").on('switchChange.bootstrapSwitch',function(event, status){
+			// alert($(this).attr('change-id'));
+			if(!status){
+				alert('Are you sure undercarrgies the food');
+			}
+			$.ajax({
+				url : "food/change",
+				type: "POST",
+				data: {'id': $(this).attr('change-id')},
+				dataType: "json",
+				success : function(returnData){
+					if(returnData.type == 'success'){
+						alert(returnData.message);
+					}else if(returnData.type == 'error'){
+						alert(returnData.message);
+
+					}
+				}
+			});
+
+	});
+
 	function deleteFood(index, id){
 		$.ajax({
 			url : "food/"+id,

@@ -63,12 +63,9 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Status</label>
 			<div class="col-sm-10">
-				<label>
-				<input type="radio" name="status" value="Grounding" checked />Grounding
-				</label>
-				<label>
-				<input type="radio" name="status" value="undercarriage" />undercarriage
-				</label>
+				<div class="switch">
+					<input data-on-color="success"  data-on-text="UP" data-off-text="DOWN" type="checkbox" name="status" checked />
+				</div>
 			</div>
 		</div>
 		<div class="form-group form-group-lg">
@@ -88,5 +85,9 @@
 		</div>
 	{{Form::close()}}
 </div>
-
+<link rel="stylesheet" href="{{URL::asset('css/bootstrap-switch.min.css')}}">
+<script type="text/javascript" src="{{URL::asset('js/bootstrap-switch.min.js')}}"></script>
+<script type="text/javascript">
+	$("[name='status']").bootstrapSwitch();
+</script>
 @stop

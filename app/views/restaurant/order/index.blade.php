@@ -3,7 +3,7 @@
 @section('main')
 
 <h1 class="page-header">Order List</h1>
-
+{{Notification::showAll()}}
 <div class="table-responsive">
 	<table class="table table-striped">
 		<thead>

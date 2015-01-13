@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers\Restaurant;
-use View, Sentry, Notification;
+use View, Sentry, Notification, Description, Input, Redirect;
 use App\Validators\RestaurantValidator;
 
 class DescriptionController extends \BaseController {
@@ -81,10 +81,13 @@ class DescriptionController extends \BaseController {
 			$description->scale 		 = Input::get('scale');
 			$description->location_label = Input::get('location_label');
 			$description->description 	 = Input::get('description');
-			// $description->status 		 = Input::get('status');
+			if(Input::get('status'))
+				$description->status 	 = 1;
+			else
+				$description->status 	 = 0;
 			$description->save();
 			Notification::success('mofity the description success');
-			return Redirect::route('admin.restaurant.index');
+			return Redirect::route('r.order.index');
 		}
 		return Redirect::back()
 			->withInput()->withErrors($validation->errors);
@@ -103,6 +106,6 @@ class DescriptionController extends \BaseController {
 	}
 
 	public function advancedSetting(){
-		return View::make('restaurant.description.advanced');
+		return View::make('restaurant.description.advancedsetting');
 	}
 }

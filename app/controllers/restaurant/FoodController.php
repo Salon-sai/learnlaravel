@@ -137,6 +137,22 @@ class FoodController extends \BaseController {
 			));
 	}
 
+	public function changestatus(){
+		$food = Food::find(Input::get('id'));
+		$food->status = !$food->status;
+		$food->save();
+		if($food->status)
+			return Response::json(array(
+				'message' => 'success to grounding the food',
+				'type'	  => 'success'
+			));
+		else
+			return Response::json(array(
+				'message' => 'success to undercarriaged the food',
+				'type'	  => 'success'
+			));
+	}
+
 
 	/**
 	*	需要算法优化 2015.1.11
@@ -153,8 +169,11 @@ class FoodController extends \BaseController {
 		$food->picture		= 'dir';
 		$categoriesId		= Input::get('categoriesId');
 		$categories 		= $food->categories;
-		if(Input::get('status') == 'Grounding')
+		// I need to fix it 2015.1.13
+		if(Input::get('status'))
 			$food->status = 1;
+		else
+			$food->status = 0;
 		foreach ($categoriesId as $categoryId) {
 			$flag = true; //判断是否存在相同的category id
 			foreach ($categories as $category) {
@@ -170,5 +189,4 @@ class FoodController extends \BaseController {
 				$food->categories()->save(Category::find($categoryId));
 		}
 	}
-
 }

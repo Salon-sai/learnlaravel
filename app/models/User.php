@@ -25,4 +25,8 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User {
 	public function group(){
 		return $this->belongsTo('Group');
 	}
+
+	public function foods(){
+		return $this->hasMany('Food');
+	}
 }
