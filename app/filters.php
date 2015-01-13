@@ -125,6 +125,6 @@ Route::filter('weixin.check', function(){
 		$tmpStr = sha1($tmpStr);
 
 		if($tmpStr != $signature){
-			// return false;
+			return false;
 		}
 });
