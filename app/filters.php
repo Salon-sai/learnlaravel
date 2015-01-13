@@ -108,3 +108,25 @@ Route::filter('auth.restaurant', function(){
 		return Redirect::to('login/r');
 	}
 });
+
+
+Route::filter('weixin.check', function(){
+		//微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。 
+		$signature 		= Input::get('signature');
+		//时间戳 
+		$timestamp 		= Input::get('timestamp');
+		//随机数 
+		$nonce			= Input::get('nonce');
+
+		$token 			= 'FoodOrder';
+		$tmpArr = array($token, $timestamp, $nonce);
+		sort($tmpArr);
+		$tmpStr = implode($tmpArr);
+		$tmpStr = sha1($tmpStr);
+
+		if($tmpStr == $signature){
+			// return true;
+		}else{
+			return false;
+		}
+});
