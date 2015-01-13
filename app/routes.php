@@ -10,6 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+// define('TOKEN', 'FoodOrder');
 
 Route::get('login/{type}',array(
 	'as'	=> 'get.login',
@@ -56,7 +57,26 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 });
 
 Route::group(array('prefix' => 'u'), function(){
-	Route::get('/checkSignature', 'App\Controllers\Customer\CheckController@checkSignature');
+	Route::get('/checkSignature', function(){
+		//微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。 
+		$signature 		= Input::get('signature');
+		//时间戳 
+		$timestamp 		= Input::get('timestamp');
+		//随机数 
+		$nonce			= Input::get('nonce');
+
+		$token 			= 'FoodOrder';
+		$tmpArr = array($token, $timestamp, $nonce);
+		sort($tmpArr);
+		$tmpStr = implode($tmpArr);
+		$tmpStr = sha1($tmpStr);
+
+		if($tmpStr == $signature){
+			return true;
+		}else{
+			return false;
+		}
+	});
 });
 
 Route::get('logout', array(
