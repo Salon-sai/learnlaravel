@@ -1,11 +1,14 @@
 <?php
 
 
+
+
+namespace App\Controllers\Customer;
+
+use Input;
+
 define('TOKEN', 'FoodOrder');
-
-namespace Customer;
-
-class CheckController extends /BaseController {
+class CheckController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
