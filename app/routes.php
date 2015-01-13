@@ -56,7 +56,7 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 });
 
 Route::group(array('prefix' => 'u'), function(){
-	Route::get('/checkSignature', 'App\Controllers\customer\CheckController@checkSignature');
+	Route::get('/checkSignature', 'App\Controllers\Customer\CheckController@checkSignature');
 });
 
 Route::get('logout', array(

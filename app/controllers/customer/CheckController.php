@@ -2,7 +2,10 @@
 
 
 define('TOKEN', 'FoodOrder');
-class Customer/CheckController extends \BaseController {
+
+namespace Customer;
+
+class CheckController extends /BaseController {
 
 	/**
 	 * Display a listing of the resource.
