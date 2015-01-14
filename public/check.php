@@ -3,7 +3,7 @@
 define("TOKEN", "FoodOrder");
 
 $wechatObj = new wechatCallbackapiTest();
-if(isset($_GET('echostr'))){
+if(isset($_GET['echostr'])){
     $wechatObj->valid()
 }else{
     $wechatObj->responseMsg();
