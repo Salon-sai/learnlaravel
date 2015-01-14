@@ -35,7 +35,7 @@ class CheckController extends \BaseController {
 							<CreateTime>%s</CreateTime>
 							<MsgType><![CDATA[%s]]></MsgType>
 							<Content><![CDATA[%s]]></Content>
-							<FuncFlag>0</FuncFlag>
+							<MsgId>1234567890123456</MsgId>
 							</xml>"; 
 			if(!empty($keyword)){
 				$MsgType	= "text";
