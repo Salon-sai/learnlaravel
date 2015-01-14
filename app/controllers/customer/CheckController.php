@@ -25,7 +25,7 @@ class CheckController extends \BaseController {
 		if(!empty($postStr)){
 			libxml_disable_entity_loader(true);
 			$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-			$fromUsername 	= $postObj->fromUsername;
+			$fromUsername 	= $postObj->FromUserName;
 			$toUsername		= $postObj->ToUserName;
 			$keyword		= trim($postObj->Content);
 			$time 			= time();
