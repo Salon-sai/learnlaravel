@@ -18,7 +18,7 @@ class CheckController extends \BaseController {
 	 */
 	public function index()
 	{
-		// $postStr 	= file_get_contents("php://input");
+				// $postStr 	= file_get_contents("php://input");
 		// $postStr	= $GLOBALS["HTTP_RAW_POST_DATA"];
 		$postStr	= Input::get('HTTP_RAW_POST_DATA');
 
@@ -40,7 +40,7 @@ class CheckController extends \BaseController {
 			if(!empty($keyword)){
 				$MsgType	= "text";
 				$contentStr = "Welcome to Food Order";
-				$resultStr	= sprintf($$textTpl, $fromUsername, $toUsername, $time, $MsgType, $contentStr);
+				$resultStr	= sprintf($textTpl, $fromUsername, $toUsername, $time, $MsgType, $contentStr);
 				return $resultStr;
 			}else{
 				return 'cao ni ma';
@@ -143,7 +143,7 @@ class CheckController extends \BaseController {
 	}
 
 	public function textMessage(){
-		
+
 	}
 
 }
