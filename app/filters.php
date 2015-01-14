@@ -111,7 +111,7 @@ Route::filter('auth.restaurant', function(){
 
 
 Route::filter('weixin.check', function(){
-	if(isset(Input::get('echostr'))){
+	if(Input::get('echostr')){
 		//微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。 
 		$signature 		= Input::get('signature');
 		//时间戳 
@@ -125,7 +125,7 @@ Route::filter('weixin.check', function(){
 		$tmpStr = implode($tmpArr);
 		$tmpStr = sha1($tmpStr);
 
-		if($tmpStr != $signature && ){
+		if($tmpStr != $signature){
 			return false;
 		}
 	}

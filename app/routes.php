@@ -58,7 +58,7 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 Route::group(array('prefix' => 'u', 'before' => 'weixin.check'), function(){
 	Route::any('/', 'App\Controllers\Customer\CheckController@index');
 	Route::resource('/checkSignature', 'App\Controllers\Customer\CheckController');
-	Route::any('text', 'Ap\Controllers\Customer\CheckController@textMessage');
+	Route::any('text', 'App\Controllers\Customer\CheckController@textMessage');
 });
 
 Route::get('logout', array(
