@@ -28,6 +28,7 @@ class CheckController extends \BaseController {
 			$fromUsername 	= $postObj->FromUserName;
 			$toUsername		= $postObj->ToUserName;
 			$keyword		= trim($postObj->Content);
+			$MsgId			= $postObj->MsgId;
 			$time 			= time();
             $textTpl		= "<xml>
 							<ToUserName><![CDATA[%s]]></ToUserName>
@@ -35,12 +36,12 @@ class CheckController extends \BaseController {
 							<CreateTime>%s</CreateTime>
 							<MsgType><![CDATA[%s]]></MsgType>
 							<Content><![CDATA[%s]]></Content>
-							<MsgId>1234567890123456</MsgId>
+							<MsgId>%s</MsgId>
 							</xml>"; 
 			if(!empty($keyword)){
 				$MsgType	= "text";
 				$contentStr = "Welcome to Food Order";
-				$resultStr	= sprintf($textTpl, $fromUsername, $toUsername, $time, $MsgType, $contentStr);
+				$resultStr	= sprintf($textTpl, $fromUsername, $toUsername, $time, $MsgType, $contentStr, $MsgId);
 				return $resultStr;
 			}else{
 				return 'cao ni ma';
