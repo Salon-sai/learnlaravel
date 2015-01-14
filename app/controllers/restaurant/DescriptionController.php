@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers\Restaurant;
-use View, Sentry, Notification, Description, Input, Redirect;
+use View, Sentry, Notification, Description, Input, Redirect, Response;
 use App\Validators\RestaurantValidator;
 
 class DescriptionController extends \BaseController {
@@ -81,10 +81,10 @@ class DescriptionController extends \BaseController {
 			$description->scale 		 = Input::get('scale');
 			$description->location_label = Input::get('location_label');
 			$description->description 	 = Input::get('description');
-			if(Input::get('status'))
-				$description->status 	 = 1;
-			else
-				$description->status 	 = 0;
+			// if(Input::get('status'))
+			// 	$description->status 	 = 1;
+			// else
+			// 	$description->status 	 = 0;
 			$description->save();
 			Notification::success('mofity the description success');
 			return Redirect::route('r.order.index');
@@ -107,5 +107,16 @@ class DescriptionController extends \BaseController {
 
 	public function advancedSetting(){
 		return View::make('restaurant.description.advancedsetting');
+	}
+
+	public function changestatus(){
+		$description = Sentry::getUser()->description;
+		$current_status = $description->status;
+		$description->status = !$current_status;
+		$description->save();
+		return Response::json(array(
+			'type' 		=> 'success',
+			'message'	=> 'success to change the restaurant stataus'
+		));
 	}
 }

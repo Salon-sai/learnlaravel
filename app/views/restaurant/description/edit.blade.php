@@ -63,18 +63,6 @@
 				))}}
 			</div>
 		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">Status</label>
-			<div class="col-sm-10">
-				<div class="switch">
-					@if($restaurant->description->status)
-						<input data-on-color="primary" data-off-color="danger" data-on-text="Open" data-off-text="Close" type="checkbox" name="status" checked />
-					@else
-						<input data-on-color="primary" data-off-color="danger" data-on-text="Open" data-off-text="Close" type="checkbox" name="status" />
-					@endif
-				</div>
-			</div>
-		</div>
 		<div class="form-actions text-center">
 			{{Form::submit('Update', array(
 				'class'		=> 'btn btn-lg btn-info',
@@ -83,8 +71,6 @@
 		</div>
 	{{Form::close()}}
 </div>
-<link rel="stylesheet" href="{{ URL::asset('css/bootstrap-switch.min.css')}}">
-<script type="text/javascript" src="{{ URL::asset('js/bootstrap-switch.min.js')}}"></script>
 <script type="text/javascript">
 	$("[name='status']").bootstrapSwitch();
 

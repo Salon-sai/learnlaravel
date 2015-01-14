@@ -4,6 +4,9 @@
 	<meta charset="UTF-8">
 	<title>Food Order</title>
 	@include('default._partials.assets')
+	<link rel="stylesheet" href="{{URL::asset('css/bootstrap-switch.min.css')}}">
+	<script type="text/javascript" src="{{URL::asset('js/bootstrap-switch.min.js')}}"></script>
+
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -30,4 +33,26 @@
 		@yield('login')
 	</div>
 </body>
+<script type="text/javascript">
+
+	$("[name='restaurant_status']").bootstrapSwitch();
+
+	$("[name='restaurant_status']").on('switchChange.bootstrapSwitch', function(event, status){
+			if(!status){
+				alert('Are you sure close you store. However, you must finish the order customers submited!!!');
+			}
+			$.ajax({
+				url : "{{Route('r.status.change')}}",
+				type : "POST",
+				dataType : 'json',
+				success : function(returnData){
+					if(returnData.type == 'success'){
+						alert(returnData.message);
+					}else{
+						alert(returnData.message);
+					}
+				}
+			});
+	});
+</script>
 </html>

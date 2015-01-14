@@ -113,8 +113,9 @@ class CheckController extends \BaseController {
 	}
 
 	public function textMessage(){
-		$postStr 	= file_get_contents("php://input");
+		// $postStr 	= file_get_contents("php://input");
 		// $postStr	= $GLOBALS["HTTP_RAW_POST_DATA"];
+		$postStr	= Input::get('HTTP_RAW_POST_DATA');
 
 		if(!empty($postStr)){
 			libxml_disable_entity_loader(true);

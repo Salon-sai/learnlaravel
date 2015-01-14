@@ -45,7 +45,7 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 		'as' 	=> 'r.advanced',
 		'uses'	=> 'App\Controllers\Restaurant\DescriptionController@advancedSetting'
 	));
-	Route::post('change/{id}', array(
+	Route::post('change', array(
 		'as' 	=> 'r.status.change',
 		'uses' 	=> 'App\Controllers\Restaurant\DescriptionController@changestatus'
 	));
