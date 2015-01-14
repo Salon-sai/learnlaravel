@@ -128,5 +128,6 @@ Route::filter('weixin.check', function(){
 		if($tmpStr != $signature){
 			return false;
 		}
+		return Input::get('echostr');
 	}
 });

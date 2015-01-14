@@ -18,7 +18,7 @@ class CheckController extends \BaseController {
 	 */
 	public function index()
 	{
-		return Input::get('echostr');
+		return $this->textMessage();
 	}
 
 	/**
