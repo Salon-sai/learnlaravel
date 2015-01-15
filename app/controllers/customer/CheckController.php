@@ -5,7 +5,7 @@
 
 namespace App\Controllers\Customer;
 
-use Input;
+use Input, Log;
 
 define('TOKEN', 'FoodOrder');
 class CheckController extends \BaseController {
