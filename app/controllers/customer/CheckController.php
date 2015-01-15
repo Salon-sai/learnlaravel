@@ -166,12 +166,13 @@ class CheckController extends \BaseController {
 			try{
 				$time 			= time();
 				$textTpl		= "<xml>
-								<ToUserName><![CDATA[%s]]></ToUserName>
-								<FromUserName><![CDATA[%s]]></FromUserName>
-								<CreateTime>%s</CreateTime>
-								<MsgType><![CDATA[text]]></MsgType>
-								<Content><![CDATA[%s]]></Content>
-								</xml>"; 
+									<ToUserName><![CDATA[%s]]></ToUserName>
+									<FromUserName><![CDATA[%s]]></FromUserName>
+									<CreateTime>%s</CreateTime>
+									<MsgType><![CDATA[text]]></MsgType>
+									<Content><![CDATA[%s]]></Content>
+									</xml>"; 
+				Log::info('FromUserName :'.$FromUserName.' ToUserName :'.$ToUserName.' ResponseText :'.$ResponseText);
 				$resultStr	= sprintf($textTpl, $FromUserName,
 					$ToUserName, $time, $ResponseText);
 				Log::info('success return xml to weichat');
