@@ -30,11 +30,11 @@ class CheckController extends \BaseController {
 
 			switch ($RX_TYPE) {
 				case 'event':
-					$this->RequestEvent($postObj);
+					return $this->RequestEvent($postObj);
 					break;
 				
 				case 'text':
-					$this->RequestText($postObj);
+					return $this->RequestText($postObj);
 					break;
 			}
 		}else {
@@ -210,7 +210,7 @@ class CheckController extends \BaseController {
 						</Articles>
 						</xml>";
 		$title 		= "Index";
-		$Descrption = "Welcome to Food Order";
+		$Description = "Welcome to Food Order";
 		$PicUrl 	= "http://104.237.155.177/pic/TestDemo.jpg";
 		$Url 		= "http://104.237.155.177/r";
 		$resultStr	= sprintf($textTpl, $FromUserName, $ToUserName,
