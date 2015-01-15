@@ -30,11 +30,11 @@ class CheckController extends \BaseController {
 
 			switch ($RX_TYPE) {
 				case 'event':
-					$this->ResponseEvent($postObj);
+					$this->RequestEvent($postObj);
 					break;
 				
 				case 'text':
-					$this->ResponeText($postObj);
+					$this->RequestText($postObj);
 					break;
 			}
 		}else {
@@ -134,26 +134,46 @@ class CheckController extends \BaseController {
 		}
 	}
 
-	private function ResponeText($postObj){
-			$fromUsername 	= $postObj->FromUserName;
-			$toUsername		= $postObj->ToUserName;
-			$keyword		= trim($postObj->Content);
+	private function RequestText($postObj){
+		$keyword = trim($postObj->Content);
+		switch ($keyword) {
+			case 'index':
+				return $this->ResponsePictureAndLink($postObj->FromUserName,
+					$postObj->ToUserName);
+				break;
+
+			default:
+				return $this->ResponseText($postObj->FromUserName,
+					$postObj->ToUserName, "Welcome To Food Order");
+				break;
+		}
+	}
+
+	private function RequestEvent($postObj){
+		switch ($postObj->Event) {
+			case 'subscribe':
+				return ResponeText($postObj->FromUserName, 
+						$postObj->ToUserName, "Welcome To Food Order");
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+	}
+
+	private function ResponeText($FromUserName, $ToUserName, $ResponseText){
 			$time 			= time();
 			$textTpl		= "<xml>
 								<ToUserName><![CDATA[%s]]></ToUserName>
 								<FromUserName><![CDATA[%s]]></FromUserName>
 								<CreateTime>%s</CreateTime>
-								<MsgType><![CDATA[%s]]></MsgType>
+								<MsgType><![CDATA[text]]></MsgType>
 								<Content><![CDATA[%s]]></Content>
 								</xml>"; 
-			if(!empty($keyword)){
-				$MsgType	= "text";
-				$contentStr = "Welcome to Food Order";
-				$resultStr	= sprintf($textTpl, $fromUsername, $toUsername, $time, $MsgType, $contentStr);
-				return $resultStr;
-			}else{
-				return 'cao ni ma';
-			}
+			$resultStr	= sprintf($textTpl, $FromUserName,
+					$ToUserName, $time, $ResponseText);
+			return $resultStr;
 	}
 
 	private function ResponLocation($postObj){
@@ -164,11 +184,30 @@ class CheckController extends \BaseController {
 
 	}
 
-	private function ResponsePictureAndLink($postObj){
-
+	private function ResponsePictureAndLink($FromUserName, $ToUserName){
+		$time 		= time();
+		$textTpl 	= "<xml>
+						<ToUserName><![CDATA[%s]]></ToUserName>
+						<FromUserName><![CDATA[%s]]></FromUserName>
+						<CreateTime>%s</CreateTime>
+						<MsgType><![CDATA[news]]></MsgType>
+						<ArticleCount>1</ArticleCount>
+						<Articles>
+						<item>
+						<Title><![CDATA[%s]]></Title> 
+						<Description><![CDATA[%s]]></Description>
+						<PicUrl><![CDATA[%s]]></PicUrl>
+						<Url><![CDATA[%s]]></Url>
+						</item>
+						</Articles>
+						</xml>";
+		$title 		= "Index";
+		$Descrption = "Welcome to Food Order";
+		$PicUrl 	= "http://104.237.155.177/pic/TestDemo.jpg";
+		$Url 		= "http://104.237.155.177/r";
+		$resultStr	= sprintf($textTpl, $FromUserName, $ToUserName,
+			$time, $title, $Description, $PicUrl, $Url);
+		return $resultStr;
 	}
 
-	private function ResponseEvent($postObj){
-
-	}
 }
