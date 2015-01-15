@@ -162,18 +162,24 @@ class CheckController extends \BaseController {
 		}
 	}
 
-	private function ResponeText($FromUserName, $ToUserName, $ResponseText){
-			$time 			= time();
-			$textTpl		= "<xml>
+	private function ResponseText($FromUserName, $ToUserName, $ResponseText){
+			try{
+				$time 			= time();
+				$textTpl		= "<xml>
 								<ToUserName><![CDATA[%s]]></ToUserName>
 								<FromUserName><![CDATA[%s]]></FromUserName>
 								<CreateTime>%s</CreateTime>
 								<MsgType><![CDATA[text]]></MsgType>
 								<Content><![CDATA[%s]]></Content>
 								</xml>"; 
-			$resultStr	= sprintf($textTpl, $FromUserName,
+				$resultStr	= sprintf($textTpl, $FromUserName,
 					$ToUserName, $time, $ResponseText);
-			return $resultStr;
+				Log::info('success return xml to weichat');
+				return $resultStr;
+			}catch(\Exception $e){
+				Log::error($e);
+			}
+			
 	}
 
 	private function ResponLocation($postObj){

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateOrderUserTable extends Migration {
+class CreateCategoryFoodTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,15 +12,12 @@ class CreateOrderUserTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('order_user', function(Blueprint $table)
+		Schema::create('category_food', function(Blueprint $table)
 		{
-			$table->integer('order_id')->unsigned()->index();
-			$table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+			$table->integer('category_id')->unsigned()->index();
+			$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 			$table->integer('food_id')->unsigned()->index();
 			$table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
-			$table->integer('quantity');
-			$table->integer('user_id')->unsigned()->index();
-			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->timestamps();
 		});
 	}
@@ -33,7 +30,7 @@ class CreateOrderUserTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('order_user');
+		Schema::drop('category_food');
 	}
 
 }
