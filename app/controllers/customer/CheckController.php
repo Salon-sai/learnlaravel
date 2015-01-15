@@ -237,7 +237,7 @@ class CheckController extends \BaseController {
 		$PicUrl 	= "http://104.237.155.177/pic/TestDemo.jpg";
 		$Url 		= "https://open.weixin.qq.com/connect/oauth2/authorize?
 						appid=wx93711e54bf475da8&
-						redirect_uri=http://localhost/r&
+						redirect_uri=http://104.237.155.177/login/r&
 						response_type=code&
 						scope=snsapi_base&
 						state=123#wechat_redirect";
