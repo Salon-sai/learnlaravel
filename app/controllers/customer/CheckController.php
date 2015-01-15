@@ -8,6 +8,10 @@ namespace App\Controllers\Customer;
 use Input, Log;
 
 define('TOKEN', 'FoodOrder');
+define('OAuth_LINK', 'https://open.weixin.qq.com/connect/oauth2/authorize?');
+define('APPID', 'wx93711e54bf475da8');
+define('Response_CODE', 'code');
+
 class CheckController extends \BaseController {
 
 	/**
@@ -141,7 +145,10 @@ class CheckController extends \BaseController {
 				return $this->ResponsePictureAndLink($postObj->FromUserName,
 					$postObj->ToUserName);
 				break;
-
+			case 'oauth':
+				return $this->ResponseURLwithOAuth($postObj->FromUserName, 
+					$postObj->ToUserName);
+				break;
 			default:
 				return $this->ResponseText($postObj->FromUserName,
 					$postObj->ToUserName, "Welcome To Food Order");
@@ -163,25 +170,37 @@ class CheckController extends \BaseController {
 	}
 
 	private function ResponseText($FromUserName, $ToUserName, $ResponseText){
-			try{
-				$time 			= time();
-				$textTpl		= "<xml>
-									<ToUserName><![CDATA[%s]]></ToUserName>
-									<FromUserName><![CDATA[%s]]></FromUserName>
-									<CreateTime>%s</CreateTime>
-									<MsgType><![CDATA[text]]></MsgType>
-									<Content><![CDATA[%s]]></Content>
-									</xml>"; 
-				Log::info('FromUserName :'.$FromUserName.' ToUserName :'.$ToUserName.' ResponseText :'.$ResponseText);
-				$resultStr	= sprintf($textTpl, $FromUserName,
-					$ToUserName, $time, $ResponseText);
-				Log::info('success return xml to weichat');
-				Log::info('result is : '.$resultStr);
-				return $resultStr;
-			}catch(\Exception $e){
-				Log::error($e);
-			}
+		try{
+			$time 			= time();
+			$textTpl		= "<xml>
+								<ToUserName><![CDATA[%s]]></ToUserName>
+								<FromUserName><![CDATA[%s]]></FromUserName>
+								<CreateTime>%s</CreateTime>
+								<MsgType><![CDATA[text]]></MsgType>
+								<Content><![CDATA[%s]]></Content>
+								</xml>"; 
+			Log::info('FromUserName :'.$FromUserName.' ToUserName :'.$ToUserName.' ResponseText :'.$ResponseText);
+			$resultStr	= sprintf($textTpl, $FromUserName,
+				$ToUserName, $time, $ResponseText);
+			Log::info('success return xml to weichat');
+			Log::info('result is : '.$resultStr);
+			return $resultStr;
+		}catch(\Exception $e){
+			Log::error($e);
+		}
+	}
+
+	private function ResponseURLwithOAuth($FromUserName, $ToUserName){
+		try{
+			$time 			= time();
+			$title 			= "Index";
+			$PicUrl 		= "http://104.237.155.177/pic/TestDemo.jpg";
+			$Description 	= "Welcome to Food Order";
+			$Redirect_Url 	= "http://104.237.155.177/r";
 			
+		}catch(\Exception $e){
+
+		}
 	}
 
 	private function ResponLocation($postObj){
@@ -189,6 +208,10 @@ class CheckController extends \BaseController {
 	}
 	
 	private function ResponseVoice($postObj){
+
+	}
+
+	private function ResponsePicAndLink($FromUserName, $ToUserName, $title, $Description, $PicUrl, $Url){
 
 	}
 
@@ -212,7 +235,12 @@ class CheckController extends \BaseController {
 		$title 		= "Index";
 		$Description = "Welcome to Food Order";
 		$PicUrl 	= "http://104.237.155.177/pic/TestDemo.jpg";
-		$Url 		= "http://104.237.155.177/r";
+		$Url 		= "https://open.weixin.qq.com/connect/oauth2/authorize?
+						appid=wx520c15f417810387&
+						redirect_uri=http%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&
+						response_type=code&
+						scope=snsapi_base&
+						state=123#wechat_redirect";
 		$resultStr	= sprintf($textTpl, $FromUserName, $ToUserName,
 			$time, $title, $Description, $PicUrl, $Url);
 		return $resultStr;
