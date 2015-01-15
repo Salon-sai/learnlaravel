@@ -237,10 +237,14 @@ class CheckController extends \BaseController {
 		$PicUrl 	= "http://104.237.155.177/pic/TestDemo.jpg";
 		$Url 		= "https://open.weixin.qq.com/connect/oauth2/authorize?
 						appid=wx93711e54bf475da8&
-						redirect_uri=http://104.237.155.177/login/r&
+						redirect_uri=http%3A%2F%2F104.237.155.177&
 						response_type=code&
-						scope=snsapi_base&
-						state=123#wechat_redirect";
+						scope=snsapi_base#wechat_redirect";
+		// $Url 		= "https://open.weixin.qq.com/connect/oauth2/authorize?
+		// 				appid=wx520c15f417810387&
+		// 				redirect_uri=http%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&
+		// 				response_type=code&
+		// 				scope=snsapi_base&state=123#wechat_redirect";
 		$resultStr	= sprintf($textTpl, $FromUserName, $ToUserName,
 			$time, $title, $Description, $PicUrl, $Url);
 		return $resultStr;
