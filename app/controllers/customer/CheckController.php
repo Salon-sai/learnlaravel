@@ -176,6 +176,7 @@ class CheckController extends \BaseController {
 				$resultStr	= sprintf($textTpl, $FromUserName,
 					$ToUserName, $time, $ResponseText);
 				Log::info('success return xml to weichat');
+				Log::info('result is : '.$resultStr);
 				return $resultStr;
 			}catch(\Exception $e){
 				Log::error($e);
