@@ -25,24 +25,17 @@ class CheckController extends \BaseController {
 		if(!empty($postStr)){
 			libxml_disable_entity_loader(true);
 			$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-			$fromUsername 	= $postObj->FromUserName;
-			$toUsername		= $postObj->ToUserName;
-			$keyword		= trim($postObj->Content);
-			$time 			= time();
-            $textTpl		= "<xml>
-								<ToUserName><![CDATA[%s]]></ToUserName>
-								<FromUserName><![CDATA[%s]]></FromUserName>
-								<CreateTime>%s</CreateTime>
-								<MsgType><![CDATA[%s]]></MsgType>
-								<Content><![CDATA[%s]]></Content>
-								</xml>"; 
-			if(!empty($keyword)){
-				$MsgType	= "text";
-				$contentStr = "Welcome to Food Order";
-				$resultStr	= sprintf($textTpl, $fromUsername, $toUsername, $time, $MsgType, $contentStr);
-				return $resultStr;
-			}else{
-				return 'cao ni ma';
+
+			$RX_TYPE = trim($postObj->MsgType);
+
+			switch ($RX_TYPE) {
+				case 'event':
+					$this->ResponseEvent($postObj);
+					break;
+				
+				case 'text':
+					$this->ResponeText($postObj);
+					break;
 			}
 		}else {
 			return 'ni ma bi';
@@ -141,8 +134,41 @@ class CheckController extends \BaseController {
 		}
 	}
 
-	public function textMessage(){
+	private function ResponeText($postObj){
+			$fromUsername 	= $postObj->FromUserName;
+			$toUsername		= $postObj->ToUserName;
+			$keyword		= trim($postObj->Content);
+			$time 			= time();
+			$textTpl		= "<xml>
+								<ToUserName><![CDATA[%s]]></ToUserName>
+								<FromUserName><![CDATA[%s]]></FromUserName>
+								<CreateTime>%s</CreateTime>
+								<MsgType><![CDATA[%s]]></MsgType>
+								<Content><![CDATA[%s]]></Content>
+								</xml>"; 
+			if(!empty($keyword)){
+				$MsgType	= "text";
+				$contentStr = "Welcome to Food Order";
+				$resultStr	= sprintf($textTpl, $fromUsername, $toUsername, $time, $MsgType, $contentStr);
+				return $resultStr;
+			}else{
+				return 'cao ni ma';
+			}
+	}
+
+	private function ResponLocation($postObj){
+
+	}
+	
+	private function ResponseVoice($postObj){
 
 	}
 
+	private function ResponsePictureAndLink($postObj){
+
+	}
+
+	private function ResponseEvent($postObj){
+
+	}
 }
