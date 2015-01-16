@@ -2,8 +2,13 @@
 
 namespace App\Controllers\_Default;
 
-use BaseController, Input;
+use BaseController, Input, Log;
 
+define('ACCESS_TOKEN_URL', 
+	"https://api.weixin.qq.com/sns/oauth2/access_token?
+	appid=wx6b67feeba41a14f3&
+	secret=29943ae5d7b778c9761961156baf5e31&
+	code=%s&grant_type=authorization_code");
 class OAuthController extends BaseController {
 
 	/**
@@ -16,7 +21,14 @@ class OAuthController extends BaseController {
 	{
 		$code = Input::get('code');
 		if($code)
-			return $code;
+			try{
+				$resultURL 	= sprintf(ACCESS_TOKEN_URL, $code);
+				$content 	= file_get_contents($resultURL);
+				Log::info('success to get ACCESS_TOKEN');
+				return $content;
+			}catch(\Exception $e){
+				Log::error($e);
+			}
 		else
 			return 'NO CODE';
 	}
