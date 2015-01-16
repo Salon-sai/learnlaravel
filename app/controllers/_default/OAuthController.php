@@ -22,7 +22,9 @@ class OAuthController extends BaseController {
 		$code = Input::get('code');
 		if($code)
 			try{
+				Log::info('code is : '.$code);
 				$resultURL 	= sprintf(ACCESS_TOKEN_URL, $code);
+				Log::info('ACCESS_TOKEN_URL is '.$resultURL);
 				$content 	= file_get_contents($resultURL);
 				Log::info('success to get ACCESS_TOKEN');
 				return $content;
