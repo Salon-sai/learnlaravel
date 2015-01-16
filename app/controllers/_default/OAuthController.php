@@ -4,8 +4,11 @@ namespace App\Controllers\_Default;
 
 use BaseController, Input, Log;
 
+define('APPID', 'wx6b67feeba41a14f3');
+define('SECRET', '29943ae5d7b778c9761961156baf5e31');
+define('GRANT_TYPE', 'authorization_code');
 define('ACCESS_TOKEN_URL', 
-	"https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx6b67feeba41a14f3&secret=29943ae5d7b778c9761961156baf5e31&code=%s&grant_type=authorization_code");
+	"https://api.weixin.qq.com/sns/oauth2/access_token");
 class OAuthController extends BaseController {
 
 	/**
@@ -20,11 +23,19 @@ class OAuthController extends BaseController {
 		if($code)
 			try{
 				Log::info('code is : '.$code);
-				$resultURL 	= sprintf(ACCESS_TOKEN_URL, $code);
-				Log::info('ACCESS_TOKEN_URL is '.$resultURL);
-				$content 	= file_get_contents($resultURL);
+				$ch 		= curl_init(ACCESS_TOKEN_URL);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+						'appid'		=> APPID,
+						'secret'	=> SECRET,
+						'code'		=> $code,
+						'grant_type'=>GRANT_TYPE
+					));
+				$result 	= curl_exec($ch);
 				Log::info('success to get ACCESS_TOKEN');
-				return $content;
+				curl_close($ch);
+				Log::info($result);
+				return $result;
 			}catch(\Exception $e){
 				Log::error($e);
 			}
