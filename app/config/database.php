@@ -55,8 +55,8 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'	=> 'testmigrate',
-			// 'database'  => 'learnlaravel',
+			// 'database'	=> 'testmigrate',
+			'database'  => 'learnlaravel',
 			'username'  => 'root',
 			'password'  => '123456',
 			'charset'   => 'utf8',
