@@ -2,7 +2,7 @@
 
 namespace App\Controllers\_Default;
 
-use BaseController;
+use BaseController, Input;
 
 class OAuthController extends BaseController {
 
