@@ -5,10 +5,7 @@ namespace App\Controllers\_Default;
 use BaseController, Input, Log;
 
 define('ACCESS_TOKEN_URL', 
-	"https://api.weixin.qq.com/sns/oauth2/access_token?
-	appid=wx6b67feeba41a14f3&
-	secret=29943ae5d7b778c9761961156baf5e31&
-	code=%s&grant_type=authorization_code");
+	"https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx6b67feeba41a14f3&secret=29943ae5d7b778c9761961156baf5e31&code=%s&grant_type=authorization_code");
 class OAuthController extends BaseController {
 
 	/**
