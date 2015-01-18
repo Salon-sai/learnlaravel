@@ -147,6 +147,7 @@ class WeiChatController extends BaseController {
 								</xml>";
 			$result 		= sprintf($textTpl, $FromUserName, $ToUserName, $time);
 			Log::info('success to create Articles');
+			Log::info('The resutl is '.$result);
 			return $result;
 		}catch(\Exception $e){
 			Log::error($e);
