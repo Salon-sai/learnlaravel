@@ -129,8 +129,10 @@ class WeiChatController extends BaseController {
 								<Url><![CDATA[%s]]></Url>
 								</item>";
 			$item_result	= "";
+			Log::info($items);
 			foreach ($items as $i) {
-				$item_result= $item_result.sprintf($item, $i['Title'], $i['Description'], $i['PicUrl'], $i['Url']);
+				$item_result.=sprintf($item, $i['Title'], 
+					$i['Description'], $i['PicUrl'], $i['Url']);
 			}
 			$time 			= time();
 			$textTpl 		= "<xml>
