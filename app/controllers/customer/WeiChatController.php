@@ -131,6 +131,7 @@ class WeiChatController extends BaseController {
 			$item_result	= "";
 			Log::info($items);
 			foreach ($items as $i) {
+				Log::info($i);
 				$item_result.=sprintf($item, $i['Title'], 
 					$i['Description'], $i['PicUrl'], $i['Url']);
 			}
@@ -145,6 +146,7 @@ class WeiChatController extends BaseController {
 								."</Articles>
 								</xml>";
 			$result 		= sprintf($textTpl, $FromUserName, $ToUserName, $time);
+			Log::info('success to create Articles');
 			return $result;
 		}catch(\Exception $e){
 			Log::error($e);
