@@ -122,17 +122,17 @@ class WeiChatController extends BaseController {
 
 	private function ResponsePictureAndLink($FromUserName, $ToUserName, $items){
 		try{
-			$item 			= "	<item>
-								<Title><![CDATA[%s]]></Title>
-								<Description><![CDATA[%s]]></Description>
-								<PicUrl><![CDATA[%s]]></PicUrl>
-								<Url><![CDATA[%s]]></Url>
-								</item>";
+			$item_TPL 			= "<item>
+									<Title><![CDATA[%s]]></Title>
+									<Description><![CDATA[%s]]></Description>
+									<PicUrl><![CDATA[%s]]></PicUrl>
+									<Url><![CDATA[%s]]></Url>
+									</item>";
 			$item_result	= "";
-			Log::info($items);
+			Log::info($items[0]['Title']);
 			foreach ($items as $i) {
 				Log::info($i);
-				$item_result.=sprintf($item, $i['Title'], 
+				$item_result.=sprintf($item_TPL, $i['Title'], 
 					$i['Description'], $i['PicUrl'], $i['Url']);
 			}
 			$time 			= time();
