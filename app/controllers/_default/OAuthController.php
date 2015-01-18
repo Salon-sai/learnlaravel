@@ -29,13 +29,15 @@ class OAuthController extends BaseController {
 						'appid'		=> APPID,
 						'secret'	=> SECRET,
 						'code'		=> $code,
-						'grant_type'=>GRANT_TYPE
+						'grant_type'=> GRANT_TYPE
 					));
 				$result 	= curl_exec($ch);
 				Log::info('success to get ACCESS_TOKEN');
 				curl_close($ch);
-				Log::info($result);
-				return $result;
+				$resultObj 	= json_decode($result);				
+				Log::info('access_token : '.$resultObj->access_token);
+				Log::info('openId : '.$resultObj->openid);
+				return "Your openId is ".$resultObj->openid;
 			}catch(\Exception $e){
 				Log::error($e);
 			}
