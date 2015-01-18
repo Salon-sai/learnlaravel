@@ -3,7 +3,7 @@
 @section('main')
 <div class="container">
 @foreach($restaurants as $restaurant)
-	<div class="col-md-12">{{$restaurant->description->name}}</div>
+	<button type="button" class="btn btn-link"></button>
 @endforeach
 </div>
 @stop
