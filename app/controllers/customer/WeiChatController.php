@@ -61,10 +61,12 @@ class WeiChatController extends BaseController {
 				$Url 			= 'http://104.237.155.177/u/r';
 				return $this->ResponsePictureAndLink($FromUserName, $ToUserName, 
 			array(
-					'Title' 		=> $Title,
-					'Description'	=> $Description,
-					'PicUrl'		=> $PicUrl,
-					'Url'			=> $Url
+					array(
+							'Title' 		=> $Title,
+							'Description'	=> $Description,
+							'PicUrl'		=> $PicUrl,
+							'Url'			=> $Url
+						)
 				));
 				break;
 			default:
