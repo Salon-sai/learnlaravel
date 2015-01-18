@@ -178,7 +178,7 @@ class CheckController extends \BaseController {
 								<CreateTime>%s</CreateTime>
 								<MsgType><![CDATA[text]]></MsgType>
 								<Content><![CDATA[%s]]></Content>
-								</xml>"; 
+								</xml>";
 			Log::info('FromUserName :'.$FromUserName.' ToUserName :'.$ToUserName.' ResponseText :'.$ResponseText);
 			$resultStr	= sprintf($textTpl, $FromUserName,
 				$ToUserName, $time, $ResponseText);
@@ -233,7 +233,7 @@ class CheckController extends \BaseController {
 						</Articles>
 						</xml>";
 		$title 		= "Index";
-		$Description = "Welcome to Food Order";
+		$Description= "Welcome to Food Order";
 		$PicUrl 	= "http://104.237.155.177/pic/TestDemo.jpg";
 		$Url 		= "https://open.weixin.qq.com/connect/oauth2/authorize?
 						appid=wx6b67feeba41a14f3&
