@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
 	<title>Food Order</title>
 	@include('default._partials.assets')
 </head>
@@ -22,11 +22,7 @@
 		</div>
 	</nav>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				@yield('main')
-			</div>
-		</div>
+		@yield('main')
 	</div>
 </body>
 </html>

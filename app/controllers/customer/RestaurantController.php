@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Customer;
 
-use BaseController, Sentry, View;
+use BaseController, Sentry, View, Description, Food, Log;
 
 class RestaurantController extends BaseController {
 
@@ -14,10 +14,10 @@ class RestaurantController extends BaseController {
 	 */
 	public function index()
 	{
-		$restaurantGroup = Sentry::findGroupById(6);
-		$restaurants 	 = Sentry::findAllUsersInGroup($restaurantGroup);
+		$descriptions = Description::where('status', '<>', 9)
+			->orderBy('status', 'desc')->get();
 		return View::make('customer.restaurant.index')
-			->with('restaurants', $restaurants);
+			->with('descriptions', $descriptions);
 	}
 
 	/**
@@ -46,12 +46,20 @@ class RestaurantController extends BaseController {
 	 * Display the specified resource.
 	 * GET /customer\restaurant/{id}
 	 *
-	 * @param  int  $id
+	 * @param  int  $id of description
 	 * @return Response
 	 */
 	public function show($id)
 	{
-		//
+		$description= Description::find($id);
+		Log::info($description->user_id);
+		$foods 		= Food::where('user_id', '=', $description->user_id)
+			->orderBy('status', 'desc')->get();
+		return View::make('customer.restaurant.foodlist')
+			->with(array(
+					'description' 	=> $description,
+					'foods'			=> $foods
+				));
 	}
 
 	/**
