@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers\Customer\OrderController;
+namespace App\Controllers\Customer;
 
-use BaseController;
+use BaseController, Input;
 
 class OrderController extends BaseController {
 
@@ -36,7 +36,13 @@ class OrderController extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		$ids 		= Input::get('food_ids');
+		$quantity_s = Input::get('quantity_s');
+		$total		= 0;
+		
+		$id_list 		= explode(',', $ids);
+		$quantity_list	= explode(',', $quantity_s);
+
 	}
 
 	/**
@@ -87,4 +93,7 @@ class OrderController extends BaseController {
 		//
 	}
 
+	public function saveInCache(){
+
+	}
 }
