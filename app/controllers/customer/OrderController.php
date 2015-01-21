@@ -30,7 +30,7 @@ class OrderController extends BaseController {
 		$restaurant_id	= Input::get('restaurant_id');
 		$foodMap 		= array();
 		$total			= 0;
-		if(!$ids && !$quantity_s){
+		if($ids && $quantity_s){
 			if($ids){
 				$id_list 	= explode(',', $ids);
 				Log::info('success to generate the id list '.$id_list);
