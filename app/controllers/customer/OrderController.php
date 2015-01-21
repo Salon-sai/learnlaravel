@@ -51,7 +51,7 @@ class OrderController extends BaseController {
 		$contacts 	= Contact::whereRaw('openid = ? and default = true', array($openid))
 			->first();
 		if(!$contacts){
-			for(var $i = 0; $i < count($id_list); $i++){
+			for($i = 0; $i < count($id_list); $i++){
 				$foodMap[$id_list[$i]] = $quantity_list[$i];
 			}
 			Session::push('foodMap', $foodMap);
