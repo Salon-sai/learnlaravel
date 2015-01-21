@@ -33,14 +33,14 @@ class OrderController extends BaseController {
 		if($ids && $quantity_s){
 			if($ids){
 				$id_list 	= explode(',', $ids);
-				Log::info('success to generate the id list '.$id_list);
+				Log::info('success to generate the id list '.$ids);
 			}else{
 				$id_list	= array();
 				Log::info('ids is empty');
 			}
 			if($quantity_s){
 				$quantity_list= explode(',', $quantity_s);
-				Log::info('success to generate the quantity list '.$quantity_list);
+				Log::info('success to generate the quantity list '.$quantity_s);
 			}else{
 				$quantity_list= array();
 				Log::info('quantity_s is empty');
