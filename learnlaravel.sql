@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50614
 File Encoding         : 65001
 
-Date: 2015-01-18 12:52:53
+Date: 2015-01-21 20:29:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -75,6 +75,7 @@ CREATE TABLE `comments` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `content` text COLLATE utf8_unicode_ci NOT NULL,
   `customer_id` int(10) unsigned NOT NULL,
+  `openid` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `food_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -96,13 +97,12 @@ DROP TABLE IF EXISTS `contacts`;
 CREATE TABLE `contacts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `openid` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `default` tinyint(1) NOT NULL DEFAULT '0',
   `telephone` int(11) NOT NULL,
-  `customer_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `contacts_customer_id_index` (`customer_id`),
-  CONSTRAINT `contacts_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
@@ -121,11 +121,12 @@ CREATE TABLE `customers` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of customers
 -- ----------------------------
+INSERT INTO `customers` VALUES ('1', 'aa', 'qwfasdf2435', 'asdf', '2015-01-20 20:35:51', '2015-01-20 20:35:55');
 
 -- ----------------------------
 -- Table structure for descriptions
@@ -152,8 +153,8 @@ CREATE TABLE `descriptions` (
 -- ----------------------------
 -- Records of descriptions
 -- ----------------------------
-INSERT INTO `descriptions` VALUES ('1', 'restaurant10', null, '10', '54', '23.56', '56.55', '20', 'Kentucky New Traceybury 655 Jacobson Shore Apt. 172', '2015-01-02 08:15:24', '2015-01-02 08:15:24', '1');
-INSERT INTO `descriptions` VALUES ('2', 'restaurant1', '没啥好吃', '2147483647', '45', '23.56', '56.55', '20', 'Rhode Island Emmittside 99107 Murazik Fords', '2015-01-02 08:15:24', '2015-01-13 07:26:18', '0');
+INSERT INTO `descriptions` VALUES ('1', 'restaurant10', null, '10', '54', '23.56', '56.55', '20', 'Kentucky New Traceybury 655 Jacobson Shore Apt. 172', '2015-01-02 08:15:24', '2015-01-20 13:14:55', '0');
+INSERT INTO `descriptions` VALUES ('2', 'restaurant1', '没啥好吃', '2147483647', '45', '23.56', '56.55', '20', 'Rhode Island Emmittside 99107 Murazik Fords', '2015-01-02 08:15:24', '2015-01-20 13:14:23', '1');
 INSERT INTO `descriptions` VALUES ('3', 'restaurant2', null, '0', '46', '23.56', '56.55', '20', 'Missouri Lake Marcelleborough 3911 Dickinson Corner Apt. 873', '2015-01-02 08:15:24', '2015-01-14 08:14:39', '1');
 INSERT INTO `descriptions` VALUES ('4', 'restaurant3', null, '0', '47', '23.56', '56.55', '20', 'Montana West Anastasia 975 Rau Springs', '2015-01-02 08:15:24', '2015-01-02 08:15:24', '1');
 INSERT INTO `descriptions` VALUES ('5', 'restaurant4', null, '0', '48', '23.56', '56.55', '20', 'Vermont Arleneborough 441 Lavern Radial Suite 785', '2015-01-02 08:15:24', '2015-01-02 08:15:24', '1');
@@ -162,7 +163,7 @@ INSERT INTO `descriptions` VALUES ('7', 'restaurant6', null, '0', '50', '23.56',
 INSERT INTO `descriptions` VALUES ('8', 'restaurant7', null, '0', '51', '23.56', '56.55', '20', 'Georgia Lake Dejontown 96902 Schowalter Shore', '2015-01-02 08:15:25', '2015-01-02 08:15:25', '1');
 INSERT INTO `descriptions` VALUES ('9', 'restaurant8', null, '0', '52', '23.56', '56.55', '20', 'Oklahoma North Francescaside 40473 Josie Hills', '2015-01-02 08:15:25', '2015-01-02 08:15:25', '1');
 INSERT INTO `descriptions` VALUES ('10', 'restaurant9', null, '0', '53', '23.56', '56.55', '20', 'Colorado Ondrickaside 78409 Daniel Vista', '2015-01-02 08:15:25', '2015-01-02 08:15:25', '1');
-INSERT INTO `descriptions` VALUES ('11', 'admin', null, '0', '44', '-1.00', '-1.00', '-1', 'null', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1');
+INSERT INTO `descriptions` VALUES ('11', 'admin', null, '0', '44', '-1.00', '-1.00', '-1', 'null', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '9');
 
 -- ----------------------------
 -- Table structure for foods
@@ -201,6 +202,26 @@ INSERT INTO `foods` VALUES ('18', '鸡汤', '', '好多好多鸡', '46', '8', '0
 INSERT INTO `foods` VALUES ('19', '炒鱿鱼', 'dir', null, '45', '40', '0', '0', '0', '1', '2015-01-11 02:53:12', '2015-01-11 02:53:12');
 INSERT INTO `foods` VALUES ('20', '屎尿', 'dir', '香', '45', '10', '0', '0', '0', '1', '2015-01-11 03:43:22', '2015-01-11 03:44:16');
 INSERT INTO `foods` VALUES ('23', '狗屎', 'dir', '你的最爱', '45', '10000', '12312', '0', '0', '0', '2015-01-13 07:26:08', '2015-01-13 07:26:08');
+
+-- ----------------------------
+-- Table structure for food_order
+-- ----------------------------
+DROP TABLE IF EXISTS `food_order`;
+CREATE TABLE `food_order` (
+  `food_id` int(10) unsigned NOT NULL,
+  `order_id` int(10) unsigned NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  KEY `food_order_food_id_index` (`food_id`),
+  KEY `food_order_order_id_index` (`order_id`),
+  CONSTRAINT `food_order_food_id_foreign` FOREIGN KEY (`food_id`) REFERENCES `foods` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `food_order_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of food_order
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for groups
@@ -248,6 +269,11 @@ INSERT INTO `migrations` VALUES ('2015_01_02_022314_create_description_table', '
 INSERT INTO `migrations` VALUES ('2015_01_05_023951_create_customer_table', '4');
 INSERT INTO `migrations` VALUES ('2015_01_05_035251_create_contact_table', '4');
 INSERT INTO `migrations` VALUES ('2015_01_14_071413_create_order_user_table', '5');
+INSERT INTO `migrations` VALUES ('2015_01_21_120338_add_openid_order', '6');
+INSERT INTO `migrations` VALUES ('2015_01_21_120758_create_food_order_table', '6');
+INSERT INTO `migrations` VALUES ('2015_01_21_121700_add_field_contacts', '7');
+INSERT INTO `migrations` VALUES ('2015_01_21_121837_add_field_comments', '7');
+INSERT INTO `migrations` VALUES ('2015_01_21_135941_add_field_contacts', '8');
 
 -- ----------------------------
 -- Table structure for orders
@@ -255,44 +281,21 @@ INSERT INTO `migrations` VALUES ('2015_01_14_071413_create_order_user_table', '5
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `total` int(11) NOT NULL,
-  `customer_id` int(10) unsigned NOT NULL,
+  `total` int(11) DEFAULT NULL,
+  `openid` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
   `status` smallint(1) DEFAULT '0',
   `telephone` int(11) NOT NULL,
   `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
-  KEY `orders_customer_id_index` (`customer_id`),
-  CONSTRAINT `orders_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE
+  KEY `orders_user_id_index` (`user_id`),
+  CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of orders
--- ----------------------------
-
--- ----------------------------
--- Table structure for order_user_food
--- ----------------------------
-DROP TABLE IF EXISTS `order_user_food`;
-CREATE TABLE `order_user_food` (
-  `order_id` int(10) unsigned NOT NULL,
-  `food_id` int(10) unsigned NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`order_id`,`food_id`,`user_id`),
-  KEY `order_user_food_order_id_index` (`order_id`),
-  KEY `order_user_food_food_id_index` (`food_id`),
-  KEY `order_user_food_user_id_index` (`user_id`),
-  CONSTRAINT `order_user_food_food_id_foreign` FOREIGN KEY (`food_id`) REFERENCES `foods` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `order_user_food_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `order_user_food_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
--- Records of order_user_food
 -- ----------------------------
 
 -- ----------------------------
@@ -311,7 +314,7 @@ CREATE TABLE `throttle` (
   `banned_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `throttle_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of throttle
@@ -326,6 +329,7 @@ INSERT INTO `throttle` VALUES ('7', '23', '192.168.1.100', '0', '0', '0', null, 
 INSERT INTO `throttle` VALUES ('8', '44', '::1', '0', '0', '0', null, null, null);
 INSERT INTO `throttle` VALUES ('9', '45', '::1', '0', '0', '0', null, null, null);
 INSERT INTO `throttle` VALUES ('10', '46', '::1', '0', '0', '0', null, null, null);
+INSERT INTO `throttle` VALUES ('11', '54', '::1', '0', '0', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for users
@@ -359,7 +363,7 @@ CREATE TABLE `users` (
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES ('44', '11', 'admin@admin.com', '$2y$10$AqNEQvEyllFg9H5TyZJrcuz3Nvc3hkZAmYzirYVg6TB1uvpcQSbEq', null, '1', null, null, '2015-01-16 15:09:16', '$2y$10$MZake6/zEwX2usZq9g5/bu1Y2WysvyY8XV7T8Oo7f20TZ.d2Iqdl.', null, 'admin', 'admin', '2015-01-10 12:27:47', '2015-01-16 15:09:16');
-INSERT INTO `users` VALUES ('45', '2', 'restaurant1@restaurant.com', '$2y$10$CEgYhT.m2vDTY79/jITY8uHfdlvxAPL5jqT5pToqf7tBB0PsfkohO', null, '1', null, null, '2015-01-15 04:36:57', '$2y$10$ycl7fcABUzoUjlds0bsxcugFOhpYD022ChcT6aAZu.pfy5oR/nUQ.', null, 'restaurant1', 'restaurant1', '2015-01-10 12:27:47', '2015-01-15 04:36:57');
+INSERT INTO `users` VALUES ('45', '2', 'restaurant1@restaurant.com', '$2y$10$CEgYhT.m2vDTY79/jITY8uHfdlvxAPL5jqT5pToqf7tBB0PsfkohO', null, '1', null, null, '2015-01-20 13:14:18', '$2y$10$g7/9jci71tn.Z9Kk3HXs..YjW1PzfTO2OBGT63ZNQpHY2m2BjdCSK', null, 'restaurant1', 'restaurant1', '2015-01-10 12:27:47', '2015-01-20 13:14:19');
 INSERT INTO `users` VALUES ('46', '3', 'restaurant2@restaurant.com', '$2y$10$YsCymlk3VRnDDaeCDNRqvOh8xePTeyIbY947URmuxOEOfGZCjM2yq', null, '1', null, null, '2015-01-14 07:48:26', '$2y$10$LVxuY2G9e4vIBNZiB1qsv.Fh//KkjIv7QELlGZInkbudi2GyG9WXC', null, 'restaurant2', 'restaurant2', '2015-01-10 12:27:48', '2015-01-14 07:48:26');
 INSERT INTO `users` VALUES ('47', '4', 'restaurant3@restaurant.com', '$2y$10$fODEQWD0QB7ThE9Pz/fDdu2VwXzR5o5BXJe7D34Rlv4ysDyMt4hTe', null, '1', null, null, null, null, null, 'restaurant3', 'restaurant3', '2015-01-10 12:27:48', '2015-01-10 12:27:48');
 INSERT INTO `users` VALUES ('48', '5', 'restaurant4@restaurant.com', '$2y$10$gYV.xAkY49oDwWKw05iYE.CPd4gMLkxAAil0Jtyzi4airHi61Pgaq', null, '1', null, null, null, null, null, 'restaurant4', 'restaurant4', '2015-01-10 12:27:48', '2015-01-10 12:27:48');
@@ -368,7 +372,7 @@ INSERT INTO `users` VALUES ('50', '7', 'restaurant6@restaurant.com', '$2y$10$/ez
 INSERT INTO `users` VALUES ('51', '8', 'restaurant7@restaurant.com', '$2y$10$RYXPOg5IgnBLvbS.F7Bhv.4VBJgbuLHu0EChKCoCo.niVF35BTwKG', null, '1', null, null, null, null, null, 'restaurant7', 'restaurant7', '2015-01-10 12:27:49', '2015-01-10 12:27:49');
 INSERT INTO `users` VALUES ('52', '9', 'restaurant8@restaurant.com', '$2y$10$zd.TNXT2.dkuhx359KSkKOCua3i7poF2Yp/ps0V9Yr.w7aEDSMxae', null, '1', null, null, null, null, null, 'restaurant8', 'restaurant8', '2015-01-10 12:27:49', '2015-01-10 12:27:49');
 INSERT INTO `users` VALUES ('53', '10', 'restaurant9@restaurant.com', '$2y$10$BcioNcfq8tkhXDd7FNVtdOakmdoOIxmshtL9Zg/XXyVraOwJ6TzmO', null, '1', null, null, null, null, null, 'restaurant9', 'restaurant9', '2015-01-10 12:27:49', '2015-01-10 12:27:49');
-INSERT INTO `users` VALUES ('54', '1', 'restaurant10@restaurant.com', '$2y$10$wCOXw0wyVwH0bG2usEHYYeiadAjmki5tPCMOwmBFjfeSEo2Qg1O66', null, '1', null, null, null, null, null, 'restaurant10', 'restaurant10', '2015-01-10 12:27:50', '2015-01-10 12:27:50');
+INSERT INTO `users` VALUES ('54', '1', 'restaurant10@restaurant.com', '$2y$10$wCOXw0wyVwH0bG2usEHYYeiadAjmki5tPCMOwmBFjfeSEo2Qg1O66', null, '1', null, null, '2015-01-20 13:14:42', '$2y$10$DH8E2LHo2RfZa3ocRGJLMe5eolg4tKtcyF7cy6iIRz3DIGNKKluRq', null, 'restaurant10', 'restaurant10', '2015-01-10 12:27:50', '2015-01-20 13:14:42');
 
 -- ----------------------------
 -- Table structure for users_groups
