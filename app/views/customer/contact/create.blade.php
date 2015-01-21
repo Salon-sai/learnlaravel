@@ -7,12 +7,12 @@
 </div>
 <div class="row">
 	{{Notification::showAll()}}
-	{{Form::open(
+	{{Form::open(array(
 		'url' 	=> URL::route('u.contact.store'),
 		'method'=> 'post',
 		'role'	=> 'form',
 		'class'	=> 'form-horizontal'
-	)}}
+	))}}
 		<label class="col-sm-2 control-label">Address</label>
 		<div class="col-sm-10">
 			{{Form::text('address',null, array(
