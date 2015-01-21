@@ -48,7 +48,7 @@ class OrderController extends BaseController {
 		}
 		$openid 	= Session::get('openid');
 
-		$contacts 	= Contact::whereRaw('openid = ? and default = true', array($openid))
+		$contacts 	= Contact::whereRaw('openid = ? and default = 1', array($openid))
 			->first();
 		if(!$contacts){
 			for($i = 0; $i < count($id_list); $i++){
