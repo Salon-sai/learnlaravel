@@ -21,8 +21,8 @@ class RestaurantController extends BaseController {
 			$openid		= $oauth->getOpenid();
 			Session::put('openid', $openid);
 			$customer 	= Customer::where('openid', $openid)
-				->first()->get();
-			if(!$customer){
+				->first();
+			if(!$customer || empty($customer)){
 				$customer= new Customer;
 				$customer->openid = $openid;
 				$customer->save();
