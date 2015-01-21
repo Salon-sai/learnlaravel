@@ -58,7 +58,7 @@ class ContactController extends \BaseController {
 			$contact->address 	= Input::get('address');
 			$contact->telephone	= Input::get('telephone');
 			if(!Contact::whereRaw('openid = ? and default = true', array($openid))->get())
-				$contact->default = true;
+				$contact->isDefault = true;
 			$contact->save();
 			Notification::success('create new contact success');
 			return Redirect::route(Input::get('nexRedirect'));
