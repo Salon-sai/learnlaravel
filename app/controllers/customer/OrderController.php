@@ -55,7 +55,7 @@ class OrderController extends BaseController {
 				$foodMap[$id_list[$i]] = $quantity_list[$i];
 			}
 			Session::push('foodMap', $foodMap);
-			Log::info('user '.$openid.' session save the food map : '.$foodMap);
+			Log::info('user '.$openid.' session save the food map ');
 			Log::info('redirect to create contact');
 			return View::make('customer.contact.create')
 				->with('RedirectPage', 'u.order.create');
