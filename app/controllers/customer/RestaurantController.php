@@ -20,14 +20,14 @@ class RestaurantController extends BaseController {
 			$oauth 		= new OAuthService;
 			$openid		= $oauth->getOpenid();
 			Session::put('openid', $openid);
-			$customer 	= Customer::where('openid', $openid)
-				->first();
-			if(!$customer || empty($customer)){
-				$customer= new Customer;
-				$customer->openid = $openid;
-				$customer->save();
-				Log::info('success to save customer and the id is '.$customer->id);
-			}
+		}
+		$customer 	= Customer::where('openid', $openid)
+			->first();
+		if(!$customer || empty($customer)){
+			$customer= new Customer;
+			$customer->openid = $openid;
+			$customer->save();
+			Log::info('success to save customer and the id is '.$customer->id);
 		}
 		$descriptions 	= Description::where('status', '<>', 9)
 			->orderBy('status', 'desc')->get();
