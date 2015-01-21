@@ -7,7 +7,7 @@
 		<li class="{{Request::is('u/order/*')? 'active' : null}}">
 			<a href="{{URL::route('u.order.index')}}">Order</a>
 		</li>
-		<li class="{{URL::route('u/contact/*')}}">
+		<li class="{{Request::is('u/contact/*')}}">
 			<a href="{{URL::route('u.contact.index')}}">Contact</a>
 		</li>
 	</ul>
