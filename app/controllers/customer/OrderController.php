@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Customer;
 
-use BaseController, Input, Food, Order, Session, Contact, Log;
+use BaseController, Input, Food, Order, Session, Contact, Log, View;
 
 class OrderController extends BaseController {
 
