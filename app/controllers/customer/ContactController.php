@@ -57,6 +57,8 @@ class ContactController extends \BaseController {
 			$openid 			= Session::get('openid');
 			$contact->address 	= Input::get('address');
 			$contact->telephone	= Input::get('telephone');
+			if(!Contact::whereRaw('openid = ? and default = true', array($openid))->get())
+				$contact->default = true;
 			$contact->save();
 			Notification::success('create new contact success');
 		}

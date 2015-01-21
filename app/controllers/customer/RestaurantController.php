@@ -3,7 +3,7 @@
 namespace App\Controllers\Customer;
 
 use BaseController, OAuthService, Sentry, View, Description, Food, Log;
-use Session;
+use Session, Customer;
 
 class RestaurantController extends BaseController {
 

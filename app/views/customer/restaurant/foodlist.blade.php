@@ -30,12 +30,12 @@
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 	{{Form::open(array(
 		'id' 	=> 'total_form',
-		'url'	=> URL::route('u.order.store'),
-		'method'=> 'post'
+		'url'	=> URL::route('u.order.create'),
+		'method'=> 'get'
 	))}}
-	<input id='total_ids' name='food_ids' type="hidden" />
-	<input id="quantity_s" name='quantity_s' type='hidden'/>
-	<input id='total' type="submit" class="btn btn-primary btn-lg btn-block" value="$0">
+		<input id='total_ids' name='food_ids' type="hidden" />
+		<input id="quantity_s" name='quantity_s' type='hidden'/>
+		<input id='total' type="submit" class="btn btn-primary btn-lg btn-block" value="$0">
 	{{Form::close()}}
 </nav>
 <script type="text/javascript">
