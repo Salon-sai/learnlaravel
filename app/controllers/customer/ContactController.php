@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Customer;
 
-use Input, Redirect, View, Session, Contact, Notification, OAuthService;
+use Input, Redirect, View, Session, Contact, Notification, Log;
 use App\Validators\ContactValidator;
 
 class ContactController extends \BaseController {
@@ -17,10 +17,6 @@ class ContactController extends \BaseController {
 	public function index()
 	{
 		$openid 	= Session::get('openid');
-		if(!$openid){
-			$oauth 	= new OAuthService;
-			$openid	= $oauth->getOpenid();
-		}
 		$contacts 	= Contact::where('openid', $openid)
 			->orderBy('default', 'desc')->get();
 		if(!$contacts || empty($contacts)){
@@ -57,12 +53,14 @@ class ContactController extends \BaseController {
 			$openid 			= Session::get('openid');
 			$contact->address 	= Input::get('address');
 			$contact->telephone	= Input::get('telephone');
-			if(!Contact::whereRaw('openid = ? and default = true', array($openid))->get())
+			if(!Contact::whereRaw('openid = ? and isDefault = true', array($openid))->frist())
 				$contact->isDefault = true;
 			$contact->save();
+			Log::info('user '.$openid.' succss to create new contact');
 			Notification::success('create new contact success');
-			return Redirect::route(Input::get('nexRedirect'));
+			return Redirect::route(Input::get('nextRedirect'));
 		}
+		Notification::error($validation->errors);
 		return Redirect::back()
 			->withInput()->withErrors($validation->errors);
 	}
