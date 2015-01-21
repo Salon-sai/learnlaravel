@@ -26,6 +26,7 @@ class RestaurantController extends BaseController {
 				$customer= new Customer;
 				$customer->openid = $openid;
 				$customer->save();
+				Log::info('success to save customer and the id is '.$customer->id);
 			}
 		}
 		$descriptions 	= Description::where('status', '<>', 9)
