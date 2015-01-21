@@ -27,6 +27,7 @@
 				'placeholder'	=> 'Telephone'
 			))}}
 		</div>
+		<input type="hidden" value="{{$RedirectPage}}" name="nextRedirect">
 		<div class="form-actions text-center">
 			{{Form::submit('Create New Contact', array(
 				'class'		=> 'btn btn-lg btn-info',

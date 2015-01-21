@@ -61,6 +61,7 @@ class ContactController extends \BaseController {
 				$contact->default = true;
 			$contact->save();
 			Notification::success('create new contact success');
+			return Redirect::route(Input::get('nexRedirect'));
 		}
 		return Redirect::back()
 			->withInput()->withErrors($validation->errors);
