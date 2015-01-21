@@ -2,7 +2,8 @@
 
 namespace App\Controllers\Customer;
 
-use BaseController, Sentry, View, Description, Food, Log;
+use BaseController, OAuthService, Sentry, View, Description, Food, Log;
+use Session;
 
 class RestaurantController extends BaseController {
 
@@ -14,7 +15,20 @@ class RestaurantController extends BaseController {
 	 */
 	public function index()
 	{
-		$descriptions = Description::where('status', '<>', 9)
+		$openid 		= Session::get('openid');
+		if(!$openid){
+			$oauth 		= new OAuthService;
+			$openid		= $oauth->getOpenid();
+			Session::put('openid', $openid);
+			$customer 	= Customer::where('openid', $openid)
+				->first()->get();
+			if(!$customer){
+				$customer= new Customer;
+				$customer->openid = $openid;
+				$customer->save();
+			}
+		}
+		$descriptions 	= Description::where('status', '<>', 9)
 			->orderBy('status', 'desc')->get();
 		return View::make('customer.restaurant.index')
 			->with('descriptions', $descriptions);
@@ -99,3 +113,4 @@ class RestaurantController extends BaseController {
 	}
 
 }
+?>

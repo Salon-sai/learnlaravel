@@ -62,6 +62,12 @@ Route::group(array('prefix' => 'u', 'before' => 'weixin.check'), function(){
 	Route::any('text', 'App\Controllers\Customer\CheckController@textMessage');
 	Route::resource('r', 'App\Controllers\Customer\RestaurantController');
 	Route::resource('order','App\Controllers\Customer\OrderController');
+	Route::resource('contact', 'App\Controllers\Customer\ContactController');
+});
+
+Route::group(array('prefix' => 'test'), function(){
+	Route::resource('cache', 'App\Controllers\_Default\CacheController');
+	Route::resource('session', 'App\Controllers\_Default\SessionController');
 });
 
 Route::get('logout', array(

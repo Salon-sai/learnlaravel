@@ -1,0 +1,1 @@
+E:\Apache Software Foundation\Apache24\htdocs\learnlaravel\app/views/customer/order/check.blade.php

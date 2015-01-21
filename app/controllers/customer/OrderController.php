@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Customer;
 
-use BaseController, Input;
+use BaseController, Input, OAuthService, Food, Order;
 
 class OrderController extends BaseController {
 
@@ -32,16 +32,45 @@ class OrderController extends BaseController {
 	 * Store a newly created resource in storage.
 	 * POST /customer\order
 	 *
+	 * 
 	 * @return Response
 	 */
 	public function store()
 	{
-		$ids 		= Input::get('food_ids');
-		$quantity_s = Input::get('quantity_s');
-		$total		= 0;
+		$ids 			= Input::get('food_ids');
+		$quantity_s 	= Input::get('quantity_s');
+		$restaurant_id	= Input::get('restaurant_id');
+		$foodMap 		= array();
+		$oauth 			= new OAuthService;
+		$total			= 0;
 		
 		$id_list 		= explode(',', $ids);
 		$quantity_list	= explode(',', $quantity_s);
+		$openid 	= $oauth->getOpenid();
+
+		$contacts 	= Contact::where('openid', = , $openid)
+			->where('default', = , 1);
+			->get();
+		if(!$contacts){
+			for(var $i = 0; $i < count($id_list); $i++){
+				$foodMap[$id_list[$i]] = $quantity_list[$i];
+			}
+			Session::push('foodMap', $foodMap);
+			return View::make('u.contact.create');
+		}else{
+			$order 			= new Order;
+			$order->openid 	= $openid;
+			$order->address = $contact->address;
+			$order->telephone = $contact->telephone;
+			$order->user_id = $restaurant_id;
+			$order->save();
+			$foods  		= array();
+			foreach ($id_list as $id) {
+				array_push($foods, Food::find($id));
+			}
+			$order->foods()->saveMany($foods);
+			return View::make('u.order.check')->with('order', $order);
+		}
 
 	}
 

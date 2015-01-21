@@ -33,8 +33,9 @@ class OAuthService {
 		}
 	}
 
-	public function getOpenid($json){
-		$resultObj 	= json_decode($json);				
+	public function getOpenid(){
+		$resultJson = $this->getAccessToken();
+		$resultObj 	= json_decode($resultJson);				
 		Log::info('access_token : '.$resultObj->access_token);
 		$openid = $resultObj->openid;
 		Log::info('openId : '.$openid);

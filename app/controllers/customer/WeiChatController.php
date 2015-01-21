@@ -58,7 +58,7 @@ class WeiChatController extends BaseController {
 				$Title  		= 'Index';
 				$Description 	= 'Welcome to Food Order';
 				$PicUrl 		= 'http://104.237.155.177/pic/TestDemo.jpg';
-				$Url 			= 'http://104.237.155.177/u/r';
+				$Url 			= 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6b67feeba41a14f3&redirect_uri=http://104.237.155.177/u/r&response_type=code&scope=snsapi_base#wechat_redirect';
 				return $this->ResponsePictureAndLink($FromUserName, $ToUserName, 
 			array(
 					array(
