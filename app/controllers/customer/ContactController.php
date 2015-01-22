@@ -49,18 +49,21 @@ class ContactController extends \BaseController {
 	{
 		$validation = new ContactValidator;
 		if($validation->passes()){
+			Log::info('success to pass the validation');
 			$contact 			= new Contact;
 			$openid 			= Session::get('openid');
 			$contact->address 	= Input::get('address');
 			$contact->telephone	= Input::get('telephone');
+			$nextredirct		= Input::get('nextRedirect');
 			if(!Contact::whereRaw('openid = ? and isDefault = true', array($openid))->frist())
 				$contact->isDefault = true;
 			$contact->save();
 			Log::info('user '.$openid.' succss to create new contact');
 			Notification::success('create new contact success');
-			return Redirect::route(Input::get('nextRedirect'));
+			Log::info('The next redirect is '.$nextredirct);
+			return Redirect::route($nextredirct);
 		}
-		Notification::error($validation->errors);
+		Notification::errors($validation->messages());
 		return Redirect::back()
 			->withInput()->withErrors($validation->errors);
 	}
