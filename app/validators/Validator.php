@@ -24,6 +24,10 @@ abstract class Validator {
 		return false;
 	}
 
+	public function messages(){
+		
+	}
+
 }
 
 ?>

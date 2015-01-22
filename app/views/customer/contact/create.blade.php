@@ -6,7 +6,9 @@
 	<h1>Create New Contact</h1>
 </div>
 <div class="row">
-	{{Notification::showAll()}}
+	<div class="alert alert-error">
+		{{ implode("<br>", $errors-all())}}
+	</div>
 	{{Form::open(array(
 		'url' 	=> URL::route('u.contact.store'),
 		'method'=> 'post',

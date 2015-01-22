@@ -63,7 +63,6 @@ class ContactController extends \BaseController {
 			Log::info('The next redirect is '.$nextredirct);
 			return Redirect::route($nextredirct);
 		}
-		Notification::errors($validation->messages());
 		return Redirect::back()
 			->withInput()->withErrors($validation->errors);
 	}
