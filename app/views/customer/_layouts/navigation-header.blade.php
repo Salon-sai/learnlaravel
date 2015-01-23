@@ -2,13 +2,13 @@
 	<ul class="nav navbar-nav navbar-right">
 		<li><a href="#">Settings</a></li>
 		<li class="{{Request::is('u/r/*')? 'active' : null}}">
-			<a href="{{URL::route('u.r.index')}}">Restaurant</a>
+			<a href="{{URL::route('customer.r.index')}}">Restaurant</a>
 		</li>
 		<li class="{{Request::is('u/order/*')? 'active' : null}}">
-			<a href="{{URL::route('u.order.index')}}">Order</a>
+			<a href="{{URL::route('customer.order.index')}}">Order</a>
 		</li>
 		<li class="{{Request::is('u/contact/*')}}">
-			<a href="{{URL::route('u.contact.index')}}">Contact</a>
+			<a href="{{URL::route('customer.contact.index')}}">Contact</a>
 		</li>
 	</ul>
 	<form class="navbar-form navbar-right">

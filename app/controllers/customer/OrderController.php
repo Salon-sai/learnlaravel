@@ -14,7 +14,12 @@ class OrderController extends BaseController {
 	 */
 	public function index()
 	{
-		//
+		$openid 	= Session::get('openid');
+		$orders 	= Order::where('openid', $openid)
+			->orderBy('status', 'desc')
+			->get();
+		return View::make('customer.order.index')
+			->with('orders', $orders);
 	}
 
 	/**
@@ -75,20 +80,24 @@ class OrderController extends BaseController {
 			$order->telephone = $contact->telephone;
 			$order->user_id = $restaurant_id;
 			$order->save();
+			// not save the total now
 			Log::info('success save order');
 			$insertlist 	= array();
 			for($i = 0; $i < count($id_list); $i++){
 				$food 		= Food::find($id_list[$i]);
 				$total		+=$food->price;
+				$time 		= time();
 				array_push($insertlist, array(
 					'order_id' 	=> $order->id,
 					'food_id'	=> $food->id,
-					'quantity'	=> $quantity_list[$i]
+					'quantity'	=> $quantity_list[$i],
+					'created_at'=> $time,
+					'updated_at'=> $time
 				));
 			}
 			DB::table('food_order')->insert($insertlist);
 			Log::info('success save food into order');
-			return View::make('u.order.check')
+			return View::make('customer.order.check')
 				->with('orders', $orders);
 		}
 	}

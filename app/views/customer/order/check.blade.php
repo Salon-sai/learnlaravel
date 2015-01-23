@@ -1,7 +1,7 @@
 @extends('customer._layouts.default')
 
 @section('main')
-<h1 class="page-header"></h1>
+<h1 class="page-header">Check Your Order</h1>
 <div class="table-responsive">
 	<table class="table table-striped">
 		<thead>
