@@ -55,7 +55,7 @@ class ContactController extends \BaseController {
 			$contact->address 	= Input::get('address');
 			$contact->telephone	= Input::get('telephone');
 			$nextredirct		= Input::get('nextRedirect');
-			if(!Contact::whereRaw('openid = ? and isDefault = true', array($openid))->frist())
+			if(!Contact::whereRaw('openid = ? and isDefault = true', array($openid))->first())
 				$contact->isDefault = true;
 			$contact->save();
 			Log::info('user '.$openid.' succss to create new contact');
