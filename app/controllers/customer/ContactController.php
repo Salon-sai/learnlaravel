@@ -52,6 +52,7 @@ class ContactController extends \BaseController {
 			Log::info('success to pass the validation');
 			$contact 			= new Contact;
 			$openid 			= Session::get('openid');
+			$contact->openid 	= $openid;
 			$contact->address 	= Input::get('address');
 			$contact->telephone	= Input::get('telephone');
 			$nextredirct		= Input::get('nextRedirect');
