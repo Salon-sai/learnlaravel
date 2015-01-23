@@ -7,7 +7,7 @@
 </div>
 
 <div class='row'>
-	@foreach($contacts as $constact)
+	@foreach($contacts as $contact)
 		<div class="col-xs-6 col-lg-4">
 			@if($contact->isDefault)
 				<p>Default</p>
