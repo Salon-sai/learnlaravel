@@ -98,7 +98,7 @@ class OrderController extends BaseController {
 			DB::table('food_order')->insert($insertlist);
 			Log::info('success save food into order');
 			return View::make('customer.order.check')
-				->with('orders', $orders);
+				->with('order', $order);
 		}
 	}
 

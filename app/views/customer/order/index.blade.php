@@ -27,8 +27,8 @@
 					<td>{{$food->name}}</td>
 					<td>{{$food->price}}</td>
 					<td>{{$food->pivot->quantity}}</td>
-					<td>0</td>
 					@if($key == 0)
+						<td>0</td>
 						<td rowspan="{{count($order->foods)}}">
 							@if($order->status == -1)
 								Waitting accepting
