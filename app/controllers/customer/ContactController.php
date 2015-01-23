@@ -18,7 +18,7 @@ class ContactController extends \BaseController {
 	{
 		$openid 	= Session::get('openid');
 		$contacts 	= Contact::where('openid', $openid)
-			->orderBy('default', 'desc')->get();
+			->orderBy('isDefault', 'desc')->get();
 		if(!$contacts || empty($contacts)){
 			Notification::error('There is no contact.You must create the new one');
 			return View::make('customer.contact.create');			

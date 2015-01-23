@@ -10,8 +10,8 @@
 				<th>Food Name</th>
 				<th>Food Price</th>
 				<th>Quantity</th>
-				<th>Status</th>
 				<th>Total</th>
+				<th>Status</th>
 				<th><i class="icon-cog"></i></th>
 			</tr>
 		</thead>
@@ -20,21 +20,21 @@
 				@foreach($order->foods as $key => $food)
 				<tr index="{{$key}}">
 					@if($key == 0)
-						<td rowspan="{{count(count($order->foods))}}">
+						<td rowspan="{{count($order->foods)}}">
 							{{$order->id}}
 						</td>
 					@endif
 					<td>{{$food->name}}</td>
 					<td>{{$food->price}}</td>
 					<td>{{$food->pivot->quantity}}</td>
-					<td>{{$order->total}}</td>
+					<td>0</td>
 					@if($key == 0)
-						<td rowspan="{{count(count($order->foods))}}">
+						<td rowspan="{{count($order->foods)}}">
 							@if($order->status == -1)
 								Waitting accepting
 							@elseif($order->status == 0)
 								Delivering
-							@else
+							@elseif($order->status == 1)
 								Finished
 							@endif
 						</td>
