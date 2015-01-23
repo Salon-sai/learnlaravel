@@ -30,7 +30,6 @@ class OrderController extends BaseController {
 		$restaurant_id	= Input::get('restaurant_id');
 		$id_list		= array();
 		$quantity_list	= array();
-		$restaurant_list= array();
 		$total			= 0;
 		if($ids && $quantity_s){
 			if($ids){
@@ -45,15 +44,12 @@ class OrderController extends BaseController {
 			}else{
 				Log::info('quantity_s is empty');
 			}
-		}else if(Session::has('ordersMap')){
-			$ordersMap = Session::pull('ordersMap', 'default');
-			Log::info('success to pull ordersMap in the session');
-			foreach ($ordersMap as $restaurant_id => $foodMap) {
-				array_push($restaurant_list, $restaurant_id)
-				foreach ($foodMap as $id => $quantity) {
-					array_push($id_list, $id);
-					array_push($quantity_list, $quantity);
-				}
+		}else if(Session::has('foodMap')){
+			$ordersMap 		= Session::pull('foodMap', 'default');
+			$restaurant_id	= Session::pull('restaurant_id', 'default');
+			foreach ($foodMap as $id => $quantity) {
+				array_push($id_list, $id);
+				array_push($quantity_list, $quantity);
 			}
 		}
 		$openid 	= Session::get('openid');
@@ -61,47 +57,39 @@ class OrderController extends BaseController {
 			->first();
 		if(!$contact){
 			$foodMap 		= array();
-			$ordersMap		= null;
 			for($i = 0; $i < count($id_list); $i++){
 				$foodMap[$id_list[$i]] = $quantity_list[$i];
 			}
-			if(Session::has('ordersMap'))
-				$ordersMap = Session::pull('ordersMap');
-			else
-				$ordersMap = array();
-			$ordersMap[$restaurant_id] = $foodMap;
-			Log::info('push the restaurant id to the order map');
-			Session::push('ordersMap', $ordersMap);
+			Session::push('restaurant_id', $restaurant_id);
+			Log::info('push the restaurant id to the session');
+			Session::push('foodMap', $foodMap);
 			Log::info('user '.$openid.' session save the food map ');
 			Log::info('redirect to create contact');
 			return View::make('customer.contact.create')
 				->with('RedirectPage', 'u.order.create');
 		}else{
 			Log::info('success get contact');
-			$orders 			= array();
-			foreach ($ordersMap as $restaurant_id => $foodMap) {
-				$order 			= new Order;
-				$order->openid 	= $openid;
-				$order->address = $contact->address;
-				$order->telephone = $contact->telephone;
-				$order->user_id = $restaurant_id;
-				$order->save();
-				Log::info('success save order');
-				$insertlist 	= array();
-				foreach ($foodMap as $id => $quantity) {
-					$food 		= Food::find($id);
-					$total		+=$food->price;
-					array_push($insertlist, array(
-						'order_id' 	=> $order->id,
-						'food_id'	=> $food->id,
-						'quantity'	=> $quantity
-					));
-				}
-				array_push($orders, $order);
-				DB::table('food_order')->insert($insertlist);
+			$order 			= new Order;
+			$order->openid 	= $openid;
+			$order->address = $contact->address;
+			$order->telephone = $contact->telephone;
+			$order->user_id = $restaurant_id;
+			$order->save();
+			Log::info('success save order');
+			$insertlist 	= array();
+			for($i; $i < count($id_list); $i++){
+				$food 		= Food::find($id_list[$i]);
+				$total		+=$food->price;
+				array_push($insertlist, array(
+					'order_id' 	=> $order->id,
+					'food_id'	=> $food->id,
+					'quantity'	=> $quantity_list[$i]
+				));
 			}
+			DB::table('food_order')->insert($insertlist);
 			Log::info('success save food into order');
-			return View::make('u.order.check')->with('orders', $orders);
+			return View::make('u.order.check')
+				->with('orders', $orders);
 		}
 	}
 

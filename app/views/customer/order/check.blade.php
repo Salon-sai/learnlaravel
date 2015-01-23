@@ -4,7 +4,6 @@
 <h1 class="page-header"></h1>
 <div class="table-responsive">
 	<table class="table table-striped">
-		@foreach($orders as $order)
 		<thead>
 			<tr>
 				<th>Order ID</th>
@@ -37,11 +36,10 @@
 			</tr>
 			@endforeach
 		</tbody>
-		@endforeach
 	</table>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-	<input id="submit_order" type="button" class="btn btn-primary btn-lg btn-block" value="submit the order">
+	<input order-id="{{$order->id}}" id="submit_order" type="button" class="btn btn-primary btn-lg btn-block" value="submit the order">
 </nav>
 <script type="text/javascript">
 
