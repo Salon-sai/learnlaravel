@@ -77,7 +77,7 @@ class OrderController extends BaseController {
 			$order->save();
 			Log::info('success save order');
 			$insertlist 	= array();
-			for($i; $i < count($id_list); $i++){
+			for($i = 0; $i < count($id_list); $i++){
 				$food 		= Food::find($id_list[$i]);
 				$total		+=$food->price;
 				array_push($insertlist, array(
