@@ -16,6 +16,8 @@ class Food extends \Eloquent {
 	}
 
 	public function orders(){
-		return $this->belongsToMany('Order');
+		return $this->belongsToMany('Order')
+			->withTimestamps()
+			->withPivot('quantity');
 	}
 }

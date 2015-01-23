@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Customer;
 
-use BaseController, Input, Food, Order, Session, Contact, Log, View;
+use BaseController, Input, Food, Order, Session, Contact, Log, View, Response, DB;
 
 class OrderController extends BaseController {
 
@@ -28,22 +28,28 @@ class OrderController extends BaseController {
 		$ids 			= Input::get('food_ids');
 		$quantity_s 	= Input::get('quantity_s');
 		$restaurant_id	= Input::get('restaurant_id');
-		$foodMap 		= array();
+		$id_list		= array();
+		$quantity_list	= array();
 		$total			= 0;
 		if($ids && $quantity_s){
 			if($ids){
 				$id_list 	= explode(',', $ids);
 				Log::info('success to generate the id list '.$ids);
 			}else{
-				$id_list	= array();
 				Log::info('ids is empty');
 			}
 			if($quantity_s){
 				$quantity_list= explode(',', $quantity_s);
 				Log::info('success to generate the quantity list '.$quantity_s);
 			}else{
-				$quantity_list= array();
 				Log::info('quantity_s is empty');
+			}
+		}else if(Session::has('foodMap')){
+			$foodMap = Session::pull('foodMap', 'default');
+			Log::info('success to pull foodMap in the session');
+			foreach ($foodMap as $id => $quantity) {
+				array_push($id_list, $id);
+				array_push($quantity_list, $quantity);
 			}
 		}
 		$openid 	= Session::get('openid');
@@ -51,6 +57,7 @@ class OrderController extends BaseController {
 		$contacts 	= Contact::whereRaw('openid = ? and isDefault = true', array($openid))
 			->first();
 		if(!$contacts){
+			$foodMap 		= array();
 			for($i = 0; $i < count($id_list); $i++){
 				$foodMap[$id_list[$i]] = $quantity_list[$i];
 			}
@@ -69,15 +76,18 @@ class OrderController extends BaseController {
 			$order->user_id = $restaurant_id;
 			$order->save();
 			Log::info('success save order');
-			$foods  		= array();
-			foreach ($id_list as $id) {
-				$food 		= Food::find($id);
+			$insertlist 	= array();
+			for($i; $i < count($id_list); $i++){
+				$food 		= Food::find($id_list[$i]);
 				$total		+= $food->price;
-				array_push($foods, $food);
+				array_push($insertlist, array(
+						'order_id' 	=> $order->id,
+						'food_id'	=> $food_id,
+						'quantity'	=> $quantity_list[$i]
+					));
 			}
-			$order->foods()->saveMany($foods);
-			Session::forget('foodMap');
-			Log::info('success save food into order and remove food map in the session');
+			DB::table('food_order')->insert($insertlist);
+			Log::info('success save food into order');
 			return View::make('u.order.check')->with('order', $order);
 		}
 	}
@@ -142,7 +152,32 @@ class OrderController extends BaseController {
 		//
 	}
 
-	public function saveInCache(){
+	public function foodDelete(){
+		$order_id 	= Input::get('order_id');
+		$food_id 	= Input::get('food_id');
 
+		DB::table('food_order')
+			->whereRaw("order_id = ? and food_id = ?", array($order_id, $food_id))
+			->delete();
+
+		return Response::json(array(
+				'message' 	=> 'Delete the food',
+				'type' 		=> 'success'
+			));
+	}
+
+	public function updateFood(){
+		$order_id 			= Input::get('order_id');
+		$change_food_id 	= Input::get('change_ids');
+		$change_quantity = Input::get('change_quantity');
+		
+		for($i; $i < count($change_food_id); $i++){
+			DB::table('food_order')
+				->whereRaw("order_id = ? and food_id = ?", array($order_id, $change_food_id[$i]))
+				->update(array('quantity' => $change_quantity[$i]));
+		}
+		return View::make('customer.order.submit_success');
 	}
 }
+
+?>

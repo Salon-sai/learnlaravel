@@ -63,6 +63,15 @@ Route::group(array('prefix' => 'u', 'before' => 'weixin.check'), function(){
 	Route::resource('r', 'App\Controllers\Customer\RestaurantController');
 	Route::resource('order','App\Controllers\Customer\OrderController');
 	Route::resource('contact', 'App\Controllers\Customer\ContactController');
+	Route::delete('order/foodDelete', array(
+		'as' 	=> 'u.order.food.delete',
+		'uses' 	=> 'App\Controllers\Customer\OrderController@foodDelete'
+	));
+	Route::put('order/food/update', array(
+		'as' 	=> 'u.order.food.update',
+		'uses'	=> 'App\Controllers\Customer\OrderController@foodUpdate'
+	));
+	
 });
 
 Route::group(array('prefix' => 'test'), function(){

@@ -5,7 +5,7 @@ namespace App\Validators;
 class ContactValidator extends Validator {
 
 	public static $rules = array(
-		'Address' 	=> 'required',
+		'address' 	=> 'required',
 		'telephone'	=> 'required|numeric',
 	);
 

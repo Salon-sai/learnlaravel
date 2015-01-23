@@ -4,7 +4,9 @@ class Order extends \Eloquent {
 	protected $fillable = [];
 
 	public function foods(){
-		return $this->belongsToMany('Food');
+		return $this->belongsToMany('Food')
+			->withTimestamps()
+			->withPivot('quantity');
 	}
 
 	public function customer(){

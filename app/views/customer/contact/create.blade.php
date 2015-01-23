@@ -7,7 +7,7 @@
 </div>
 <div class="row">
 	<div class="alert alert-error">
-		{{ implode("<br>", $errors-all())}}
+		{{ implode("<br>", $errors->all())}}
 	</div>
 	{{Form::open(array(
 		'url' 	=> URL::route('u.contact.store'),
