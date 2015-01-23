@@ -54,9 +54,9 @@ class OrderController extends BaseController {
 		}
 		$openid 	= Session::get('openid');
 
-		$contacts 	= Contact::whereRaw('openid = ? and isDefault = true', array($openid))
+		$contact 	= Contact::whereRaw('openid = ? and isDefault = true', array($openid))
 			->first();
-		if(!$contacts){
+		if(!$contact){
 			$foodMap 		= array();
 			for($i = 0; $i < count($id_list); $i++){
 				$foodMap[$id_list[$i]] = $quantity_list[$i];
@@ -67,7 +67,6 @@ class OrderController extends BaseController {
 			return View::make('customer.contact.create')
 				->with('RedirectPage', 'u.order.create');
 		}else{
-			$contact 		= $contacts->get();
 			Log::info('success get contact');
 			$order 			= new Order;
 			$order->openid 	= $openid;
