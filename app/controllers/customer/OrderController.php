@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Customer;
 
-use BaseController, Input, Food, Order, Session, Contact, Log, View, Response, DB;
+use BaseController, Input, Food, Order, Session, Contact, Log, View, Response, DB, Notification;
 
 class OrderController extends BaseController {
 
@@ -36,6 +36,7 @@ class OrderController extends BaseController {
 		$ids 			= Input::get('food_ids');
 		$quantity_s 	= Input::get('quantity_s');
 		$restaurant_id	= Input::get('restaurant_id');
+		$total 			= substr(Input::get('total'), 1);
 		$id_list		= array();
 		$quantity_list	= array();
 		$total			= 0;
@@ -53,8 +54,9 @@ class OrderController extends BaseController {
 				Log::info('quantity_s is empty');
 			}
 		}else if(Session::has('foodMap')){
-			$ordersMap 		= Session::pull('foodMap', 'default');
+			$foodMap 		= Session::pull('foodMap', 'default');
 			$restaurant_id	= Session::pull('restaurant_id', 'default');
+			$total 			= Session::pull('total');
 			foreach ($foodMap as $id => $quantity) {
 				array_push($id_list, $id);
 				array_push($quantity_list, $quantity);
@@ -68,9 +70,10 @@ class OrderController extends BaseController {
 			for($i = 0; $i < count($id_list); $i++){
 				$foodMap[$id_list[$i]] = $quantity_list[$i];
 			}
-			Session::push('restaurant_id', $restaurant_id);
+			Session::put('restaurant_id', $restaurant_id);
+			Session::put('total', $total);
 			Log::info('push the restaurant id to the session');
-			Session::push('foodMap', $foodMap);
+			Session::put('foodMap', $foodMap);
 			Log::info('user '.$openid.' session save the food map ');
 			Log::info('redirect to create contact');
 			Log::info('That user create order and redeay to redirect to contact use total time : '.(time() - $beginTime).'ms');
@@ -86,17 +89,15 @@ class OrderController extends BaseController {
 			$order->address = $contact->address;
 			$order->telephone = $contact->telephone;
 			$order->user_id = $restaurant_id;
-			//the first database opeartion
+			$total->total 	= $total;
 			$order->save();
 			Log::info('success save order');
 			$insertlist 	= array();
 			for($i = 0; $i < count($id_list); $i++){
-				$food 		= Food::find($id_list[$i]);
-				$total		+=$food->price;
-				$time 		= time();
+				$time 		= date('Y-m-d H:i:s', time());
 				array_push($insertlist, array(
 					'order_id' 	=> $order->id,
-					'food_id'	=> $food->id,
+					'food_id'	=> $id_list[$i],
 					'quantity'	=> $quantity_list[$i],
 					'created_at'=> $time,
 					'updated_at'=> $time
@@ -160,22 +161,32 @@ class OrderController extends BaseController {
 	public function update($id)
 	{
 		$beginTime 			= time();
-		$order_id 			= Input::get('order_id');
 		$change_food_id 	= Input::get('change_ids');
-		$change_quantity = Input::get('change_quantity');
+		$change_quantity 	= Input::get('change_quantity');
 		
 		$id_list 			= explode(',', $change_food_id);
 		$quantity_list		= explode(',', $change_quantity);
-		Log::info('id_list is '.$id_list);
-		Log::info('quantity list is '.$quantity_list);
+		Log::info('id_list is '.$change_food_id);
+		Log::info('quantity list is '.$change_quantity);
 
-		for($i; $i < count($id_list); $i++){
+		for($i = 0; $i < count($id_list); $i++){
 			DB::table('food_order')
-				->whereRaw("order_id = ? and food_id = ?", array($order_id, $id_list[$i]))
+				->whereRaw("order_id = ? and food_id = ?", array($id, $id_list[$i]))
 				->update(array('quantity' => $quantity_list[$i]));
 		}
+
+		$total = 0;
+		$order 				= Order::find($id);
+		foreach ($order->foods as $food) {
+			$total 			+= $food->pivot->quantity * $food->price;
+		}
+		$order->total 		= $total;
+		$order->status 		= -1;
+		$order->save();
 		Log::info('update time is '.(time() - $beginTime).'ms');
-		return View::make('customer.order.submit_success');
+		Notification::success('success to submit the order');
+		return View::make('customer.order.submit_success')
+			->with('order', $order);
 	}
 
 	/**
@@ -187,6 +198,8 @@ class OrderController extends BaseController {
 	 */
 	public function destroy($id)
 	{
+		Log::info($id);
+		Log::info('destroy method invoke');
 		$order 		= Order::find($id);
 		$order->delete();
 		return Response::json();

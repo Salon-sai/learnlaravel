@@ -22,11 +22,11 @@
 				<td>
 					<div class="input-group col-xs-2">
 						<div class="input-group-btn">
-							<button name="add" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', 'add')"> + </button>
+							<button name="add" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', '{{$key}}', 'add')"> + </button>
 						</div>
 						<input food-id="{{$food->id}}" type="text" value="{{$food->pivot->quantity}}" class="form-control" is-change='false' />
 						<div class="input-group-btn">
-							<button name="reduce" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', 'reduce')"> - </button>
+							<button name="reduce" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', '{{$key}}', 'reduce')"> - </button>
 						</div>
 					</div>
 				</td>
@@ -46,20 +46,20 @@
 		<input type="hidden" id='change_id_list' name="change_ids">
 		<input type="hidden" id='change_quantity_list' name="change_quantity">
 		<input type="hidden" id="order_id" name="order_id" value="{{$order->id}}">
-		<input order-id="{{$order->id}}" id="submit_order" type="button" class="btn btn-primary btn-lg btn-block" value="submit the order">
+		<input order-id="{{$order->id}}" id="submit_order" type="submit" class="btn btn-primary btn-lg btn-block" value="submit the order">
 	{{Form::close()}}
 </nav>
 <script type="text/javascript">
 
 	function deleteFood(index, orderId, foodId){
 		$.ajax({
-			url : "{{URL::route('u.order.food.delete')}}"
+			url : "{{URL::route('u.order.food.delete')}}",
 			type: 'DELETE',
 			dataType: 'json',
 			data: {
 				'order_id' : orderId,
 				'food_id'  : foodId
-				}
+				},
 			success : function(returnData){
 				if(returnData.type == 'success'){
 					alert(returnData.message);
@@ -69,30 +69,29 @@
 		});
 	}
 
-	function changeQuantity(quantity ,type){
-		var quantity_text = $(this).parent().parent().children(':text');
-		alert(quantity_text.val());
-		alert($(this).parent().parent().html());
+	function changeQuantity(quantity, index, type){
+		var quantity_text 		= $("tr[index='"+index+"']").find(':text');
 		if(type == 'add'){
-			alert('add method invoke');
-			quantity_text.val(parseInt(quantity_text.val())+1);
+			var change_quantity 		= parseInt(quantity_text.val()) + 1;
+			if(change_quantity > 20)
+				change_quantity 		= change_quantity - 1;
+			quantity_text.val(change_quantity);
 		}
 		else{
-			alert('reduce method invoke');
-			quantity_text.val(parseInt(quantity_text.val())-1);
+			var change_quantity 		= parseInt(quantity_text.val()) - 1;
+			if(change_quantity < 1)
+				change_quantity 		= 1;
+			quantity_text.val(change_quantity);
 		}
 		if(quantity == quantity_text.val()){
-			quantity_text.attr('is-change') = 'false';
-			alert('quantity is change');
+			quantity_text.attr('is-change', 'false');
 		}
 		else{
-			quantity_text.attr('is-change') = 'true';
-			alert('quantity is not change');
+			quantity_text.attr('is-change', 'true');
 		}
-		alert(quantity_text.val());
 	}
 
-	$('#submit_order').on('submit', function(){
+	$('#submit_order').on('click', function(){
 		var change_foood_ids 	= new Array();
 		var change_quantity 	= new Array();
 		$("[is-change='true']").each(function(){

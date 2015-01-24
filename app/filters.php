@@ -110,7 +110,7 @@ Route::filter('auth.restaurant', function(){
 });
 
 
-Route::filter('weixin.check', function(){
+Route::filter('weixin.check.echostr', function(){
 	if(Input::get('echostr')){
 		//微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。 
 		$signature 		= Input::get('signature');
@@ -130,4 +130,25 @@ Route::filter('weixin.check', function(){
 		}
 		return Input::get('echostr');
 	}
+});
+
+Route::filter('weixin.check.oauth', function(){
+	if(Input::get('code')){
+		Log::info('It is weichat login the web');
+		if(!Session::get('openid')){
+			try{
+				$oauth		= new OAuthService;
+				$openid		= $oauth->getOpenid();
+				Session::put('openid', $openid);
+			}catch(\Exception $e){
+				Log::info('the code is validate');
+				return 'the code is validate';
+			}
+		}
+	}else if(!Session::get('openid')){
+		//temporary create openid to you and it is not invalidate.
+		Log::info("success to add 'test' into openid for testing the web");
+		Session::put('openid', 'test');
+	}
+	Log::info('success to get the openid');
 });

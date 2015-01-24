@@ -3,11 +3,11 @@
 @section('main')
 <h1 class="page-header">Your Order</h1>
 <div class="table-responsive">
-	<table class="table table-striped">
+	<table class="table">
 		<tbody>
 			@foreach($orders as $order)
 				<tr>
-					<td class="col-xs-12 col-lg-8">
+					<td class="col-xs-12 col-lg-8 bg-success">
 						<p>Order ID : {{$order->id}}</p>
 						<p>Status 	: 							@if($order->status == -2)
 								<a href="{{URL::route('u.order.edit', $order->id)}}">Need Confirm</a>
@@ -43,7 +43,6 @@
 						</ul>
 					</td>
 				</tr>
-				<hr>
 			@endforeach
 		</tbody>
 	</table>

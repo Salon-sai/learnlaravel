@@ -55,7 +55,7 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 	));
 });
 
-Route::group(array('prefix' => 'u', 'before' => 'weixin.check'), function(){
+Route::group(array('prefix' => 'u', 'before' => array('weixin.check.echostr', 'weixin.check.oauth')), function(){
 	Route::post('/', 'App\Controllers\Customer\WeiChatController@index');
 	Route::resource('oauth', 'App\Controllers\_Default\OAuthController');
 	Route::resource('/checkSignature', 'App\Controllers\Customer\CheckController');
@@ -63,7 +63,7 @@ Route::group(array('prefix' => 'u', 'before' => 'weixin.check'), function(){
 	Route::resource('r', 'App\Controllers\Customer\RestaurantController');
 	Route::resource('order','App\Controllers\Customer\OrderController');
 	Route::resource('contact', 'App\Controllers\Customer\ContactController');
-	Route::delete('order/foodDelete', array(
+	Route::delete('delete/foodinorder', array(
 		'as' 	=> 'u.order.food.delete',
 		'uses' 	=> 'App\Controllers\Customer\OrderController@foodDelete'
 	));

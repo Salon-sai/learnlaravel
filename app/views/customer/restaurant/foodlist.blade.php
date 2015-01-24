@@ -36,7 +36,7 @@
 		<input id='total_ids' name='food_ids' type="hidden" />
 		<input id="quantity_s" name='quantity_s' type='hidden'/>
 		<input id="user_id" name='restaurant_id' type="hidden" value="{{$description->user_id}}">
-		<input id='total' type="submit" class="btn btn-primary btn-lg btn-block" value="$0">
+		<input id='total' type="submit" class="btn btn-primary btn-lg btn-block" name="total" value="$0">
 	{{Form::close()}}
 </nav>
 <script type="text/javascript">
