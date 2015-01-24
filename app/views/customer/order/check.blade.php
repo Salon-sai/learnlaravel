@@ -20,18 +20,18 @@
 				<td>{{$food->name}}</td>
 				<td>{{$food->price}}</td>
 				<td>
-					<div class="input-group col-md-2">
+					<div class="input-group col-xs-2">
 						<div class="input-group-btn">
-							<button name="add" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}')"> + </button>
+							<button name="add" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', 'add')"> + </button>
 						</div>
 						<input food-id="{{$food->id}}" type="text" value="{{$food->pivot->quantity}}" class="form-control" is-change='false' />
 						<div class="input-group-btn">
-							<button name="reduce" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}')"> - </button>
+							<button name="reduce" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', 'reduce')"> - </button>
 						</div>
 					</div>
 				</td>
 				<td>
-					<input type="button" class="btn btn-danger btn-mini" onclick="deleteFood('{{$key}}', '{{$order->id}}', '{{$food->id}}')">
+					<input type="button" class="btn btn-danger btn-mini" onclick="deleteFood('{{$key}}', '{{$order->id}}', '{{$food->id}}')" value="delete">
 				</td>
 			</tr>
 			@endforeach
@@ -69,8 +69,12 @@
 		});
 	}
 
-	function changeQuantity(quantity){
+	function changeQuantity(quantity ,type){
 		var quantity_text = $(this).parent().parent().children(':text');
+		if(type == 'add')
+			quantity_text.val(quantity_text.val()++);
+		else
+			quantity_text.val(quantity_text.val()--);
 		if(quantity == quantity_text.val())
 			quantity_text.attr('is-change') = 'false';
 		else

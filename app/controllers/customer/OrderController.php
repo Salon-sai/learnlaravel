@@ -14,10 +14,12 @@ class OrderController extends BaseController {
 	 */
 	public function index()
 	{
+		$beginTime  = time();
 		$openid 	= Session::get('openid');
 		$orders 	= Order::where('openid', $openid)
 			->orderBy('status', 'desc')
 			->get();
+		Log::info('total time : '.(time() - $beginTime).'ms');
 		return View::make('customer.order.index')
 			->with('orders', $orders);
 	}
@@ -30,6 +32,7 @@ class OrderController extends BaseController {
 	 */
 	public function create()
 	{
+		$beginTime 		= time();
 		$ids 			= Input::get('food_ids');
 		$quantity_s 	= Input::get('quantity_s');
 		$restaurant_id	= Input::get('restaurant_id');
@@ -70,6 +73,7 @@ class OrderController extends BaseController {
 			Session::push('foodMap', $foodMap);
 			Log::info('user '.$openid.' session save the food map ');
 			Log::info('redirect to create contact');
+			Log::info('That user create order and redeay to redirect to contact use total time : '.(time() - $beginTime).'ms');
 			return View::make('customer.contact.create')
 				->with(array(
 						'RedirectPage' 	=> 'u.order.create',
@@ -101,6 +105,7 @@ class OrderController extends BaseController {
 			DB::table('food_order')->insert($insertlist);
 			//the second database opeartion
 			Log::info('success save food into order');
+			Log::info('That user create order uses total time : '.(time() - $beginTime).'ms');
 			return View::make('customer.order.check')
 				->with('order', $order);
 		}
@@ -198,5 +203,4 @@ class OrderController extends BaseController {
 	}
 
 }
-
 ?>
