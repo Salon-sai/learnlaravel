@@ -28,7 +28,7 @@
 					<td>{{$food->price}}</td>
 					<td>{{$food->pivot->quantity}}</td>
 					@if($key == 0)
-						<td>0</td>
+						<td rowspan="{{count($order->foods)}}">0</td>
 						<td rowspan="{{count($order->foods)}}">
 							@if($order->status == -1)
 								Waitting accepting
@@ -38,8 +38,12 @@
 								Finished
 							@endif
 						</td>
-						<td>
-							<button order-id="{{$order->id}}" class="btn btn-danger btn-mini pull-left">Delete</button>
+						<td rowspan="{{count($order->foods)}}">
+							@if($order->status == 0)
+								<button order-id="{{$order->id}}" class="btn btn-danger btn-mini pull-left" disabled='disabled'>Delete</button>
+							@else
+								<button order-id="{{$order->id}}" class="btn btn-danger btn-mini pull-left">Delete</button>
+							@endif
 						</td>
 					@endif
 				</tr>

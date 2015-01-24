@@ -18,4 +18,7 @@
 		</div>
 	@endforeach
 </div>
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+	<a class="btn btn-primary btn-lg btn-block" href="{{URL::route('u.contact.create')}}">Create new Contact</a>
+</nav>
 @stop
