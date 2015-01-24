@@ -19,7 +19,7 @@
 								Finished
 							@endif
 						</p>
-						<p>Total 	: {{$order->total}}</p>
+						<p>Total 	: ${{$order->total}}</p>
 						<p>
 							@if($order->status == 0)
 								<button order-id="{{$order->id}}" class="btn btn-danger btn-mini pull-left" disabled='disabled'>Delete</button>
@@ -36,7 +36,8 @@
 							@foreach($order->foods as $food)
 							<li class="list-group-item">
 								<span class="badge">{{$food->pivot->quantity}}</span>
-								{{$food->name}} 	Price : {{$food->price}}
+								<span class="badge">${{$food->price}}</span>
+								{{$food->name}}
 							</li>
 							@endforeach
 						</ul>

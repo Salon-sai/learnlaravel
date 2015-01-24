@@ -82,7 +82,6 @@
 	}
 
 	$('#submit_order').on('submit', function(){
-		var order_id = $(this).attr('order-id');
 		var change_foood_ids 	= new Array();
 		var change_quantity 	= new Array();
 		$("[is-change='true']").each(function(){
