@@ -71,14 +71,25 @@
 
 	function changeQuantity(quantity ,type){
 		var quantity_text = $(this).parent().parent().children(':text');
-		if(type == 'add')
-			quantity_text.val(parseInt(quantity_text.val())++);
-		else
-			quantity_text.val(parseInt(quantity_text.val())--);
-		if(quantity == quantity_text.val())
+		alert(quantity_text.val());
+		alert($(this).parent().parent().html());
+		if(type == 'add'){
+			alert('add method invoke');
+			quantity_text.val(parseInt(quantity_text.val())+1);
+		}
+		else{
+			alert('reduce method invoke');
+			quantity_text.val(parseInt(quantity_text.val())-1);
+		}
+		if(quantity == quantity_text.val()){
 			quantity_text.attr('is-change') = 'false';
-		else
+			alert('quantity is change');
+		}
+		else{
 			quantity_text.attr('is-change') = 'true';
+			alert('quantity is not change');
+		}
+		alert(quantity_text.val());
 	}
 
 	$('#submit_order').on('submit', function(){
