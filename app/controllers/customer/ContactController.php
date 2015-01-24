@@ -36,7 +36,8 @@ class ContactController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('customer.contact.create');
+		return View::make('customer.contact.create')
+			->with('isDefault', false);
 	}
 
 	/**

@@ -71,7 +71,10 @@ class OrderController extends BaseController {
 			Log::info('user '.$openid.' session save the food map ');
 			Log::info('redirect to create contact');
 			return View::make('customer.contact.create')
-				->with('RedirectPage', 'u.order.create');
+				->with(array(
+						'RedirectPage' 	=> 'u.order.create',
+						'setDefault' 	=> true
+					));
 		}else{
 			Log::info('success get contact');
 			$order 			= new Order;
@@ -79,8 +82,6 @@ class OrderController extends BaseController {
 			$order->address = $contact->address;
 			$order->telephone = $contact->telephone;
 			$order->user_id = $restaurant_id;
-			$order->save();
-			// not save the total now
 			Log::info('success save order');
 			$insertlist 	= array();
 			for($i = 0; $i < count($id_list); $i++){
@@ -95,6 +96,8 @@ class OrderController extends BaseController {
 					'updated_at'=> $time
 				));
 			}
+			$order->total 	= $total;
+			$order->save();
 			DB::table('food_order')->insert($insertlist);
 			Log::info('success save food into order');
 			return View::make('customer.order.check')
@@ -159,7 +162,9 @@ class OrderController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$order 		= Order::find($id);
+		$order->delete();
+		return Response::json();
 	}
 
 	public function foodDelete(){

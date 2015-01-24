@@ -7,9 +7,14 @@
 		<li class="{{Request::is('u/order/*')? 'active' : null}}">
 			<a href="{{URL::route('u.order.index')}}">Order</a>
 		</li>
-		<li class="{{Request::is('u/contact/*')}}">
-			<a href="{{URL::route('u.contact.index')}}">Contact</a>
-		</li>
+		<ul class="dropdown-menu" role="menu">
+			<li class="{{Request::is('u/contact/index')}}">
+				<a href="{{URL::route('u.contact.index')}}">Index</a>
+			</li>
+			<li>
+				<a href="{{URL::route('u.contact.create')}}">Create new Create</a>
+			</li>
+		</ul>
 	</ul>
 	<form class="navbar-form navbar-right">
 		<input class="form-control" placeholder="Search..." type="text">
