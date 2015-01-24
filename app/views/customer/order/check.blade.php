@@ -72,9 +72,9 @@
 	function changeQuantity(quantity ,type){
 		var quantity_text = $(this).parent().parent().children(':text');
 		if(type == 'add')
-			quantity_text.val(quantity_text.val()++);
+			quantity_text.val(parseInt(quantity_text.val())++);
 		else
-			quantity_text.val(quantity_text.val()--);
+			quantity_text.val(parseInt(quantity_text.val())--);
 		if(quantity == quantity_text.val())
 			quantity_text.attr('is-change') = 'false';
 		else
