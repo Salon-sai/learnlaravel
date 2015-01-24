@@ -82,6 +82,8 @@ class OrderController extends BaseController {
 			$order->address = $contact->address;
 			$order->telephone = $contact->telephone;
 			$order->user_id = $restaurant_id;
+			//the first database opeartion
+			$order->save();
 			Log::info('success save order');
 			$insertlist 	= array();
 			for($i = 0; $i < count($id_list); $i++){
@@ -96,9 +98,8 @@ class OrderController extends BaseController {
 					'updated_at'=> $time
 				));
 			}
-			$order->total 	= $total;
-			$order->save();
 			DB::table('food_order')->insert($insertlist);
+			//the second database opeartion
 			Log::info('success save food into order');
 			return View::make('customer.order.check')
 				->with('order', $order);
@@ -165,6 +166,12 @@ class OrderController extends BaseController {
 		$order 		= Order::find($id);
 		$order->delete();
 		return Response::json();
+	}
+
+	public function confirmOrder($id){
+		$order 		= Order::find($id);
+		return View::make('customer.order.check')
+			->with('order', $order);
 	}
 
 	public function foodDelete(){
