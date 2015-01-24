@@ -40,7 +40,7 @@
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 	{{Form::open(array(
-		'url' 	=> URL::route('u.order.food.update'),
+		'url' 	=> URL::route('u.order.update',$order->id),
 		'method'=> 'PUT',
 	))}}
 		<input type="hidden" id='change_id_list' name="change_ids">

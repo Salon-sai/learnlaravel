@@ -139,7 +139,10 @@ class OrderController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		Log::info('invoke to the order edit and order id is '.$id);
+		$order 		= Order::find($id);
+		return View::make('customer.order.check')
+			->with('order', $order);
 	}
 
 	/**
@@ -151,7 +154,19 @@ class OrderController extends BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$order_id 			= Input::get('order_id');
+		$change_food_id 	= Input::get('change_ids');
+		$change_quantity = Input::get('change_quantity');
+		
+		$id_list 			= explode(',', $change_food_id);
+		$quantity_list		= explode(',', $change_quantity);
+
+		for($i; $i < count($id_list); $i++){
+			DB::table('food_order')
+				->whereRaw("order_id = ? and food_id = ?", array($order_id, $id_list[$i]))
+				->update(array('quantity' => $quantity_list[$i]));
+		}
+		return View::make('customer.order.submit_success');
 	}
 
 	/**
@@ -168,12 +183,6 @@ class OrderController extends BaseController {
 		return Response::json();
 	}
 
-	public function confirmOrder($id){
-		$order 		= Order::find($id);
-		return View::make('customer.order.check')
-			->with('order', $order);
-	}
-
 	public function foodDelete(){
 		$order_id 	= Input::get('order_id');
 		$food_id 	= Input::get('food_id');
@@ -188,21 +197,6 @@ class OrderController extends BaseController {
 			));
 	}
 
-	public function updateFood(){
-		$order_id 			= Input::get('order_id');
-		$change_food_id 	= Input::get('change_ids');
-		$change_quantity = Input::get('change_quantity');
-		
-		$id_list 			= explode(',', $change_food_id);
-		$quantity_list		= explode(',', $change_quantity);
-		
-		for($i; $i < count($id_list); $i++){
-			DB::table('food_order')
-				->whereRaw("order_id = ? and food_id = ?", array($order_id, $id_list[$i]))
-				->update(array('quantity' => $quantity_list[$i]));
-		}
-		return View::make('customer.order.submit_success');
-	}
 }
 
 ?>

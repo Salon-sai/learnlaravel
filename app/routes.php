@@ -67,14 +67,6 @@ Route::group(array('prefix' => 'u', 'before' => 'weixin.check'), function(){
 		'as' 	=> 'u.order.food.delete',
 		'uses' 	=> 'App\Controllers\Customer\OrderController@foodDelete'
 	));
-	Route::put('order/food/update', array(
-		'as' 	=> 'u.order.food.update',
-		'uses'	=> 'App\Controllers\Customer\OrderController@foodUpdate'
-	));
-	Route::get('/order/confirm', array(
-		'as' 	=> 'u.order.confirm',
-		'uses'	=> 'App\Controllers\Customer\OrderController@confirmOrder'
-	));
 });
 
 Route::group(array('prefix' => 'test'), function(){

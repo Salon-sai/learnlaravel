@@ -31,7 +31,7 @@
 						<td rowspan="{{count($order->foods)}}">0</td>
 						<td rowspan="{{count($order->foods)}}">
 							@if($order->status == -2)
-								<a href="{{URL::route('u.order.confirm', $order->id)}}">Need Confirm</a>
+								<a href="{{URL::route('u.order.edit', $order->id)}}">Need Confirm</a>
 							@elseif($order->status == -1)
 								Waitting accepting
 							@elseif($order->status == 0)
