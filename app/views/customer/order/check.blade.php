@@ -43,6 +43,9 @@
 		'url' 	=> URL::route('u.order.food.update'),
 		'method'=> 'PUT',
 	))}}
+		<input type="hidden" id='change_id_list' name="change_ids">
+		<input type="hidden" id='change_quantity_list' name="change_quantity">
+		<input type="hidden" id="order_id" name="order_id" value="{{$order->id}}">
 		<input order-id="{{$order->id}}" id="submit_order" type="button" class="btn btn-primary btn-lg btn-block" value="submit the order">
 	{{Form::close()}}
 </nav>
@@ -74,7 +77,7 @@
 			quantity_text.attr('is-change') = 'true';
 	}
 
-	$('#submit_order').on('click', function(){
+	$('#submit_order').on('submit', function(){
 		var order_id = $(this).attr('order-id');
 		var change_foood_ids 	= new Array();
 		var change_quantity 	= new Array();
@@ -82,19 +85,10 @@
 			change_foood_ids.push($(this).attr('food-id'));
 			change_quantity.push($(this).val());
 		});
-		$.ajax({
-			url : "{{URL::route('u.order.food.update')}}",
-			type: 'PUT',
-			dataType: 'json',
-			data: {
-				'change_ids' : change_foood_ids,
-				'change_quantity' : change_quantity,
-				'order_id'	: order_id
-			}
-			success : function(returnData){
-				alert('return success');
-			}
-		});
+		var change_id_list			= change_foood_ids.join(',');
+		var change_quantity_list	= change_quantity.join(',');
+		$('#change_id_list').val(change_id_list);
+		$('#change_quantity_list').val(change_quantity_list);
 	});
 </script>
 @stop
