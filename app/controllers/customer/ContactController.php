@@ -3,7 +3,7 @@
 namespace App\Controllers\Customer;
 
 use Input, Redirect, View, Session, Contact, Notification, Log;
-use App\Validators\ContactValidator;
+use App\Validators\ContactValidator, Response, DB;
 
 class ContactController extends \BaseController {
 
@@ -99,7 +99,14 @@ class ContactController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$address 	= Input::get('address');
+		$telephone	= Input::get('telephone');
+		return View::make('customer.contact.edit')
+			->with(array(
+					'address'	=> $address,
+					'telephone'	=> $telephone,
+					'id'		=> $id
+				));
 	}
 
 	/**
@@ -111,7 +118,13 @@ class ContactController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		DB::table('contacts')->where('id', $id)
+			->update(array(
+					'address' 	=> Input::get('address'),
+					'telephone'	=> Input::get('telephone')
+				));
+		Notification::success('update contact success');
+		return Redirect::route('u.contact.index');
 	}
 
 	/**
@@ -123,7 +136,11 @@ class ContactController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$contact 	= Contact::find($id);
+		$contact->delete();
+		return Response::json(array(
+				'type'	=> 'success'
+			));
 	}
 
 }
