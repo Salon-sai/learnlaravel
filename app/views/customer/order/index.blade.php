@@ -29,7 +29,6 @@
 						</p>
 					</td>
 				</tr>
-				
 				<tr>
 					<td class="col-xs-12 col-lg-8">
 						<ul class="list-group">

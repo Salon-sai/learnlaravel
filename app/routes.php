@@ -29,17 +29,14 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function(){
 
 Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 	Route::any('/', 'App\Controllers\Restaurant\OrderController@index');
-	Route::resource('order', 'App\Controllers\Restaurant\OrderController');
+	Route::resource('order', 'App\Controllers\Restaurant\OrderController',
+			array('expect' => array('create', 'store')));
 	Route::resource('food', 'App\Controllers\Restaurant\FoodController');
 	Route::resource('category', 'App\Controllers\Restaurant\CategoryController');
 	Route::resource('description', 'App\Controllers\Restaurant\DescriptionController');
-	Route::get('order/check', array(
-		'as'	=> 'r.order.check',
-		'uses'	=> 'App\Controllers\Restaurant\OrderController@checkOrder'
-	));
-	Route::get('order/finshed', array(
-		'as'	=> 'r.order.finshed',
-		'uses'	=> 'App\Controllers\Restaurant\OrderController@finishedOrder'
+	Route::get('order/find/{type}', array(
+		'as'	=> 'r.order.find',
+		'uses'	=> 'App\Controllers\Restaurant\OrderController@findOrderByType'
 	));
 	Route::get('advanced', array(
 		'as' 	=> 'r.advanced',
@@ -52,6 +49,14 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 	Route::post('food/change', array(
 		'as'	=> 'r.food.status.change',
 		'uses' 	=> 'App\Controllers\Restaurant\FoodController@changestatus'
+	));
+	Route::post('order/accept', array(
+		'as' 	=> 'r.order.accept',
+		'uses'	=> 'App\Controllers\Restaurant\OrderController@acceptOrder'
+	));
+	Route::post('order/refuse', array(
+		'as' 	=> 'r.order.refuse',
+		'uses'	=> 'App\Controllers\Restaurant\OrderController@refuseOrder'
 	));
 });
 

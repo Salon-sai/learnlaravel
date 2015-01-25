@@ -6,19 +6,41 @@
 	<h1>Your Contacts</h1>
 </div>
 
-<div class='row'>
+<div class='list-group'>
+	<ul class="list-group text-primary">
+		<li class="list-group-item">
+			Default
+		</li>
+		<li class="list-group-item">
+			Address : {{$default_contact->address}}
+		</li>
+		<li class="list-group-item">
+			Telephone : {{$default_contact->telephone}}
+		</li>
+		<li class="list-group-item">
+			<a name="edit" href="{{URL::route('u.contact.edit',$default_contact->id)}}" class="btn btn-info">Edit</a>
+			<button name="delete" class="btn btn-danger">Delete</button>
+		</li>
+	</ul>
 	@foreach($contacts as $contact)
-		<div class="col-xs-6 col-lg-4">
-			@if($contact->isDefault)
-				<p>Default</p>
-			@endif
-			<p>{{$contact->address}}</p>
-			<p>{{$contact->telephone}}</p>
-			<p><a name="default_setting" class="btn btn-info btn-md col-md-2"  role="button">Set Default Contact</a></p>
-		</div>
+		<ul class="list-group">
+			<li class="list-group-item">
+				Address : {{$contact->address}}
+			</li>
+			<li class="list-group-item">
+				Telephone : {{$contact->telephone}}
+			</li>
+			<li class="list-group-item">
+				<a name="edit" href="{{URL::route('u.contact.edit',$contact->id)}}" class="btn btn-info">Edit</a>
+				<button name="delete" class="btn btn-danger">Delete</button>
+			</li>
+		</ul>
 	@endforeach
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 	<a class="btn btn-primary btn-lg btn-block" href="{{URL::route('u.contact.create')}}">Create new Contact</a>
 </nav>
+<script type="text/javascript">
+	
+</script>
 @stop

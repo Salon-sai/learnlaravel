@@ -18,14 +18,20 @@ class ContactController extends \BaseController {
 	{
 		$openid 	= Session::get('openid');
 		$contacts 	= Contact::where('openid', $openid)
-			->orderBy('isDefault', 'desc')->get();
+			->orderBy('isDefault')->get();
 		if(!$contacts || empty($contacts)){
 			Notification::error('There is no contact.You must create the new one');
 			return View::make('customer.contact.create');			
 		}
-		else
+		else{
+			$default_contact = $contacts->pop();
 			return View::make('customer.contact.index')
-				->with('contacts', $contacts);
+				->with(array(
+						'contacts'	 		=> $contacts,
+						'default_contact'	=> $default_contact
+					));
+		}
+			
 	}
 
 	/**
@@ -37,7 +43,10 @@ class ContactController extends \BaseController {
 	public function create()
 	{
 		return View::make('customer.contact.create')
-			->with('isDefault', false);
+			->with(array(
+					'isDefault' 	=> false,
+					'RedirectPage'	=> 'u.contact.index'
+				));
 	}
 
 	/**

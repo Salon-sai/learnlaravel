@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Restaurant;
 
-use View, Sentry;
+use View, Sentry, Order, Response, Input;
 
 class OrderController extends \BaseController {
 
@@ -15,8 +15,11 @@ class OrderController extends \BaseController {
 	public function index()
 	{	
 		$restaurant = Sentry::getUser();
-		// $orders 	= $restaurant->foods->orders
-		return View::make('restaurant.order.index');
+		$orders 	= Order::where('user_id', $restaurant->id)
+			->orderBy('status', 'desc')
+			->get();
+		return View::make('restaurant.order.index')
+			->with('orders', $orders);
 	}
 
 	/**
@@ -27,7 +30,7 @@ class OrderController extends \BaseController {
 	 */
 	public function create()
 	{
-		
+		return 'restaurant has no promises to create the order';
 	}
 
 	/**
@@ -38,7 +41,7 @@ class OrderController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		return 'restaurant has no promises to store the order';
 	}
 
 	/**
@@ -77,6 +80,35 @@ class OrderController extends \BaseController {
 		//
 	}
 
+	public function findOrderByType($type){
+		$orders 	= null;
+		$view 		= null;
+		switch ($type) {
+			case 'check':
+				$orders 	= Order::where('status', '<', 0)
+					->orderBy('status')
+					->get();
+				$view 		= 'restaurant.order.check';
+				break;
+			case 'refuse' :
+				$orders 	= Order::where('status', 0)->get();
+				$view 		= 'restaurant.order.refuse';
+				break;
+			case 'deliver':
+				$orders 	= Order::where('status', 1)->get();
+				$view 		= 'restaurant.order.deliver';
+				break;
+			case 'finished':
+				$orders 	= Order::where('status', 2)->get();
+				$view 		= 'restaurant.order.finished';
+				break;
+			default:
+				# code...
+				break;
+		}
+		return View::make($view)->with('orders', $orders);
+	}
+
 	/**
 	 * Remove the specified resource from storage.
 	 * DELETE /restaurant/order/{id}
@@ -89,4 +121,20 @@ class OrderController extends \BaseController {
 		//
 	}
 
+
+	public function acceptOrder(){
+		$id 			= Input::get('order_id');
+		$order 			= Order::find($id);
+		$order->status 	= 1;
+		$order->update();
+		return Response::json();
+	}
+
+	public function refuseOrder(){
+		$id 			= Input::get('order_id');
+		$order 			= Order::find($id);
+		$order->status 	= 0;
+		$order->update();
+		return Response::json();
+	}
 }

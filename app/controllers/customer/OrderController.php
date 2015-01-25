@@ -89,7 +89,7 @@ class OrderController extends BaseController {
 			$order->address = $contact->address;
 			$order->telephone = $contact->telephone;
 			$order->user_id = $restaurant_id;
-			$total->total 	= $total;
+			$order->total 	= $total;
 			$order->save();
 			Log::info('success save order');
 			$insertlist 	= array();
