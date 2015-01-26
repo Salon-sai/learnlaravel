@@ -49,7 +49,7 @@
 					<input type="submit" class="btn btn-info" value="Edit" />
 				{{Form::close()}}
 				<button name="delete" class="btn btn-danger" onclick="deleteContact('{{$contact->id}}')">Delete</button>
-				<button class="btn btn-success">Set Default</button>
+				<button name="setDefault" class="btn btn-success">Set Default</button>
 			</li>
 		</ul>
 	@endforeach

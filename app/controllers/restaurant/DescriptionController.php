@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Restaurant;
 use View, Sentry, Notification, Description, Input, Redirect, Response;
-use App\Validators\RestaurantValidator;
+use App\Validators\RestaurantValidator, Log;
 
 class DescriptionController extends \BaseController {
 
@@ -81,12 +81,15 @@ class DescriptionController extends \BaseController {
 			$description->scale 		 = Input::get('scale');
 			$description->location_label = Input::get('location_label');
 			$description->description 	 = Input::get('description');
+			$description->locationX		 = Input::get('locationX');
+			$description->locationY		 = Input::get('locationY');
 			// if(Input::get('status'))
 			// 	$description->status 	 = 1;
 			// else
 			// 	$description->status 	 = 0;
 			$description->save();
 			Notification::success('mofity the description success');
+			Log::info('invoke to the description update');
 			return Redirect::route('r.order.index');
 		}
 		return Redirect::back()

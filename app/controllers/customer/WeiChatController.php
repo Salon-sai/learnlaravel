@@ -87,8 +87,8 @@ class WeiChatController extends BaseController {
 		$Location_X 		= $postObj->Location_X;
 		$Location_Y 		= $postObj->Location_Y;
 		$label 				= $postObj->Label;
-		return $this->ResponseText($FromUserName, 
-			$ToUserName,'维度为：'.$Location_X.' 经度为: '.$Location_Y.' 所在地方为 '.$Label);
+		return $this->ResponseText($postObj->FromUserName, 
+			$postObj->ToUserName,'维度为：'.$Location_X.' 经度为: '.$Location_Y.' 所在地方为 '.$Label);
 	}
 
 	private function RequestVoice($postObj){
