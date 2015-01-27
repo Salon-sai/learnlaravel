@@ -234,10 +234,10 @@ class WeiChatController extends BaseController {
 
 	private function getAccessToken(){
 		$access_token 	= Cache::get('access_token',function(){return null;});
-		if($access_token)
+		if($access_token){
 			Log::info('the access token comes from cache');
 			return $access_token;
-		else{
+		}else{
 			$ch 		= curl_init(ACCESS_TOKEN_URL);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			$result 	= curl_exec($ch);
