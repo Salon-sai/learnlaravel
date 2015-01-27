@@ -63,9 +63,9 @@ class WeiChatController extends BaseController {
 							$openid = getOpenid();
 						}						
 						$orders 	= $this->getOrders($openid);
-						if(empty($orders))
+						if(empty($orders)){
 							$resulttext 	+= 'These is no order for you'
-						else{
+						}else{
 							foreach ($orders as $order) {
 								$resulttext 	+= 'order id is : '.$order->id.' status is : '
 								switch ($order->status) {
