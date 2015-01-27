@@ -114,6 +114,9 @@ class RestaurantController extends BaseController {
 		$lngX	= Input::get('locationX');
 		$latY 	= Input::get('locationY');
 
+		Log::info('lngX is '.$lngX);
+		Log::info('latY is '.$latY);
+
 		$radLng	= deg2rad($lngX);
 		$radLat = deg2rad($latY);
 
