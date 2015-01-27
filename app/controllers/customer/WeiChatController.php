@@ -88,7 +88,7 @@ class WeiChatController extends BaseController {
 		$Location_Y 		= $postObj->Location_Y;
 		$Label 				= $postObj->Label;
 		// $redirect_uri		= "http%3A%2F%2F104.237.155.177%2Fu%2Fr%2FlocationIndex%3FlocationX%3D".$Location_X."%26locationY%3D".$Location_Y;
-		$redirect_uri		= "http://104.237.155.177/u/r/locationIndex?locationX=".$locationX."&locationY=".$locationY;
+		$redirect_uri		= "http://104.237.155.177/u/r/locationIndex?locationX=".$Location_X."&locationY=".$Location_Y;
 		$Title				= 'Near Your Restaurant';
 		$Description		= 'Welcome to Food Order';
 		$PicUrl 			= 'http://104.237.155.177/pic/TestDemo.jpg';
