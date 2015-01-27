@@ -233,7 +233,7 @@ class WeiChatController extends BaseController {
 	}
 
 	private function getAccessToken(){
-		$access_token 	= Cache::get('access_token',function(){return null});
+		$access_token 	= Cache::get('access_token',function(){return null;});
 		if($access_token)
 			return $access_token;
 		else{
