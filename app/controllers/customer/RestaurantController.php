@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Customer;
 
-use BaseController, Sentry, View, Description, Food, Log;
+use BaseController, Sentry, View, Description, Food, Log, Input, DB;
 use Session, Customer;
 
 define('EARTH_RADIUS', 6378137);
