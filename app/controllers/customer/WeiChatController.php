@@ -86,7 +86,14 @@ class WeiChatController extends BaseController {
 	private function RequestLocation($postObj){
 		$Location_X 		= $postObj->Location_X;
 		$Location_Y 		= $postObj->Location_Y;
-		$label 				= $postObj->Label;
+		$Label 				= $postObj->Label;
+		$redirect_uri		= "http%3A%2F%2F104.237.155.177%2Fu%2Fr%2FlocationIndex%3FlocationX%3D".$Location_X."%26locationY%3D".$Location_Y;
+		$Title				= 'Near Your Restaurant';
+		$Description		= 'Welcome to Food Order';
+		$PicUrl 			= 'http://104.237.155.177/pic/TestDemo.jpg';
+		$FormUrl 			= 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6b67feeba41a14f3&redirect_uri=%s&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
+		$Url 				= sprintf($FormUrl,$redirect_uri);
+		Log::info('redirect_uri is '.$Url);
 		return $this->ResponseText($postObj->FromUserName, 
 			$postObj->ToUserName,'维度为：'.$Location_X.' 经度为: '.$Location_Y.' 所在地方为 '.$Label);
 	}

@@ -5,6 +5,7 @@ namespace App\Controllers\Customer;
 use BaseController, Sentry, View, Description, Food, Log;
 use Session, Customer;
 
+define('EARTH_RADIUS', 6378137);
 class RestaurantController extends BaseController {
 
 	/**
@@ -107,6 +108,21 @@ class RestaurantController extends BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+
+	public function getRestaurantByLocation(){
+		$lngX	= Input::get('locationX');
+		$latY 	= Input::get('locationY');
+
+		$radLng	= deg2rad($lngX);
+		$radLat = deg2rad($latY);
+
+		$descriptions 	= DB::table('descriptions')
+			->whereRaw("( ? * 2 * ASIN( SQRT( POW( SIN( (RADIANS(locationX) - ?) / 2),2) + 
+				COS(locationY) * COS(?) * POW( SIN( (RADIANS(locationY) - ?) / 2),2))) ) < scale", 
+			array(EARTH_RADIUS, $radLng, $latY, $radLat))-get();
+		return View::make('customer.restaurant.index')
+			->with('descriptions', $descriptions);
 	}
 
 }
