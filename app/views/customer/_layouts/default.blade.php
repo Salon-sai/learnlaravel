@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
 	<title>Food Order</title>
 	@include('default._partials.assets')
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

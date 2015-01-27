@@ -2,8 +2,12 @@
 
 namespace App\Controllers\Customer;
 
-use Input, Log, BaseController;
+use Input, Log, BaseController, Cache, Order, Session, Customer;
 
+define('ACCESS_TOKEN_URL',
+	"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx6b67feeba41a14f3&secret=29943ae5d7b778c9761961156baf5e31");
+define('GET_USER_BASE',
+	"https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=%s");
 class WeiChatController extends BaseController {
 
 	/**
@@ -46,7 +50,62 @@ class WeiChatController extends BaseController {
 	}
 
 	private function RequestEvent($postObj){
-		Log::info('invoke Event ');
+		$content = "";
+		switch ($postObj) {
+			case 'CLICK':
+				switch ($postObj->EventKey) {
+					case 'getOrders':{
+						$opendid 	= null;
+						$resulttext	= '';
+						if(Session::has('openid')){
+							$openid = Session::get('openid');
+						}else{
+							$openid = getOpenid();
+						}						
+						$orders 	= $this->getOrders($openid);
+						if(empty($orders))
+							$resulttext 	+= 'These is no order for you'
+						else{
+							foreach ($orders as $order) {
+								$resulttext 	+= 'order id is : '.$order->id.' status is : '
+								switch ($order->status) {
+									case -2 :
+										$resulttext += 'need confirm /n';
+										break;
+									case -1 :
+										$resulttext += 'watting restaurant accept /n';
+										break;
+									case 0 :
+										$resulttext += 'restaurant refuse your order /n';
+										break;
+									case 1 :
+										$resulttext += 'delivering /n';
+										break;
+									default:
+										# code...
+										break;
+								}
+								foreach ($order->foods as $food) {
+									$resulttext += 'The food name : '.$food->name.' quantity is : '
+									.$food->pivot->quantity.' the pirce is : '.$food->price.'/n';
+								}
+								$resulttext 	+= 'the total is : '.$order->total.' /n';
+							}
+						}
+						return $this->ResponseText($postObj->FromUserName, 
+							$postObj->ToUserName, $resulttext);
+						break;						
+					}
+					default:
+						# code...
+						break;
+				}
+				break;
+			
+			default:
+				# code...
+				break;
+		}
 	}
 
 	private function RequestText($postObj){
@@ -164,11 +223,51 @@ class WeiChatController extends BaseController {
 								."</Articles>
 								</xml>";
 			Log::info('success to create Articles');
-			Log::info('The resutl is '.$result);
+			Log::info('The result is '.$result);
 			return $result;
 		}catch(\Exception $e){
 			Log::error($e);
 		}
 			return 'empty';
+	}
+
+	private function getAccessToken(){
+		$access_token Cache::get('access_token',function(){return null});
+		if($access_token)
+			return $access_token;
+		else{
+			$ch 		= curl_init(ACCESS_TOKEN_URL);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$result 	= curl_exec($ch);
+			curl_close($ch);
+			Log::info('the result is '.$result);
+			$resultObj	= json_decode($result);
+			Log::info('the access token is '.$result->access_token);
+			Cache::put('access_token', $result->access_token,120);
+			return $result->access_token;
+		}
+	}
+
+	private function getOpenid(){
+		$access_token 	= $this->getAccessToken();
+		$url 			= sprintf(GET_USER_BASE, $access_token);
+		$ch 			= curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_POST, true);
+		$result 		= curl_exec($ch);
+		curl_close($ch);
+		Log::info('the result is '.$result);
+		$openid 		= $result->openid;
+		Session::put('openid', $openid);
+		$customer 		= new Customer;
+		$customer->openid= $openid;
+		$customer->save();
+		return $openid;
+	}
+
+	private function getOrders(openid){
+		$orders 	= Order::where('openid = ? and status <> 2')
+			->get();
+		return $orders;
 	}
 }
