@@ -46,7 +46,7 @@ class WeiChatController extends BaseController {
 	}
 
 	private function RequestEvent($postObj){
-
+		Log::info('invoke Event ');
 	}
 
 	private function RequestText($postObj){
@@ -94,8 +94,17 @@ class WeiChatController extends BaseController {
 		$FormUrl 			= 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6b67feeba41a14f3&redirect_uri=%s&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
 		$Url 				= sprintf($FormUrl,$redirect_uri);
 		Log::info('redirect_uri is '.$Url);
-		return $this->ResponseText($postObj->FromUserName, 
-			$postObj->ToUserName,'维度为：'.$Location_X.' 经度为: '.$Location_Y.' 所在地方为 '.$Label);
+		return $this->ResponsePictureAndLink($postObj->FromUserName, $postObj->ToUserName,
+			array(
+					array(
+							'Title' 		=> $Title,
+							'Description'	=> $Description,
+							'PicUrl'		=> $PicUrl,
+							'Url'			=> $Url
+						)
+				));	
+		// return $this->ResponseText($postObj->FromUserName, 
+		// 	$postObj->ToUserName,'维度为：'.$Location_X.' 经度为: '.$Location_Y.' 所在地方为 '.$Label);
 	}
 
 	private function RequestVoice($postObj){
