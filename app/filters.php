@@ -145,10 +145,18 @@ Route::filter('weixin.check.oauth', function(){
 				return 'the code is validate';
 			}
 		}
+		Log::info('success to get the openid');
 	}else if(!Session::get('openid')){
 		//temporary create openid to you and it is not invalidate.
-		Log::info("success to add 'test' into openid for testing the web");
-		Session::put('openid', 'test');
+		$poststr 		= file_get_contents("php://input");
+		$postObj		= simplexml_load_string($poststr, 'SimpleXMLElement', LIBXML_NOCDATA);
+		if(!$postObj->MsgType){//not come from weichat server
+			Log::info("success to add 'test' into openid for testing the web");
+			Session::put('openid', 'test');
+			Log::info('success to get the openid');
+		}else{
+			Log::info('the request comes from weichat server');
+		}
 	}
-	Log::info('success to get the openid');
+	
 });
