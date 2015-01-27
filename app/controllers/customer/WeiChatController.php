@@ -51,7 +51,7 @@ class WeiChatController extends BaseController {
 
 	private function RequestEvent($postObj){
 		$content = "";
-		switch ($postObj) {
+		switch ($postObj->Event) {
 			case 'CLICK':
 				switch ($postObj->EventKey) {
 					case 'getOrders':{
