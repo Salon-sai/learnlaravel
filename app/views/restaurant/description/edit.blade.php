@@ -59,8 +59,8 @@
 			<label class="col-sm-2 control-label">Map</label>
 			<div class="col-sm-10" >
 				<div id="map-container"></div>
-				<input type="hidden" id="lng" name="locationX" value="{{$restaurant->description->locationX}}"/>
-				<input type="hidden" id="lat" name="locationY" value="{{$restaurant->description->locationY}}" />
+				<input type="hidden" id="lat" name="locationX" value="{{$restaurant->description->locationX}}"/>
+				<input type="hidden" id="lng" name="locationY" value="{{$restaurant->description->locationY}}" />
 			</div>
 		</div>
 		<div class="form-group">
