@@ -266,8 +266,8 @@ class WeiChatController extends BaseController {
 		return $openid;
 	}
 
-	private function getOrders(openid){
-		$orders 	= Order::where('openid = ? and status <> 2')
+	private function getOrders($openid){
+		$orders 	= Order::whereRaw('openid = ? and status <> 2')
 			->get();
 		return $orders;
 	}
