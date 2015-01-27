@@ -153,18 +153,16 @@ class WeiChatController extends BaseController {
 					$i['Description'], $i['PicUrl'], $i['Url']);
 			}
 			$time 			= time();
-			$textTpl 		= "<xml>
-								<ToUserName><![CDATA[%s]]></ToUserName>
-								<FromUserName><![CDATA[%s]]></FromUserName>
-								<CreateTime>%s</CreateTime>
+			$result 		= "<xml>
+								<ToUserName><![CDATA[".$FromUserName."]]></ToUserName>
+								<FromUserName><![CDATA[".$ToUserName."]]></FromUserName>
+								<CreateTime>".$time."</CreateTime>
 								<MsgType><![CDATA[news]]></MsgType>
-								<ArticleCount>%s</ArticleCount>
+								<ArticleCount>".count($items)."</ArticleCount>
 								<Articles>".
 								$item_result
 								."</Articles>
 								</xml>";
-			$result 		= sprintf($textTpl, $FromUserName, 
-				$ToUserName, $time, count($items));
 			Log::info('success to create Articles');
 			Log::info('The resutl is '.$result);
 			return $result;
