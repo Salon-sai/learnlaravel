@@ -68,7 +68,7 @@ class WeiChatController extends BaseController {
 							$resulttext 	+= 'These is no order for you';
 						}else{
 							foreach ($orders as $order) {
-								$resulttext 	+= 'order id is : '.$order->id.' status is : '
+								$resulttext 	+= 'order id is : '.$order->id.' status is : ';
 								switch ($order->status) {
 									case -2 :
 										$resulttext += 'need confirm /n';
