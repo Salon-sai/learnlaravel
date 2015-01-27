@@ -51,13 +51,13 @@ class WeiChatController extends BaseController {
 
 	private function RequestEvent($postObj){
 		$content = "";
-		Log::info($postObj->Event);
+		Log::info('the post event is '.$postObj->Event);
 		switch ($postObj->Event) {
 			case 'CLICK':
 				switch ($postObj->EventKey) {
 					case 'getOrders':{
 						//FromUserName is the openid
-						$opendid 	= $postObj->FromUserName;
+						$openid 	= $postObj->FromUserName;
 						$resulttext	= '';
 											
 						$orders 	= $this->getOrders($openid);
