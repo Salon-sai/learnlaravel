@@ -57,6 +57,7 @@ class WeiChatController extends BaseController {
 				switch ($postObj->EventKey) {
 					case 'getOrders':{
 						//FromUserName is the openid
+						Log::info('click  get orders invoke');
 						$openid 	= $postObj->FromUserName;
 						$resulttext	= '';
 											
@@ -103,7 +104,9 @@ class WeiChatController extends BaseController {
 						break;
 				}
 				break;
-			
+			case 'LOCATION':
+				Log::info('location invoke');
+				break;
 			default:
 				# code...
 				break;
