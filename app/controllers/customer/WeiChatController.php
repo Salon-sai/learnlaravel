@@ -55,18 +55,17 @@ class WeiChatController extends BaseController {
 			case 'CLICK':
 				switch ($postObj->EventKey) {
 					case 'getOrders':{
-						$opendid 	= null;
+						//FromUserName is the openid
+						$opendid 	= $postObj->FromUserName;
 						$resulttext	= '';
-						if(Session::has('openid')){
-							$openid = Session::get('openid');
-						}else{
-							$openid = getOpenid();
-						}						
+											
 						$orders 	= $this->getOrders($openid);
 						
 						if(empty($orders)){
+							Log::info('These is no order with the user : '.$openid);
 							$resulttext 	+= 'These is no order for you';
 						}else{
+							Log::info('get the orders with the user : '.$openid);
 							foreach ($orders as $order) {
 								$resulttext 	+= 'order id is : '.$order->id.' status is : ';
 								switch ($order->status) {
@@ -93,6 +92,7 @@ class WeiChatController extends BaseController {
 								$resulttext 	+= 'the total is : '.$order->total.' /n';
 							}
 						}
+						Log::info($resulttext);
 						return $this->ResponseText($postObj->FromUserName, 
 							$postObj->ToUserName, $resulttext);
 						break;						
@@ -235,6 +235,7 @@ class WeiChatController extends BaseController {
 	private function getAccessToken(){
 		$access_token 	= Cache::get('access_token',function(){return null;});
 		if($access_token)
+			Log::('the access token comes from cache');
 			return $access_token;
 		else{
 			$ch 		= curl_init(ACCESS_TOKEN_URL);
