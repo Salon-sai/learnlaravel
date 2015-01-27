@@ -146,6 +146,7 @@ Route::filter('weixin.check.oauth', function(){
 			}
 		}
 		Log::info('success to get the openid');
+		Log::info('the openid is '.Session::get('openid'));
 	}else if(!Session::get('openid')){
 		//temporary create openid to you and it is not invalidate.
 		$poststr 		= file_get_contents("php://input");
@@ -153,7 +154,7 @@ Route::filter('weixin.check.oauth', function(){
 		if(!$postObj){//not come from weichat server
 			Log::info("success to add 'test' into openid for testing the web");
 			Session::put('openid', 'test');
-			Log::info('success to get the openid');
+			Log::info('success to get the openid and openid is test');
 		}else{
 			Log::info('the request comes from weichat server and the openid is '.$postObj->FromUserName);
 		}
