@@ -141,6 +141,7 @@ Route::filter('weixin.check.oauth', function(){
 				$openid		= $oauth->getOpenid();
 				Session::put('openid', $openid);
 			}catch(\Exception $e){
+				Log::info($e);
 				Log::info('the code is validate');
 				return 'the code is validate';
 			}
