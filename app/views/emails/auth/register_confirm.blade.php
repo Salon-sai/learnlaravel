@@ -7,7 +7,7 @@
 		<h2>Password Reset</h2>
 
 		<div>
-			To reset your password, complete this form: {{ URL::route('register.auth', array($code,$id)) }}.<br/>
+			To reset your password, complete this form: {{ URL::route('register.auth', array($activationCode,$id)) }}.<br/>
 			This link will expire in {{ Config::get('auth.reminder.expire', 60) }} minutes.
 		</div>
 	</body>

@@ -64,6 +64,9 @@ class AuthController extends \BaseController {
 		//add the user into the group
 		$restaurantGroup= Sentry::findGroupById(6);
 		$activeUser		= Sentry::findUserById($id);
+
+		// $now			= time();
+		// need to create time limition
 		if($user->attemptActivation($code)){
 			//activation is success
 			Log::info('active the user : '.$id);
