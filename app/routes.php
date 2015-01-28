@@ -43,7 +43,7 @@ Route::group(array('prefix' => 'r', 'before' => array('auth.restaurant', 'auth.r
 	Route::resource('category', 'App\Controllers\Restaurant\CategoryController');
 	Route::resource('description', 'App\Controllers\Restaurant\DescriptionController',
 		array('except' => array('index')));
-	Route::get('order/find/{type}/{id}', array(
+	Route::get('order/find/{type}', array(
 		'as'	=> 'r.order.find',
 		'uses'	=> 'App\Controllers\Restaurant\OrderController@findOrderByType'
 	));
