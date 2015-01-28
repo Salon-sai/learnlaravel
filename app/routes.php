@@ -38,11 +38,11 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function(){
 Route::group(array('prefix' => 'r', 'before' => array('auth.restaurant', 'auth.restaurant.description')), function(){
 	Route::any('/', 'App\Controllers\Restaurant\OrderController@index');
 	Route::resource('order', 'App\Controllers\Restaurant\OrderController',
-		array('expect' => array('create', 'store')));
+		array('except' => array('create', 'store')));
 	Route::resource('food', 'App\Controllers\Restaurant\FoodController');
 	Route::resource('category', 'App\Controllers\Restaurant\CategoryController');
 	Route::resource('description', 'App\Controllers\Restaurant\DescriptionController',
-		array('expect' => array('index')));
+		array('except' => array('index')));
 	Route::get('order/find/{type}/{id}', array(
 		'as'	=> 'r.order.find',
 		'uses'	=> 'App\Controllers\Restaurant\OrderController@findOrderByType'
