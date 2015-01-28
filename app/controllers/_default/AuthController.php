@@ -67,7 +67,7 @@ class AuthController extends \BaseController {
 
 		// $now			= time();
 		// need to create time limition
-		if($user->attemptActivation($code)){
+		if($activeUser->attemptActivation($code)){
 			//activation is success
 			Log::info('active the user : '.$id);
 			if($activaUser->addGroup($restaurantGroup)){
