@@ -4,7 +4,7 @@ define('APPID', 'wx6b67feeba41a14f3');
 define('SECRET', '29943ae5d7b778c9761961156baf5e31');
 define('GRANT_TYPE', 'authorization_code');
 define('ACCESS_TOKEN_OAuth_URL', 
-	"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx6b67feeba41a14f3&secret=29943ae5d7b778c9761961156baf5e31");
+	"https://api.weixin.qq.com/sns/oauth2/access_token");
 class OAuthService {
 
 	private function getAccessToken(){
