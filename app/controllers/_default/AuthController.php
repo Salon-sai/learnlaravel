@@ -70,7 +70,7 @@ class AuthController extends \BaseController {
 		if($activeUser->attemptActivation($code)){
 			//activation is success
 			Log::info('active the user : '.$id);
-			if($activaUser->addGroup($restaurantGroup)){
+			if($activeUser->addGroup($restaurantGroup)){
 				Log::info('add the user into the restaurant  id : '.$id);
 				$credentials 	= array(
 						'email'		=> $activeUser->email,
