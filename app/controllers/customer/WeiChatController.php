@@ -109,7 +109,6 @@ class WeiChatController extends BaseController {
 				return $this->ResponseText($postObj->FromUserName, 
 					$postObj->ToUserName, "Your location : latitude is ".$postObj->Latitude." and longitude is ".$postObj->Longitude);
 				break;
-			case ''
 			default:
 				# code...
 				break;
