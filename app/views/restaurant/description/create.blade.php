@@ -2,14 +2,14 @@
 
 @section('login')
 
-<h1 class="page-header">Create Restaurant Information</h1>
+<h1 class="page-header text-center">Create Restaurant Information</h1>
 
 @if ($errors->any())
 	<div class="alert alert-error">
 		{{ implode('<br>', $errors->all()) }}
 	</div>
 @endif
-
+{{Notification::showAll()}}
 <div class="container">
 	{{ Form::open(array(
 		'url'	=> URL::route('r.description.store'),
@@ -74,8 +74,8 @@
 			</div>
 		</div>
 		<div class="form-actions text-center">
-			{{Form::submit('Update', array(
-				'class'		=> 'btn btn-lg btn-info',
+			{{Form::submit('Create', array(
+				'class'		=> 'btn btn-lg btn-info btn-block',
 			))}}
 		</div>
 	{{Form::close()}}

@@ -45,6 +45,7 @@ class DescriptionController extends \BaseController {
 			Log::info('invoke to the description update');
 			return Redirect::route('r.order.index');
 		}
+		Log::info(implode(',', $validator->messages()));
 		return Redirect::back()
 			->withInput()->withErrors($validation->errors);
 	}
@@ -91,6 +92,7 @@ class DescriptionController extends \BaseController {
 			Log::info('invoke to the description update');
 			return Redirect::route('r.order.index');
 		}
+		Log::info(implode(',', $validator->messages()));
 		return Redirect::back()
 			->withInput()->withErrors($validation->errors);
 	}
