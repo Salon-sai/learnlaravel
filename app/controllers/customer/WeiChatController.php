@@ -106,6 +106,8 @@ class WeiChatController extends BaseController {
 				break;
 			case 'LOCATION':
 				Log::info('location invoke');
+				return $this->ResponseText($FromUserName, 
+					$ToUserName, "reply 'index' . You can get the restaurant index and order the food you want");
 				break;
 			default:
 				# code...
