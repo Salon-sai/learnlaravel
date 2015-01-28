@@ -40,7 +40,7 @@ class RegisterController extends BaseController {
 					'activationCode'	=> $activationCode,
 					'id'				=> $user->id
 				);
-			Mail::send('email.auth.register_confirm', $data, function($message) use ($email){
+			Mail::send('emails.auth.register_confirm', $data, function($message) use ($email){
 				Log::info('readry to send the email to the '.$email);
 				$message->from('coke1231078@gmail.com', 'FoodOrder');
 				$message->to($email)->subject('Food Order Active By GMail');

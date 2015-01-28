@@ -77,7 +77,6 @@
 			{{Form::submit('Update', array(
 				'class'		=> 'btn btn-lg btn-info',
 			))}}
-			<a href="{{URL::route('r.advanced')}}" class="btn btn-link">Advanced Setting</a>
 		</div>
 	{{Form::close()}}
 </div>
