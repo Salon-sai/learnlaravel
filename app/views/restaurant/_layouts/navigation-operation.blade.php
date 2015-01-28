@@ -1,5 +1,5 @@
 @if(Sentry::getUser())
-	@if(Sentry::check() && Sentry::getUser()->hasAccess('restaurant'))
+	@if(Sentry::check() && Sentry::getUser()->hasAccess('restaurant') && Sentry::getUser()->description)
 		<div class="col-sm-3 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
 				<li class="{{Request::is('r/order') ? 'active' : null}}"><a href="{{URL::route('r.order.index')}}">Order List</a></li>
