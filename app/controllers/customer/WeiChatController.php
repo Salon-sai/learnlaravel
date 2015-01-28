@@ -65,33 +65,33 @@ class WeiChatController extends BaseController {
 						Log::info('the openid is '.$openid);
 						if(empty($orders)){
 							Log::info('These is no order with the user : '.$openid);
-							$resulttext 	+= 'These is no order for you';
+							$resulttext 	= $resulttext.'These is no order for you';
 						}else{
 							Log::info('get the orders with the user : '.$openid);
 							foreach ($orders as $order) {
-								$resulttext 	+= 'order id is : '.$order->id.' status is : ';
+								$resulttext 	= $resulttext.' order id is : '.$order->id.' status is : ';
 								switch ($order->status) {
 									case -2 :
-										$resulttext += 'need confirm /n';
+										$resulttext = $resulttext.'need confirm /n';
 										break;
 									case -1 :
-										$resulttext += 'watting restaurant accept /n';
+										$resulttext = $resulttext.'watting restaurant accept /n';
 										break;
 									case 0 :
-										$resulttext += 'restaurant refuse your order /n';
+										$resulttext = $resulttext.'restaurant refuse your order /n';
 										break;
 									case 1 :
-										$resulttext += 'delivering /n';
+										$resulttext = $resulttext.'delivering /n';
 										break;
 									default:
 										# code...
 										break;
 								}
 								foreach ($order->foods as $food) {
-									$resulttext += 'The food name : '.$food->name.' quantity is : '
+									$resulttext = $resulttext.'The food name : '.$food->name.' quantity is : '
 									.$food->pivot->quantity.' the pirce is : '.$food->price.'/n';
 								}
-								$resulttext 	+= 'the total is : '.$order->total.' /n';
+								$resulttext 	= $resulttext.'the total is : '.$order->total.' /n';
 							}
 						}
 						Log::info($resulttext);
