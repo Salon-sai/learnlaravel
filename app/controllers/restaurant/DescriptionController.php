@@ -8,17 +8,6 @@ use App\Validators\DescriptionValidator;
 class DescriptionController extends \BaseController {
 
 	/**
-	 * Display a listing of the resource.
-	 * GET /restaurant/description
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
-
-	/**
 	 * Show the form for creating a new resource.
 	 * GET /restaurant/description/create
 	 *
