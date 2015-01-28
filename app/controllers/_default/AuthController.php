@@ -72,11 +72,7 @@ class AuthController extends \BaseController {
 			Log::info('active the user : '.$id);
 			if($activeUser->addGroup($restaurantGroup)){
 				Log::info('add the user into the restaurant  id : '.$id);
-				$credentials 	= array(
-						'email'		=> $activeUser->email,
-						'password'	=> $activeUser->password
-					);
-				$user 			= Sentry::authenticate($credentials, false);
+				$user = Sentry::login($activeUser, false);
 				return Redirect::route('r.description.create');
 			}else{
 				Log::info('fail to add the user into the restaurant');
