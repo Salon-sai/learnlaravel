@@ -30,6 +30,7 @@
 			{{Form::submit('Sign in', array(
 				'class'		=> 'btn btn-lg btn-primary btn-block',
 			))}}
+			<a href="" class="btn btn-lg btn-link">Join with our</a>
 		</div>
 	{{Form::close()}}
 </div>

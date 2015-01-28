@@ -229,7 +229,6 @@ class WeiChatController extends BaseController {
 								."</Articles>
 								</xml>";
 			Log::info('success to create Articles');
-			Log::info('The result is '.$result);
 			return $result;
 		}catch(\Exception $e){
 			Log::error($e);

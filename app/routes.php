@@ -30,7 +30,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function(){
 Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 	Route::any('/', 'App\Controllers\Restaurant\OrderController@index');
 	Route::resource('order', 'App\Controllers\Restaurant\OrderController',
-			array('expect' => array('create', 'store')));
+		array('expect' => array('create', 'store')));
 	Route::resource('food', 'App\Controllers\Restaurant\FoodController');
 	Route::resource('category', 'App\Controllers\Restaurant\CategoryController');
 	Route::resource('description', 'App\Controllers\Restaurant\DescriptionController');
@@ -58,6 +58,8 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 		'as' 	=> 'r.order.refuse',
 		'uses'	=> 'App\Controllers\Restaurant\OrderController@refuseOrder'
 	));
+	Route::resource('register', 'App\Controllers\Restaurant\RegisterController',
+		array('only' => array('create', 'store')));
 });
 
 Route::group(array('prefix' => 'u', 'before' => array('weixin.check.echostr', 'weixin.check.oauth')), function(){
@@ -78,6 +80,19 @@ Route::group(array('prefix' => 'u', 'before' => array('weixin.check.echostr', 'w
 Route::group(array('prefix' => 'test'), function(){
 	Route::resource('cache', 'App\Controllers\_Default\CacheController');
 	Route::resource('session', 'App\Controllers\_Default\SessionController');
+	Route::get('gmail_test', function(){
+		$address 	= Config::get('mail.username');
+		Log::info('In the route : '.$address);
+		$data		= array('token'	=> '123456');
+		Mail::send('emails.auth.reminder', $data, function($message) use ($address){
+			Log::info('In the Mail : '.$address);
+			$message->from($address, 'FoodOrder');
+
+			$message->to($address)->subject('Laravel Mail By Gmail');
+		});
+
+		return 'success';
+	});
 });
 
 Route::get('logout', array(
