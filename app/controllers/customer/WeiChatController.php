@@ -57,12 +57,12 @@ class WeiChatController extends BaseController {
 				switch ($postObj->EventKey) {
 					case 'getOrders':{
 						//FromUserName is the openid
-						Log::info('click  get orders invoke');
+						Log::info('click get orders invoke');
 						$openid 	= $postObj->FromUserName;
-						$resulttext	= '';
-											
+						$resulttext	= '';			
 						$orders 	= $this->getOrders($openid);
 						
+						Log::info('the openid is '.$openid);
 						if(empty($orders)){
 							Log::info('These is no order with the user : '.$openid);
 							$resulttext 	+= 'These is no order for you';
@@ -107,8 +107,9 @@ class WeiChatController extends BaseController {
 			case 'LOCATION':
 				Log::info('location invoke');
 				return $this->ResponseText($postObj->FromUserName, 
-					$postObj->ToUserName, "reply 'index' . You can get the restaurant index and order the food you want");
+					$postObj->ToUserName, "Your location : latitude is ".$postObj->Latitude." and longitude is ".$postObj->Longitude);
 				break;
+			case ''
 			default:
 				# code...
 				break;
