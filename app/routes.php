@@ -41,7 +41,8 @@ Route::group(array('prefix' => 'r', 'before' => array('auth.restaurant', 'auth.r
 		array('expect' => array('create', 'store')));
 	Route::resource('food', 'App\Controllers\Restaurant\FoodController');
 	Route::resource('category', 'App\Controllers\Restaurant\CategoryController');
-	Route::resource('description', 'App\Controllers\Restaurant\DescriptionController');
+	Route::resource('description', 'App\Controllers\Restaurant\DescriptionController',
+		array('expect' => array('index')));
 	Route::get('order/find/{type}/{id}', array(
 		'as'	=> 'r.order.find',
 		'uses'	=> 'App\Controllers\Restaurant\OrderController@findOrderByType'
