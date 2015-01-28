@@ -35,7 +35,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function(){
 	Route::resource('profile', '');
 });
 
-Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
+Route::group(array('prefix' => 'r', 'before' => array('auth.restaurant', 'auth.restaurant.description')), function(){
 	Route::any('/', 'App\Controllers\Restaurant\OrderController@index');
 	Route::resource('order', 'App\Controllers\Restaurant\OrderController',
 		array('expect' => array('create', 'store')));

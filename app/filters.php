@@ -109,6 +109,12 @@ Route::filter('auth.restaurant', function(){
 	}
 });
 
+Route::filter('auth.restaurant.description', function(){
+	if(!Sentry::getUser()->description){
+		Redirect::route('r.description.create');
+	}
+});
+
 
 Route::filter('weixin.check.echostr', function(){
 	if(Input::get('echostr')){
