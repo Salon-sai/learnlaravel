@@ -2,7 +2,7 @@
 
 namespace App\Controllers\_Default;
 
-use Sentry, Redirect, View, Input;
+use Sentry, Redirect, View, Input, Log, DB;
 
 class AuthController extends \BaseController {
 
@@ -28,13 +28,19 @@ class AuthController extends \BaseController {
 			$user = Sentry::authenticate($credentials, false);
 			
 			if($user) {
-				if($user->hasAccess('restaurant') && $type == 'r')
-					return Redirect::route('r.order.index');
-				else if($user->hasAccess('manager') && $type == 'admin')
+				if($user->hasAccess('restaurant') && $type == 'r'){
+					$description	= DB::table('descriptions')
+						->where('user_id',$user->id)->get();
+					if($description)
+						return Redirect::route('r.order.index');
+					else
+						return Redirect::route('r.description.create');
+				}else if($user->hasAccess('manager') && $type == 'admin'){
 					return Redirect::route('admin.restaurant.index');
-				else 
+				}else{
 					return Redirect::back()
 						->withErrors(array('login' => 'The Login Type is invalidation'));
+				}				
 			}
 
 		}catch(\Exception $e){
@@ -54,4 +60,28 @@ class AuthController extends \BaseController {
 		}
 	}
 
+	public function EmailConfirm($code, $id){
+		//add the user into the group
+		$restaurantGroup= Sentry::findGroupById(6);
+		$activeUser		= Sentry::findUserById($id);
+		if($user->attemptActivation($code)){
+			//activation is success
+			Log::info('active the user : '.$id);
+			if($activaUser->addGroup($restaurantGroup)){
+				Log::info('add the user into the restaurant  id : '.$id);
+				$credentials 	= array(
+						'email'		=> $activeUser->email,
+						'password'	=> $activeUser->password
+					);
+				$user 			= Sentry::authenticate($credentials, false);
+				return Redirect::route('r.description.create');
+			}else{
+				Log::info('fail to add the user into the restaurant');
+			}
+		}else{
+			//activation is fail
+			Log::info('fail to active the user : '.$id);
+			return Response::view('fail to active the user', array(), 404);
+		}
+	}
 }

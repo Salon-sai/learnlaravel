@@ -3,6 +3,7 @@
 namespace App\Controllers\Restaurant;
 use View, Sentry, Notification, Description, Input, Redirect, Response;
 use App\Validators\RestaurantValidator, Log;
+use App\Validators\DescriptionValidator;
 
 class DescriptionController extends \BaseController {
 
@@ -25,7 +26,7 @@ class DescriptionController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('restaurant.description.create');
 	}
 
 	/**
@@ -36,7 +37,16 @@ class DescriptionController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$validation = new DescriptionValidator;
+		if($validation->passes()){
+			$description = new Description;
+			$this->saveDescription($description);
+			Notification::success('mofity the description success');
+			Log::info('invoke to the description update');
+			return Redirect::route('r.order.index');
+		}
+		return Redirect::back()
+			->withInput()->withErrors($validation->errors);
 	}
 
 	/**
@@ -75,19 +85,8 @@ class DescriptionController extends \BaseController {
 	{
 		$validation = new RestaurantValidator;
 		if($validation->passes()){
-			$description 				 = Description::find($id);
-			$description->name 			 = Input::get('name');
-			$description->telephone	  	 = Input::get('telephone');
-			$description->scale 		 = Input::get('scale');
-			$description->location_label = Input::get('location_label');
-			$description->description 	 = Input::get('description');
-			$description->locationX		 = Input::get('locationX');
-			$description->locationY		 = Input::get('locationY');
-			// if(Input::get('status'))
-			// 	$description->status 	 = 1;
-			// else
-			// 	$description->status 	 = 0;
-			$description->save();
+			$description = Description::find($id);
+			$this->saveDescription($description);
 			Notification::success('mofity the description success');
 			Log::info('invoke to the description update');
 			return Redirect::route('r.order.index');
@@ -121,5 +120,20 @@ class DescriptionController extends \BaseController {
 			'type' 		=> 'success',
 			'message'	=> 'success to change the restaurant stataus'
 		));
+	}
+
+	private function saveDescription($description){
+		$description->name 			 = Input::get('name');
+		$description->telephone	  	 = Input::get('telephone');
+		$description->scale 		 = Input::get('scale');
+		$description->location_label = Input::get('location_label');
+		$description->description 	 = Input::get('description');
+		$description->locationX		 = Input::get('locationX');
+		$description->locationY		 = Input::get('locationY');
+		// if(Input::get('status'))
+		// 	$description->status 	 = 1;
+		// else
+		// 	$description->status 	 = 0;
+		$description->save();
 	}
 }

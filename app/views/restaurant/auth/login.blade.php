@@ -26,11 +26,15 @@
 				Remember me
 			</label>
 		</div>
-		<div class="form-actions">
-			{{Form::submit('Sign in', array(
-				'class'		=> 'btn btn-lg btn-primary btn-block',
-			))}}
-			<a href="" class="btn btn-lg btn-link">Join with our</a>
+		<div class="form-actions btn-group btn-group-justified" role="group">
+			<div class="btn-group" role="group">
+				{{Form::submit('Sign in', array(
+					'class'		=> 'btn btn-lg btn-primary',
+				))}}
+			</div>
+			<div class="btn-group" role="group">
+				<a href="{{URL::route('register.create')}}" class="btn btn-lg btn-warning">Join with our</a>
+			</div>
 		</div>
 	{{Form::close()}}
 </div>

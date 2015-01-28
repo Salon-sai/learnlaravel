@@ -21,6 +21,14 @@ Route::post('login/{type}',array(
 	'uses'	=> 'App\Controllers\_Default\AuthController@postLogin'
 ));
 
+Route::resource('register', 'App\Controllers\Restaurant\RegisterController',
+	array('only' => array('create', 'store')));
+
+Route::get('register/auth/{code}/{id}', array(
+	'as'	=> 'register.auth',
+	'uses'	=> 'App\Controllers\_Default\AuthController@EmailConfirm'
+));
+
 Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function(){
 	Route::any('/', 'App\Controllers\Admin\RestaurantController@index');
 	Route::resource('restaurant', 'App\Controllers\Admin\RestaurantController');
@@ -34,7 +42,7 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 	Route::resource('food', 'App\Controllers\Restaurant\FoodController');
 	Route::resource('category', 'App\Controllers\Restaurant\CategoryController');
 	Route::resource('description', 'App\Controllers\Restaurant\DescriptionController');
-	Route::get('order/find/{type}', array(
+	Route::get('order/find/{type}/{id}', array(
 		'as'	=> 'r.order.find',
 		'uses'	=> 'App\Controllers\Restaurant\OrderController@findOrderByType'
 	));
@@ -58,8 +66,6 @@ Route::group(array('prefix' => 'r', 'before' => 'auth.restaurant'), function(){
 		'as' 	=> 'r.order.refuse',
 		'uses'	=> 'App\Controllers\Restaurant\OrderController@refuseOrder'
 	));
-	Route::resource('register', 'App\Controllers\Restaurant\RegisterController',
-		array('only' => array('create', 'store')));
 });
 
 Route::group(array('prefix' => 'u', 'before' => array('weixin.check.echostr', 'weixin.check.oauth')), function(){
@@ -90,7 +96,6 @@ Route::group(array('prefix' => 'test'), function(){
 
 			$message->to($address)->subject('Laravel Mail By Gmail');
 		});
-
 		return 'success';
 	});
 });

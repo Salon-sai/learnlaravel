@@ -1,7 +1,7 @@
 @extends('restaurant._layouts.default')
-@section('main')
+@section('login')
 
-<h1 class="page-header">Register Restaurant</h1>
+<h1 class="page-header text-center">Register Restaurant</h1>
 
 @if ($errors->any())
 	<div class="alert alert-error">
@@ -11,7 +11,7 @@
 
 <div class="container">
 	{{Form::open(array(
-		'url'	=> URL::route('r.register.store'),
+		'url'	=> URL::route('register.store'),
 		'class'	=> 'form-horizontal',
 		'role'	=> 'form',
 		'method'=> 'post'
@@ -37,11 +37,16 @@
 		<div class="form-group form-group-lg">
 			<label class="col-sm-2 control-label">Password</label>
 			<div class="col-sm-10">
-				{{Form::password('repassword', array(
+				{{Form::password('password_confirmation', array(
 					'class'			=> 'form-control',
 					'placeholder'	=> 'Again Password'
 				))}}
 			</div>
+		</div>
+		<div class="form-actions text-center">
+			{{Form::submit('Submit and Check the E-mail',array(
+				'class'				=> 'btn btn-lg btn-primary'
+			))}}
 		</div>
 	{{Form::close()}}
 </div>
