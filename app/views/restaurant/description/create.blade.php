@@ -75,7 +75,7 @@
 		</div>
 		<div class="form-actions text-center">
 			{{Form::submit('Create', array(
-				'class'		=> 'btn btn-lg btn-info btn-block',
+				'class'		=> 'btn btn-lg btn-info',
 			))}}
 		</div>
 	{{Form::close()}}

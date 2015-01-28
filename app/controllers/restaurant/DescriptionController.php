@@ -42,7 +42,7 @@ class DescriptionController extends \BaseController {
 			$description = new Description;
 			$this->saveDescription($description);
 			Notification::success('mofity the description success');
-			Log::info('invoke to the description update');
+			Log::info('invoke to the description store');
 			return Redirect::route('r.order.index');
 		}
 		Log::info(implode(',', $validator->messages()));
