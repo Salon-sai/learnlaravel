@@ -29,7 +29,7 @@ class DescriptionController extends \BaseController {
 		$validation = new DescriptionValidator;
 		if($validation->passes()){
 			$description = new Description;
-			$this->saveDescription($description);
+			$this->saveORupdateDescription($description);
 			Notification::success('mofity the description success');
 			Log::info('invoke to the description store');
 			return Redirect::route('r.order.index');
@@ -76,7 +76,7 @@ class DescriptionController extends \BaseController {
 		$validation = new RestaurantValidator;
 		if($validation->passes()){
 			$description = Description::find($id);
-			$this->saveDescription($description);
+			$this->saveORupdateDescription($description);
 			Notification::success('mofity the description success');
 			Log::info('invoke to the description update');
 			return Redirect::route('r.order.index');
@@ -113,7 +113,7 @@ class DescriptionController extends \BaseController {
 		));
 	}
 
-	private function saveDescription($description){
+	private function saveORupdateDescription($description){
 		$description->name 			 = Input::get('name');
 		$description->telephone	  	 = Input::get('telephone');
 		$description->scale 		 = Input::get('scale');
@@ -121,6 +121,7 @@ class DescriptionController extends \BaseController {
 		$description->description 	 = Input::get('description');
 		$description->locationX		 = Input::get('locationX');
 		$description->locationY		 = Input::get('locationY');
+		$description->user_id		 = Sentry::getUser()->id;
 		// if(Input::get('status'))
 		// 	$description->status 	 = 1;
 		// else
