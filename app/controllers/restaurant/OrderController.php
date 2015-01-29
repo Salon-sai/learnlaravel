@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Restaurant;
 
-use View, Sentry, Order, Response, Input;
+use View, Sentry, Order, Response, Input, Log;
 
 class OrderController extends \BaseController {
 
@@ -57,6 +57,25 @@ class OrderController extends \BaseController {
 	}
 
 	/**
+	 * Remove the specified resource from storage.
+	 * DELETE /restaurant\order/{id}
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy($id)
+	{
+		Log::info($id);
+		Log::info('destroy method invoke');
+		$order 		= Order::find($id);
+		$order->delete();
+		return Response::json(array(
+				'type'	=> 'success',
+				'message'=> 'success to delete the order'
+			));
+	}
+
+	/**
 	 * Update the specified resource in storage.
 	 * PUT /restaurant/order/{id}
 	 *
@@ -97,36 +116,33 @@ class OrderController extends \BaseController {
 		return View::make($view)->with('orders', $orders);
 	}
 
-	public function finishedOrder(){
-		$order_id 		= Input::get('id');
-		$order 			= Order::find($id);
-		$order->status  = 2;
-		$order->update();
-		return Response::json(array(
-				'type'	=>'success',
-				'message'=>'success finished Order'
-			));
-	}
-
-	public function acceptOrder(){
+	public function changeOrderState(){
 		$id 			= Input::get('order_id');
+		$type 			= Input::get('type');
 		$order 			= Order::find($id);
-		$order->status 	= 1;
+		switch ($type) {
+			case 'refuse':
+				$order->status = 0;
+				break;
+			case 'accept':
+				$order->status = 1;
+				break;
+			case 'finished':
+				$order->status = 2;
+				break;
+			default:
+				# code...
+				Log::info('invoke to the state default');
+				return Response::json(array(
+						'type' 	=> 'error',
+						'message'=> 'fail to change the order status'
+					));
+				break;
+		}
 		$order->update();
 		return Response::json(array(
-				'type'	=>'success',
-				'message'=>'accept the order'
-			));
-	}
-
-	public function refuseOrder(){
-		$id 			= Input::get('order_id');
-		$order 			= Order::find($id);
-		$order->status 	= 0;
-		$order->update();
-		return Response::json(array(
-				'type'	=>'success',
-				'message'=>'refuse the order'
+				'type'	=> 'success',
+				'message'=> 'success to '.$type.' the order'
 			));
 	}
 }

@@ -8,8 +8,8 @@
 	<table class="table table-striped">
 		<tbody>
 			@foreach($orders as $order)
-				<tr>
-					<td class="col-xs-12 col-lg-8" order-id="{{$order->id}}">
+				<tr order-id="{{$order->id}}">
+					<td class="col-xs-12 col-lg-8">
 						<p>Order ID : {{$order->id}}</p>
 						<p>Status	:
 								@if($order->status == -1)
@@ -26,14 +26,14 @@
 						<p>Total 	: ${{$order->total}}</p>
 						<p>
 							@if($order->status < 2)
-								<button class="btn btn-danger btn-mini pull-left" disabled='disabled'>Delete</button>
+								<button name="delete-order" class="btn btn-danger btn-mini pull-left" disabled='disabled'>Delete</button>
 							@elseif($order->status == 0 || $order->status == 2)
-								<button class="btn btn-danger btn-mini pull-left">Delete</button>
+								<button name="delete-order" class="btn btn-danger btn-mini pull-left">Delete</button>
 							@endif
 						</p>
 					</td>
 				</tr>
-				<tr>
+				<tr order-id="{{$order->id}}">
 					<td class="col-xs-12 col-lg-8">
 						<ul class="list-group">
 							@foreach($order->foods as $food)
@@ -52,31 +52,60 @@
 </div>
 <script type="text/javascript">
 	$("[name='acceptOrder']").on('click', function(){
-		var td_field = $(this).parent().parent();
-		var order_id = td_field.attr('order-id');
+		var tr_field = $(this).parents('tr');
+		var order_id = tr_field.attr('order-id');
 		$.ajax({
-			url : 'order/accept',
+			url : "{{URL::route('r.order.status.change')}}",
 			type: 'POST',
 			dataType: 'json',
-			data: { 'order_id': order_id },
+			data: {
+				'order_id'	: order_id,
+				'type'		: 'accept'
+			},
 			success: function(returnData){
-				td_field.find('p:eq(1)').html('Status : Delivering');
+				if(returnData.type == 'success'){
+					alert(returnData.message);
+					tr_field.find('p:eq(1)').html('Status : Delivering');
+				}
 			}
 		});
 	});
 
 	$("[name='refuseOrder']").on('click', function(){
-		var td_field = $(this).parent().parent();
-		var order_id = td_field.attr('order_id');
+		var tr_field = $(this).parents('tr');
+		var order_id = tr_field.attr('order-id');
 		$.ajax({
-			url : 'order/refuse',
+			url : "{{URL::route('r.order.status.change')}}",
 			type: 'POST',
 			dataType: 'json',
-			data: { 'order_id': order_id },
+			data: {
+				'order_id'	: order_id,
+				'type'		: 'refuse'
+			},
 			success: function(returnData){
-				td_field.td_field.find('p:eq(1)').html('Status : Refuse the order');
+				if(returnData.type == 'success'){
+					alert(returnData.message);
+					tr_field.find('p:eq(1)').html('Status : Refuse the order');
+					tr_field.find('p:eq(3)').children('button').attr('disabled', false);
+				}
 			}
 		});
+	});
+
+	$("[name='delete-order']").on('click', function(){
+		var tr_field = $(this).parents('tr');
+		var order_id = tr_field.attr('order-id');
+		$.ajax({
+			url : '/r/order/'+order_id,
+			type: 'DELETE',
+			dataType: 'json',
+			success: function(returnData){
+				if(returnData.type == 'success'){
+					alert(returnData.message);
+					$("[order-id='"+order_id+"']").remove();
+				}
+			}
+		});		
 	});
 </script>
 @stop

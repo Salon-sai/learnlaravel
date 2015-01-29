@@ -7,8 +7,8 @@
 	<table class="table table-striped">
 		<tbody>
 			@foreach($orders as $order)
-				<tr>
-					<td class="col-xs-12 col-lg-8" order-id="{{$order->id}}">
+				<tr order-id="{{$order->id}}">
+					<td class="col-xs-12 col-lg-8">
 						<p>Order ID : {{$order->id}}</p>
 						<p>Status	:
 								@if($order->status == -2)
@@ -38,4 +38,44 @@
 		</tbody>
 	</table>
 </div>
+<script type="text/javascript">
+	$("[name='acceptOrder']").on('click', function(){
+		var tr_field = $(this).parents('tr');
+		var order_id = tr_field.attr('order-id');
+		$.ajax({
+			url : "{{URL::route('r.order.status.change')}}",
+			type: 'POST',
+			dataType: 'json',
+			data: { 
+				'order_id'	: order_id,
+				'type'		: 'accept'
+			},
+			success: function(returnData){
+				if(returnData.type == 'success'){
+					alert(returnData.message);
+					tr_field.find('p:eq(1)').html('Status : Delivering');
+				}
+			}
+		});
+	});
+
+	$("[name='refuseOrder']").on('click', function(){
+		var tr_field = $(this).parents('tr');
+		var order_id = tr_field.attr('order-id');
+		$.ajax({
+			url : "{{URL::route('r.order.status.change')}}",
+			type: 'POST',
+			dataType: 'json',
+			data: { 
+				'order_id'	: order_id,
+				'type'	 	: 'refuse'},
+			success: function(returnData){
+				if(returnData.type == 'success'){
+					alert(returnData.message);
+					tr_field.find('p:eq(1)').html('Status :  Refuse the order');
+				}
+			}
+		});
+	});
+</script>
 @stop

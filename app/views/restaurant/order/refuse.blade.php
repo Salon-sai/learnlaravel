@@ -8,17 +8,17 @@
 	<table class="table table-striped">
 		<tbody>
 			@foreach($orders as $order)
-				<tr>
+				<tr order-id="{{$order->id}}">
 					<td class="col-xs-12 col-lg-8" order-id="{{$order->id}}">
 						<p>Order ID : {{$order->id}}</p>
 						<p>Status	: Refuse the order</p>
 						<p>Total 	: ${{$order->total}}</p>
 						<p>
-							<button class="btn btn-danger btn-mini pull-left">Delete</button>
+							<button name="delete-order" class="btn btn-danger btn-mini pull-left">Delete</button>
 						</p>
 					</td>
 				</tr>
-				<tr>
+				<tr order-id="{{$order->id}}">
 					<td class="col-xs-12 col-lg-8">
 						<ul class="list-group">
 							@foreach($order->foods as $food)
@@ -35,5 +35,21 @@
 		</tbody>
 	</table>
 </div>
-
+<script type="text/javascript">
+	$("[name='delete-order']").on('click', function(){
+		var tr_field = $(this).parents('tr');
+		var order_id = tr_field.attr('order-id');
+		$.ajax({
+			url : '/r/order/'+order_id,
+			type: 'DELETE',
+			dataType: 'json',
+			success: function(returnData){
+				if(returnData.type == 'success'){
+					alert(returnData.message);
+					$("[order-id='"+order_id+"']").remove();
+				}
+			}
+		});		
+	});
+</script>
 @stop

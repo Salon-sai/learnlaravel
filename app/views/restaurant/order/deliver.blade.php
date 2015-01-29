@@ -12,12 +12,14 @@
 						<p>Order ID : {{$order->id}}</p>
 						<p>
 							Status	: Delivering
-							<button class="btn btn-lg btn-success" onclick="orderFinished('{{$order->id}}')">Finished</button>
 						</p>
 						<p>Total 	: ${{$order->total}}</p>
+						<p>
+							<button class="btn btn-success" onclick="orderFinished('{{$order->id}}')">Finished</button>
+						</p>
 					</td>
 				</tr>
-				<tr>
+				<tr order-id="{{$order->id}}">
 					<td class="col-xs-12 col-lg-8">
 						<ul class="list-group">
 							@foreach($order->foods as $food)
@@ -37,10 +39,13 @@
 <script type="text/javascript">
 	function orderFinished(id){
 		$.ajax({
-			url : 'r/order/finished',
+			url : "{{URL::route('r.order.status.change')}}",
 			type: 'post',
 			dataType: 'json',
-			data: {'id' : id},
+			data: {
+				'order_id'	: id,
+				'type'		: 'finished'
+			},
 			success : function(returnData){
 				if(returnData.type == 'success'){
 					alert(returnData.message);
