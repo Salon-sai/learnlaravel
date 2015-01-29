@@ -3,10 +3,12 @@
 namespace App\Controllers\Customer;
 
 use BaseController, Sentry, View, Description, Food, Log, Input, DB;
-use Session, Customer;
+use Session, Customer, JSSDKService;
 
 define('EARTH_RADIUS', 6378137);
 class RestaurantController extends BaseController {
+
+	// private static final $js_service = new JSSDKService;
 
 	/**
 	 * Display a listing of the resource.
@@ -26,10 +28,15 @@ class RestaurantController extends BaseController {
 			$customer->save();
 			Log::info('success to save customer and the id is '.$customer->id);
 		}
+		$js_service 	= new JSSDKService;
+		$signPackage	= $js_service->getSignPackage();
 		$descriptions 	= Description::where('status', '<>', 9)
 			->orderBy('status', 'desc')->get();
 		return View::make('customer.restaurant.index')
-			->with('descriptions', $descriptions);
+			->with(array(
+					'descriptions' 	=> $descriptions,
+					'signPackage'	=> $signPackage
+				));
 	}
 
 	/**
