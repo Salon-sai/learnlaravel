@@ -7,7 +7,7 @@ define('ACCESS_TOKEN_URL',
 class AccessTokenService{
 
 
-	public static function getAccessToken(){
+	public function getAccessToken(){
 		$access_token 		= Cache::get('ACCESS_TOKEN',function(){return null;});
 		if(!$access_token){
 			$result 		= HttpSend::httpSend(ACCESS_TOKEN_URL);

@@ -37,10 +37,12 @@ class JSSDKService {
 	private function getJsApiTicket(){
 		$ticket 	= Cache::get('jsapi_ticket',function(){return null;});
 		if(!$ticket){
-			$access_token = AccessTokenService::getAccessToken();
+			$accesstokenService = new AccessTokenService;
+			$access_token = $accesstokenService->getAccessToken();
 			$url 		= sprintf(TICKET_URL_FORM, $access_token);
 			Log::info('ready to send url for getting the ticket');
-			$result 	= HttpSend::HttpSend($url);
+			$httpSend 	= new HttpSend;
+			$result 	= $httpSend->HttpSendHttpSend($url);
 			$ticket 	= json_decode($result);
 			Log::info('success to get the ticket : '.$ticket);
 			if($ticket){

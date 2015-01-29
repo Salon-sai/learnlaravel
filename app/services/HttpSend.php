@@ -2,7 +2,7 @@
 
 class HttpSend {
 
-	public static function httpSend($url, $isPost = false, $post_data = null){
+	public function httpSend($url, $isPost = false, $post_data = null){
 		$ch 	= curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
