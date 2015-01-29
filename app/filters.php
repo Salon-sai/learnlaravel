@@ -145,6 +145,7 @@ Route::filter('weixin.check.oauth', function(){
 		Log::info('It is weichat login the web');
 		if(!Session::get('openid')){
 			try{
+				Log::info('the first time login the subscribe');
 				$oauth		= new OAuthService;
 				$openid		= $oauth->getOpenid();
 				Session::put('openid', $openid);
