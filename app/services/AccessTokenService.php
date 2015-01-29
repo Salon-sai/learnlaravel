@@ -1,6 +1,6 @@
 <?php
 
-use Cache, Log;
+use Cache, HttpSend, Log;
 
 define('ACCESS_TOKEN_URL', 
 	"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx6b67feeba41a14f3&secret=29943ae5d7b778c9761961156baf5e31");
