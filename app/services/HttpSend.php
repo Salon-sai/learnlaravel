@@ -3,8 +3,7 @@
 class HttpSend {
 
 	public function httpSend($url, $isPost = false, $post_data = null){
-		$ch 	= curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
+		$ch 	= curl_init($url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 500);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

@@ -18,6 +18,7 @@ class OAuthService {
 						'grant_type'=> GRANT_TYPE
 					);
 				$httpSend = new HttpSend;
+				Log::info('ready to get url message');
 				$result = $httpSend->HttpSend(ACCESS_TOKEN_OAuth_URL, true, $data);
 				Log::info('success to get ACCESS_TOKEN');
 				return $result;
