@@ -43,7 +43,8 @@ class JSSDKService {
 			Log::info('ready to send url for getting the ticket');
 			$sender 	= new Sender;
 			$result 	= $sender->httpSend($url);
-			$ticket 	= json_decode($result);
+			Log::info('the result of getting the ticket '.$result);
+			$ticket 	= json_decode($result)->ticket;
 			Log::info('success to get the ticket : '.$ticket);
 			if($ticket){
 				Cache::put('jsapi_ticket', $ticket, 120);
