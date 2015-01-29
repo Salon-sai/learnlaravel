@@ -153,7 +153,6 @@ class FoodController extends \BaseController {
 			));
 	}
 
-
 	/**
 	*	需要算法优化 2015.1.11
 	*

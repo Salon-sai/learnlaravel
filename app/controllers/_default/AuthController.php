@@ -74,7 +74,7 @@ class AuthController extends \BaseController {
 				Log::info('add the user into the restaurant  id : '.$id);
 				$user = Sentry::login($activeUser, false);
 				Log::info('success to login to the Food Order');
-				return View::make('restaurant.description.create');
+				return Redirect::route('r.description.create');
 			}else{
 				Log::info('fail to add the user into the restaurant');
 			}

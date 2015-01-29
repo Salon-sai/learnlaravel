@@ -38,7 +38,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function(){
 Route::group(array('prefix' => 'r', 'before' => array('auth.restaurant', 'auth.restaurant.description')), function(){
 	Route::any('/', 'App\Controllers\Restaurant\OrderController@index');
 	Route::resource('order', 'App\Controllers\Restaurant\OrderController',
-		array('except' => array('create', 'store')));
+		array('except' => array('create', 'store', 'destroy', 'edit')));
 	Route::resource('food', 'App\Controllers\Restaurant\FoodController');
 	Route::resource('category', 'App\Controllers\Restaurant\CategoryController');
 	Route::resource('description', 'App\Controllers\Restaurant\DescriptionController',
@@ -66,6 +66,10 @@ Route::group(array('prefix' => 'r', 'before' => array('auth.restaurant', 'auth.r
 	Route::post('order/refuse', array(
 		'as' 	=> 'r.order.refuse',
 		'uses'	=> 'App\Controllers\Restaurant\OrderController@refuseOrder'
+	));
+	Route::post('order/finished', array(
+		'as'	=> 'r.order.finished',
+		'uses'	=> 'App\Controllers\Restaurant\OrderController@finishedOrder'
 	));
 });
 

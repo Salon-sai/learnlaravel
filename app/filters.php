@@ -110,8 +110,10 @@ Route::filter('auth.restaurant', function(){
 });
 
 Route::filter('auth.restaurant.description', function(){
-	if(!Sentry::getUser()->description && !Request::is('r/description')){
-			return View::make('restaurant.description.create');
+	if(!Sentry::getUser()->description && 
+		!Request::is('r/description') && 
+		!Request::is('r/description/create')){
+			return Redirect::route('r.description.create');
 	}
 });
 

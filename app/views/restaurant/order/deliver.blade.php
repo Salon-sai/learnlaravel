@@ -7,10 +7,13 @@
 	<table class="table table-striped">
 		<tbody>
 			@foreach($orders as $order)
-				<tr>
+				<tr order-id="{{$order->id}}">
 					<td class="col-xs-12 col-lg-8" order-id="{{$order->id}}">
 						<p>Order ID : {{$order->id}}</p>
-						<p>Status	: Delivering</p>
+						<p>
+							Status	: Delivering
+							<button class="btn btn-lg btn-success" onclick="orderFinished('{{$order->id}}')">Finished</button>
+						</p>
 						<p>Total 	: ${{$order->total}}</p>
 					</td>
 				</tr>
@@ -31,4 +34,20 @@
 		</tbody>
 	</table>
 </div>
+<script type="text/javascript">
+	function orderFinished(id){
+		$.ajax({
+			url : 'r/order/finished',
+			type: 'post',
+			dataType: 'json',
+			data: {'id' : id},
+			success : function(returnData){
+				if(returnData.type == 'success'){
+					alert(returnData.message);
+					$("[order-id='"+id+"']").remove();
+				}
+			}
+		});
+	}
+</script>
 @stop

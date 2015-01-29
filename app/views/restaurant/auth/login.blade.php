@@ -33,7 +33,7 @@
 				))}}
 			</div>
 			<div class="btn-group" role="group">
-				<a href="{{URL::route('register.create')}}" class="btn btn-lg btn-warning">Join with our</a>
+				<a href="{{URL::route('register.create')}}" class="btn btn-lg btn-warning">Join with us</a>
 			</div>
 		</div>
 	{{Form::close()}}

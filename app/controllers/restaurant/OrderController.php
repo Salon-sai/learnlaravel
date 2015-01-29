@@ -57,18 +57,6 @@ class OrderController extends \BaseController {
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
-	 * GET /restaurant/order/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
 	 * Update the specified resource in storage.
 	 * PUT /restaurant/order/{id}
 	 *
@@ -109,25 +97,26 @@ class OrderController extends \BaseController {
 		return View::make($view)->with('orders', $orders);
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /restaurant/order/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+	public function finishedOrder(){
+		$order_id 		= Input::get('id');
+		$order 			= Order::find($id);
+		$order->status  = 2;
+		$order->update();
+		return Response::json(array(
+				'type'	=>'success',
+				'message'=>'success finished Order'
+			));
 	}
-
 
 	public function acceptOrder(){
 		$id 			= Input::get('order_id');
 		$order 			= Order::find($id);
 		$order->status 	= 1;
 		$order->update();
-		return Response::json();
+		return Response::json(array(
+				'type'	=>'success',
+				'message'=>'accept the order'
+			));
 	}
 
 	public function refuseOrder(){
@@ -135,6 +124,9 @@ class OrderController extends \BaseController {
 		$order 			= Order::find($id);
 		$order->status 	= 0;
 		$order->update();
-		return Response::json();
+		return Response::json(array(
+				'type'	=>'success',
+				'message'=>'refuse the order'
+			));
 	}
 }
