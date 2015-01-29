@@ -16,7 +16,7 @@ class JSSDKService {
 		$signature 		= sha1($string);
 
 		$signPackage 	= array(
-				'appId'		=> APPID,
+				'appId'		=> 'wx6b67feeba41a14f3',
 				'nonceStr'	=> $nonceStr,
 				'timestamp'	=> $time,
 				'signature'	=> $signature
