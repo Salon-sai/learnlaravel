@@ -21,6 +21,7 @@ class AccessTokenService{
 		    }
 		    return $access_token;
 		}else{
+			Log::info('the access token get from the Cache');
 			return $access_token;
 		}
 	}

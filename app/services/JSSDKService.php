@@ -50,8 +50,11 @@ class JSSDKService {
 				Cache::put('jsapi_ticket', $ticket, 120);
 			}
 			return $ticket;
+		}else{
+			Log::info('the ticket get from the Cache');
+			return $ticket;
 		}
-		return $ticket;
+		
 	}
 }
 ?>
