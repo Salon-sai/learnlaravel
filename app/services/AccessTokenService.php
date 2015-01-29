@@ -10,7 +10,8 @@ class AccessTokenService{
 	public function getAccessToken(){
 		$access_token 		= Cache::get('ACCESS_TOKEN',function(){return null;});
 		if(!$access_token){
-			$result 		= HttpSend::httpSend(ACCESS_TOKEN_URL);
+			$httpSend 		= new HttpSend;
+			$result 		= $httpSend->httpSend(ACCESS_TOKEN_URL);
 		    Log::info('success to send the url');
 		    $resultjson 	= json_decode($result);
 		    $access_token 	= $resultjson->access_token;
