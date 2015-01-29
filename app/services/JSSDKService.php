@@ -3,7 +3,7 @@
 use AccessTokenService, Sender, Log, Cache, Request;
 
 define('TICKET_URL_FORM', 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=%s');
-define('STRING_FORM','jsapi_ticket=?&noncestr=?&timestamp=?&url=?');
+define('STRING_FORM','jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s');
 class JSSDKService {
 	
 	public function getSignPackage(){
