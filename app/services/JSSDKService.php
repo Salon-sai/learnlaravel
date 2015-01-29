@@ -1,6 +1,6 @@
 <?php
 
-use AccessTokenService, HttpSend, Log, Cache, Request;
+use AccessTokenService, Sender, Log, Cache, Request;
 
 define('TICKET_URL_FORM', 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=%s');
 define('APPID', 'wx6b67feeba41a14f3');
@@ -41,7 +41,7 @@ class JSSDKService {
 			$access_token = $accesstokenService->getAccessToken();
 			$url 		= sprintf(TICKET_URL_FORM, $access_token);
 			Log::info('ready to send url for getting the ticket');
-			$sender 	= new HttpSend;
+			$sender 	= new Sender;
 			$result 	= $sender->httpSend($url);
 			$ticket 	= json_decode($result);
 			Log::info('success to get the ticket : '.$ticket);
