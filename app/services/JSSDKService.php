@@ -21,10 +21,6 @@ class JSSDKService {
 				'timestamp'	=> $time,
 				'signature'	=> $signature
 			);
-		foreach ($signPackage as $key => $value) {
-			Log::info($key.' => '.$value);
-			Log::info('');
-		}
 		return $signPackage;
 	}
 

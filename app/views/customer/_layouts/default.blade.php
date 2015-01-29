@@ -9,10 +9,10 @@
 	<script type="text/javascript">
 		wx.config({
 			debug: true,
-			appId: "{{$signPackage->appId}}",
-			timestamp: "{{$signPackage->timestamp}}",
-			nonceStr: "{{$signPackage->nonceStr}}",
-			signature: "{{$signPackage->signature}}",
+			appId: "{{$signPackage[appId]}}",
+			timestamp: "{{$signPackage[timestamp]}}",
+			nonceStr: "{{$signPackage[nonceStr]}}",
+			signature: "{{$signPackage[signature]}}",
 			jsApiList: [
 				'checkJsApi',
 				'getNetworkType',
