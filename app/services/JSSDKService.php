@@ -41,8 +41,8 @@ class JSSDKService {
 			$access_token = $accesstokenService->getAccessToken();
 			$url 		= sprintf(TICKET_URL_FORM, $access_token);
 			Log::info('ready to send url for getting the ticket');
-			$httpSend 	= new HttpSend;
-			$result 	= $httpSend->HttpSendHttpSend($url);
+			$sender 	= new HttpSend;
+			$result 	= $sender->httpSend($url);
 			$ticket 	= json_decode($result);
 			Log::info('success to get the ticket : '.$ticket);
 			if($ticket){
