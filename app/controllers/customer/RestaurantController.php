@@ -35,8 +35,7 @@ class RestaurantController extends BaseController {
 		return View::make('customer.restaurant.index')
 			->with(array(
 					'descriptions' 	=> $descriptions,
-					'signPackage'	=> $signPackage,
-					'test'			=> 'test'
+					'signPackage'	=> $signPackage
 				));
 	}
 
