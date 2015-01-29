@@ -1,5 +1,7 @@
 <?php
 
+use HttpSend;
+
 define('APPID', 'wx6b67feeba41a14f3');
 define('SECRET', '29943ae5d7b778c9761961156baf5e31');
 define('GRANT_TYPE', 'authorization_code');
@@ -11,16 +13,13 @@ class OAuthService {
 		$code = Input::get('code');
 		if($code){
 			try{
-				$ch 	= curl_init(ACCESS_TOKEN_OAuth_URL);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+				$data 	= array(
 						'appid'		=> APPID,
 						'secret'	=> SECRET,
 						'code'		=> $code,
 						'grant_type'=> GRANT_TYPE
-					));
-				$result 	= curl_exec($ch);
-				curl_close($ch);
+					);
+				$result = HttpSend::HttpSend(ACCESS_TOKEN_OAuth_URL, true, $data);
 				Log::info('success to get ACCESS_TOKEN');
 				return $result;
 			}catch(\Exception $e){
