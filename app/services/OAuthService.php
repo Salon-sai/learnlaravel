@@ -1,7 +1,5 @@
 <?php
 
-use HttpSend;
-
 define('APPID', 'wx6b67feeba41a14f3');
 define('SECRET', '29943ae5d7b778c9761961156baf5e31');
 define('GRANT_TYPE', 'authorization_code');
