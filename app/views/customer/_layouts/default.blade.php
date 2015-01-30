@@ -35,17 +35,17 @@
 			});
 			wx.hideOptionMenu();
 		});
-		$('#getLocation').on('click',function(){
-			wx.getLogcation({
-				success: function(result){
-					var latitude 	= result.latitude;
-					var longtitude	= result.longtitude;
-					alert('the latitude is '.latitude.' and the longtitude is '.longtitude);
-					$('#locationX').val(latitude);
-					$('#locationY').val(longtitude);
-				}
-			});
-		});
+		// $('#getLocation').on('click',function(){
+		// 	wx.getLogcation({
+		// 		success: function(result){
+		// 			var latitude 	= result.latitude;
+		// 			var longtitude	= result.longtitude;
+		// 			alert('the latitude is '.latitude.' and the longtitude is '.longtitude);
+		// 			$('#locationX').val(latitude);
+		// 			$('#locationY').val(longtitude);
+		// 		}
+		// 	});
+		// });
 
 	</script>
 </head>
