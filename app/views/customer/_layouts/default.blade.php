@@ -8,7 +8,7 @@
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script type="text/javascript">
 		wx.config({
-			debug: true,
+			debug: false,
 			appId: "$signPackage['appId']",
 			timestamp: "$signPackage['timestamp']",
 			nonceStr: "$signPackage['nonceStr']",
@@ -35,18 +35,18 @@
 			});
 			wx.hideOptionMenu();
 		});
-		
-		document.querySelector.('#getLocation').onclick = function(){
-			wx.getLocation({
-				success: function(result){
-					var latitude 	= result.latitude;
-					var longtitude	= result.longtitude;
-					alert('the latitude is '.latitude.' and the longtitude is '.longtitude);
-					$('#locationX').val(latitude);
-					$('#locationY').val(longtitude);
-				}
-			});
-		};
+
+		// document.querySelector.('#getLocation').onclick = function(){
+		// 	wx.getLocation({
+		// 		success: function(result){
+		// 			var latitude 	= result.latitude;
+		// 			var longtitude	= result.longtitude;
+		// 			alert('the latitude is '.latitude.' and the longtitude is '.longtitude);
+		// 			$('#locationX').val(latitude);
+		// 			$('#locationY').val(longtitude);
+		// 		}
+		// 	});
+		// };
 
 	</script>
 </head>
