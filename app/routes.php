@@ -68,7 +68,7 @@ Route::group(array(
 		));
 });
 
-Route::group(array('prefix' => 'u', 'before' => array('weixin.check.echostr', 'weixin.check.oauth', 'weixin.add.JSAPI')), function(){
+Route::group(array('prefix' => 'u', 'before' => array('weixin.check.echostr', 'weixin.check.oauth')), function(){
 	Route::post('/', 'App\Controllers\Customer\WeiChatController@index');
 	Route::get('/restaurant/locationIndex', 'App\Controllers\Customer\RestaurantController@getRestaurantByLocation');
 	Route::resource('oauth', 'App\Controllers\_Default\OAuthController');
