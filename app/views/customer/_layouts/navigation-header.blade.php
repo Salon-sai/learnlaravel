@@ -21,6 +21,16 @@
 				</li>
 			</ul>
 		</li>
+		<li>
+			{{Form::open(
+				'url'	=> '/u/restaurant/locationIndex',
+				'method'=> 'get'
+			)}}
+				<input type="hidden" id="locationX" name="locationX" >
+				<input type="hidden" id="locationY" name="locationY">
+				<input type="submit" id="getLocation" class="btn-link">
+			{{Form::close()}}
+		</li>
 	</ul>
 	<form class="navbar-form navbar-right">
 		<input class="form-control" placeholder="Search..." type="text">
