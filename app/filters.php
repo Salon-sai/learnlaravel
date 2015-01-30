@@ -121,6 +121,7 @@ Route::filter('weixin.add.JSAPI', function(){
 	if(!Request::ajax() && Input::get('Notget')){
 		$js_service 	= new JSSDKService;
 		$signPackage	= $js_service->getSignPackage();
+		Log::info('get the js api');
 		return Redirect::to(Request::fullUrl())->withInput()
 			->with(array(
 					'Notget'		=> true,
