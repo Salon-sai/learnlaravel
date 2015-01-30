@@ -118,6 +118,8 @@ Route::filter('auth.restaurant.description', function(){
 });
 
 Route::filter('weixin.add.JSAPI', function(){
+	Log::info('Input has get : '.Input::get('Hasget'));
+	Log::info('Request has get : '.Request::has('Hasget'));
 	if(!Request::ajax() && !Request::has('Hasget')){
 		$js_service 	= new JSSDKService;
 		$signPackage	= $js_service->getSignPackage();

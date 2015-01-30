@@ -19,7 +19,6 @@ class RestaurantController extends BaseController {
 	public function index()
 	{
 		$openid 	= Session::get('openid');
-		Log::info('the openid is '.$openid);
 		$customer 	= Customer::where('openid', $openid)
 			->first();
 		if(!$customer || empty($customer)){
