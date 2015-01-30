@@ -22,10 +22,10 @@
 			</ul>
 		</li>
 		<li>
-			{{Form::open(
+			{{Form::open(array(
 				'url'	=> '/u/restaurant/locationIndex',
 				'method'=> 'get'
-			)}}
+			))}}
 				<input type="hidden" id="locationX" name="locationX" >
 				<input type="hidden" id="locationY" name="locationY">
 				<input type="submit" id="getLocation" class="btn-link">
