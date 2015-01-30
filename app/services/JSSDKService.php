@@ -13,7 +13,6 @@ class JSSDKService {
 		$nonceStr 		= $this->createNonceStr();
 		$string 		= sprintf(STRING_FORM, 
 			$jsapi_ticket, $nonceStr, $time, $url);
-		Log::info($string);
 		$signature 		= sha1($string);
 
 		$signPackage 	= array(

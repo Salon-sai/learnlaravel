@@ -95,16 +95,17 @@
 	$(function(){
 		if(!$('#lat').val() || !$('#lng').val())
 			initlnglatXY = new AMap.LngLat(113.263986,23.125041);
-		else
+		else{
 			initlnglatXY = new AMap.LngLat($('#lng').val(), $('#lat').val());
-			mapObj		= new AMap.Map("map-container", {
-					view : new AMap.View2D({
-					center : initlnglatXY,
-					zoom: 15,
-					rotation: 0
-				}),
-				lang: 'zh_en'
-			});
+		}
+		mapObj		= new AMap.Map("map-container", {
+				view : new AMap.View2D({
+				center : initlnglatXY,
+				zoom: 15,
+				rotation: 0
+			}),
+			lang: 'zh_en'
+		});
 
 			addSingleMarker(initlnglatXY);
 		//add single marker

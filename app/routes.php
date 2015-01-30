@@ -35,37 +35,40 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function(){
 	Route::resource('profile', '');
 });
 
-Route::group(array('prefix' => 'r', 'before' => array('auth.restaurant', 'auth.restaurant.description')), function(){
-	Route::any('/', 'App\Controllers\Restaurant\OrderController@index');
-	Route::resource('order', 'App\Controllers\Restaurant\OrderController',
-		array('except' => array('create', 'store', 'edit')));
-	Route::resource('food', 'App\Controllers\Restaurant\FoodController');
-	Route::resource('category', 'App\Controllers\Restaurant\CategoryController');
-	Route::resource('description', 'App\Controllers\Restaurant\DescriptionController',
-		array('except' => array('index')));
-	Route::get('order/find/{type}', array(
-		'as'	=> 'r.order.find',
-		'uses'	=> 'App\Controllers\Restaurant\OrderController@findOrderByType'
-	));
-	Route::get('advanced', array(
-		'as' 	=> 'r.advanced',
-		'uses'	=> 'App\Controllers\Restaurant\DescriptionController@advancedSetting'
-	));
-	Route::post('change', array(
-		'as' 	=> 'r.status.change',
-		'uses' 	=> 'App\Controllers\Restaurant\DescriptionController@changestatus'
-	));
-	Route::post('food/change', array(
-		'as'	=> 'r.food.status.change',
-		'uses' 	=> 'App\Controllers\Restaurant\FoodController@changestatus'
-	));
-	Route::post('order/changestatus', array(
-		'as'	=> 'r.order.status.change',
-		'uses'	=> 'App\Controllers\Restaurant\OrderController@changeOrderState'
-	));
+Route::group(array(
+	'prefix' => 'r', 
+	'before' => array('auth.restaurant', 'auth.restaurant.description'),
+	),function(){
+		Route::any('/', 'App\Controllers\Restaurant\OrderController@index');
+		Route::resource('order', 'App\Controllers\Restaurant\OrderController',
+			array('except' => array('create', 'store', 'edit')));
+		Route::resource('food', 'App\Controllers\Restaurant\FoodController');
+		Route::resource('category', 'App\Controllers\Restaurant\CategoryController');
+		Route::resource('description', 'App\Controllers\Restaurant\DescriptionController',
+			array('except' => array('index')));
+		Route::get('order/find/{type}', array(
+			'as'	=> 'r.order.find',
+			'uses'	=> 'App\Controllers\Restaurant\OrderController@findOrderByType'
+		));
+		Route::get('advanced', array(
+			'as' 	=> 'r.advanced',
+			'uses'	=> 'App\Controllers\Restaurant\DescriptionController@advancedSetting'
+		));
+		Route::post('change', array(
+			'as' 	=> 'r.status.change',
+			'uses' 	=> 'App\Controllers\Restaurant\DescriptionController@changestatus'
+		));
+		Route::post('food/change', array(
+			'as'	=> 'r.food.status.change',
+			'uses' 	=> 'App\Controllers\Restaurant\FoodController@changestatus'
+		));
+		Route::post('order/changestatus', array(
+			'as'	=> 'r.order.status.change',
+			'uses'	=> 'App\Controllers\Restaurant\OrderController@changeOrderState'
+		));
 });
 
-Route::group(array('prefix' => 'u', 'before' => array('weixin.check.echostr', 'weixin.check.oauth')), function(){
+Route::group(array('prefix' => 'u', 'before' => array('weixin.check.echostr', 'weixin.check.oauth', 'weixin.add.JSAPI')), function(){
 	Route::post('/', 'App\Controllers\Customer\WeiChatController@index');
 	Route::get('/restaurant/locationIndex', 'App\Controllers\Customer\RestaurantController@getRestaurantByLocation');
 	Route::resource('oauth', 'App\Controllers\_Default\OAuthController');
