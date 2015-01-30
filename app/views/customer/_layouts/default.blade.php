@@ -16,17 +16,21 @@
 			jsApiList: [
 				'checkJsApi',
 				'getNetworkType',
-				'previewImage'
+				'previewImage',
+				'getLogcation',
+				'hideOptionMenu'
 			]
 		});
 		wx.ready(function(){
 			wx.checkJsApi({
 				jsApiList: [
 					'getNetworkType',
-					'previewImage'
+					'previewImage',
+					'getLogcation',
+					'hideOptionMenu'
 				],
 				success :function(result){
-					// alert(JSON.stringify(result));
+					alert(JSON.stringify(result));
 				}
 			});
 			wx.hideOptionMenu();
