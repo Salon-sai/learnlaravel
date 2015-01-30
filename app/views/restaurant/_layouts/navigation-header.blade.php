@@ -5,7 +5,7 @@
 				<li><a href="#">Settings</a></li>
 				<li><a href="{{URL::route('r.description.edit',Sentry::getUser()->id)}}">Profile</a></li>
 				<li><a href="{{URL::route('logout')}}">Logout</a></li>
-				<li class="dropdown visible-sm">
+				<li class="dropdown visible-sm visible-xs">
 					<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 						Order
 						<span class='caret'></span>
@@ -26,7 +26,7 @@
 						</li>
 					</ul>
 				</li>
-				<li class="dropdown visible-sm">
+				<li class="dropdown visible-sm visible-xs">
 					<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 						Food
 						<span class='caret'></span>
@@ -37,7 +37,7 @@
 						<li class="{{Request::is('r/food/create') ? 'active' : null}}"><a href="{{URL::route('r.food.create')}}">Create</a></li>
 					</ul>
 				</li>
-				<li class="dropdown visible-sm">
+				<li class="dropdown visible-sm visible-xs">
 					<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 						Category
 						<span class='caret'></span>
