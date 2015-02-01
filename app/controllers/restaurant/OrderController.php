@@ -90,23 +90,31 @@ class OrderController extends \BaseController {
 	public function findOrderByType($type){
 		$orders 	= null;
 		$view 		= null;
+		$restaurant_id = Sentry::getUser()->id;
 		switch ($type) {
 			case 'check':
 				$orders 	= Order::where('status', '<', 0)
+					->where('user_id', $restaurant_id)
 					->orderBy('status')
 					->get();
 				$view 		= 'restaurant.order.check';
 				break;
 			case 'refuse' :
-				$orders 	= Order::where('status', 0)->get();
+				$orders 	= Order::where('status', 0)
+					->where('user_id', $restaurant_id)
+					->get();
 				$view 		= 'restaurant.order.refuse';
 				break;
 			case 'deliver':
-				$orders 	= Order::where('status', 1)->get();
+				$orders 	= Order::where('status', 1)
+					->where('user_id', $restaurant_id)
+					->get();
 				$view 		= 'restaurant.order.deliver';
 				break;
 			case 'finished':
-				$orders 	= Order::where('status', 2)->get();
+				$orders 	= Order::where('status', 2)
+					->where('user_id', $restaurant_id)
+					->get();
 				$view 		= 'restaurant.order.finished';
 				break;
 			default:

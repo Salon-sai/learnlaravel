@@ -23,6 +23,9 @@
 									Finished
 								@endif
 						</p>
+						<p>Submit Date : {{$order->created_at}}</p>
+						<p>Customer Telephone : {{$order->telephone }}</p>
+						<p>Customer Address : {{$order->address}}</p>
 						<p>Total 	: ${{$order->total}}</p>
 						<p>
 							@if($order->status < 2)

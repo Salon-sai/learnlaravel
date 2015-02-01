@@ -13,6 +13,9 @@
 						<p>Order ID : {{$order->id}}</p>
 						<p>Status	: Refuse the order</p>
 						<p>Total 	: ${{$order->total}}</p>
+						<p>Submit Date : {{$order->created_at}}</p>
+						<p>Customer Telephone : {{$order->telephone }}</p>
+						<p>Customer Address : {{$order->address}}</p>
 						<p>
 							<button name="delete-order" class="btn btn-danger btn-mini pull-left">Delete</button>
 						</p>

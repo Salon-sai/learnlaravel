@@ -14,6 +14,9 @@
 							Status	: Delivering
 						</p>
 						<p>Total 	: ${{$order->total}}</p>
+						<p>Submit Date : {{$order->created_at}}</p>
+						<p>Customer Telephone : {{$order->telephone }}</p>
+						<p>Customer Address : {{$order->address}}</p>
 						<p>
 							<button class="btn btn-success" onclick="orderFinished('{{$order->id}}')">Finished</button>
 						</p>

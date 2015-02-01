@@ -12,6 +12,9 @@
 					<td class="col-xs-12 col-lg-8" order-id="{{$order->id}}">
 						<p>Order ID : {{$order->id}}</p>
 						<p>Status	: Finished the order</p>
+						<p>Submit Date : {{$order->created_at}}</p>
+						<p>Customer Telephone : {{$order->telephone }}</p>
+						<p>Customer Address : {{$order->address}}</p>
 						<p>Total 	: ${{$order->total}}</p>
 						<p>
 							<button name="delete-order" class="btn btn-danger btn-mini pull-left">Delete</button>

@@ -18,6 +18,9 @@
 									<a class="btn btn-danger btn-mini" name="refuseOrder">Refuse</a>
 								@endif
 						</p>
+						<p>Submit Date : {{$order->created_at}}</p>
+						<p>Customer Telephone : {{$order->telephone }}</p>
+						<p>Customer Address : {{$order->address}}</p>
 						<p>Total 	: ${{$order->total}}</p>
 					</td>
 				</tr>
