@@ -45,42 +45,36 @@
 			@endforeach
 		</tbody>
 	</table>
-
-	<hr>
-
-	<h1>Other Contacts</h1>
-	<table class="table table-striped">
-		<tbody>
-			<tr>
-				<td class="col-xs-12 col-lg-8">
-					@foreach($contacts as $contact)
-					<ul class="list-group">
-						<li class="list-group-item">
-							<span class="badge">
-								{{$contact->telephone}}
-							</span>Telephone
-						</li>
-						<li class="list-group-item">
-							<span class="badge">
-								{{$contact->address}}
-							</span>address
-						</li>
-						<li class="list-group-item">
-							@if(!$contact->isDefault)
-								<button class="btn btn-success" chosed="false" name="setting-contact">chose</button>
-							@else
-								<span class="badge" chosed="true">
-									Chose
-								</span>
-							@endif
-						</li>
-					</ul>
-					@endforeach
-				</td>
-			</tr>
-		</tbody>
-	</table>
 </div>
+
+<hr>
+
+<h1>Other Contacts</h1>
+
+@foreach($contacts as $contact)
+<ul class="list-group">
+	<li class="list-group-item">
+		<span class="badge">
+			{{$contact->telephone}}
+		</span>Telephone
+	</li>
+	<li class="list-group-item">
+		<span class="badge">
+			{{$contact->address}}
+		</span>address
+	</li>
+	<li class="list-group-item">
+		@if(!$contact->isDefault)
+			<button class="btn btn-success" chosed="false" name="setting-contact">chose</button>
+		@else
+			<span class="badge" chosed="true">
+				Chose
+			</span>
+		@endif
+	</li>
+</ul>
+@endforeach
+
 <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 	{{Form::open(array(
 		'url' 	=> URL::route('u.order.update',$order->id),

@@ -103,7 +103,7 @@ class OrderController extends BaseController {
 					'updated_at'=> $time
 				));
 			}
-			$contacts = Contact::where("openid", $openid);
+			$contacts = Contact::where("openid", $openid)->get();
 			DB::table('food_order')->insert($insertlist);
 			//the second database opeartion
 			Log::info('success save food into order');
