@@ -49,10 +49,12 @@
 				<li>
 					<form class="navbar-form navbar-left">
 						@if(Sentry::getUser()->description)
-							@if(Sentry::getUser()->description->status)
+							@if(Sentry::getUser()->description->status == 1)
 								<input data-on-color="primary" data-off-color="danger" data-on-text="Open" data-off-text="Close" type="checkbox" name="restaurant_status" checked />
-							@else
+							@elseif(Sentry::getUser()->description->status == 0)
 								<input data-on-color="primary" data-off-color="danger" data-on-text="Open" data-off-text="Close" type="checkbox" name="restaurant_status" />
+							@elseif(Sentry::getUser()->description->status == -1)
+								<input data-on-color="primary" data-off-color="danger" data-on-text="Open" data-off-text="Close" type="checkbox" name="restaurant_status" disabled="true"/>
 							@endif
 						@endif
 					</form>

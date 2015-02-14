@@ -42,7 +42,8 @@ class RegisterController extends BaseController {
 				);
 			Mail::send('emails.auth.register_confirm', $data, function($message) use ($email){
 				Log::info('readry to send the email to the '.$email);
-				$message->from('coke1231078@gmail.com', 'FoodOrder');
+				$message->from('kaxiu_ptd@163.com', 'FoodOrder');
+				// $message->from('coke1231078@gmail.com', 'FoodOrder');
 				$message->to($email)->subject('Food Order Active By GMail');
 			});
 			return View::make('restaurant.auth.waittingactivationCode');

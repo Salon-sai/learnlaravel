@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.gmail.com',
+	'host' => 'smtp.163.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +41,10 @@ return array(
 	|
 	*/
 
-	'port' => 465,
+	//163 mail port
+	'port' => 994,
+	// gmail mail port
+	// 'port' => 465,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,11 +57,14 @@ return array(
 	|
 	*/
 
+	// 'from' => array(
+	// 	'address' 	=> 'coke1231078@gmail.com',
+	// 	'name' 		=> 'SalonSai'
+	// 	),
 	'from' => array(
-		'address' 	=> 'coke1231078@gmail.com',
+		'address' 	=> 'kaxiu_ptd@163.com',
 		'name' 		=> 'SalonSai'
 		),
-
 	/*
 	|--------------------------------------------------------------------------
 	| E-Mail Encryption Protocol
@@ -83,7 +89,8 @@ return array(
 	|
 	*/
 
-	'username' => 'coke1231078@gmail.com',
+	'username' => 'kaxiu_ptd@163.com',
+	// 'username' => 'coke1231078@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -95,8 +102,11 @@ return array(
 	| connection so that the application will be able to send messages.
 	|
 	*/
-
-	'password' => 'yxokmufpgetxrhzm',
+	
+	//163 password
+	'password' => '4Pmzsedx29',
+	// gmail password
+	// 'password' => 'yxokmufpgetxrhzm',
 
 	/*
 	|--------------------------------------------------------------------------

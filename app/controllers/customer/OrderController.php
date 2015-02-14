@@ -103,12 +103,16 @@ class OrderController extends BaseController {
 					'updated_at'=> $time
 				));
 			}
+			$contacts = Contact::where("openid", $openid);
 			DB::table('food_order')->insert($insertlist);
 			//the second database opeartion
 			Log::info('success save food into order');
 			Log::info('That user create order uses total time : '.(time() - $beginTime).'ms');
 			return View::make('customer.order.check')
-				->with('order', $order);
+				->with(array(
+					'order'		=> $order,
+					'contacts'	=> $contacts
+					));
 		}
 	}
 

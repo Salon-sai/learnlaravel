@@ -32,6 +32,18 @@ Route::get('register/auth/{code}/{id}', array(
 Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function(){
 	Route::any('/', 'App\Controllers\Admin\RestaurantController@index');
 	Route::resource('restaurant', 'App\Controllers\Admin\RestaurantController');
+	Route::get("r/findapplication", array(
+		"as"	=>	"admin.r.findapplication",
+		"uses"	=>	"App\Controllers\Admin\RestaurantController@findApplication"
+	));
+	Route::get("r/checkdetial/{id}", array(
+		"as"	=> 'admin.r.checkdetail',
+		"uses"	=> "App\Controllers\Admin\RestaurantController@checkDetail"
+	));
+	Route::post("r/agree",array(
+		"as"	=> 'admin.r.agree',
+		"uses"	=> "App\Controllers\Admin\RestaurantController@agressApplication"
+	));
 	Route::resource('profile', '');
 });
 

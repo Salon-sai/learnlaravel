@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Admin;
 
-use View, Sentry, User;
+use View, Sentry, User, DB, Log, Input, Description, Redirect, Notification;
 
 class RestaurantController extends \BaseController {
 
@@ -56,6 +56,12 @@ class RestaurantController extends \BaseController {
 			->with('restaurant', $restaurant);
 	}
 
+	public function checkDetail($id){
+		$restaurant = User::find($id);
+		return View::make('admin.restaurant.checkdetail')
+			->with('restaurant', $restaurant);
+	}
+
 	/**
 	 * Show the form for editing the specified resource.
 	 * GET /admin/restauratn/{id}/edit
@@ -92,4 +98,21 @@ class RestaurantController extends \BaseController {
 		//
 	}
 
+	public function findApplication(){
+		$select_sql = "select users.id, descriptions_0.name, users.email, descriptions_0.location_label from users inner join (select * from descriptions where status = -1) descriptions_0 on descriptions_0.user_id = users.id;";
+		$restaurants= DB::select($select_sql);
+		Log::info("invoke to the find application");
+		return View::make('admin.restaurant.checkApplication')
+			->with('restaurants', $restaurants);
+	}
+
+	public function agressApplication()
+	{
+		$id = Input::get('r_id');
+		$description = Description::where("user_id", $id)->first();
+		$description->status = 0;
+		$description->save();
+		Notification::success('agree the application !');
+		return Redirect::route("admin.r.findapplication");
+	}
 }

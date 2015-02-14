@@ -30,6 +30,7 @@ class DescriptionController extends \BaseController {
 		if($validation->passes()){
 			$description = new Description;
 			$this->saveORupdateDescription($description);
+			
 			Notification::success('mofity the description success');
 			Log::info('invoke to the description store');
 			return Redirect::route('r.order.index');
@@ -105,6 +106,13 @@ class DescriptionController extends \BaseController {
 	public function changestatus(){
 		$description = Sentry::getUser()->description;
 		$current_status = $description->status;
+		if($description->status == -2)
+		{
+			return Response::json(array(
+					'type'		=> 'error',
+					'message' 	=> 'Your Application has not been checked'
+				));
+		}
 		$description->status = !$current_status;
 		$description->save();
 		return Response::json(array(
@@ -122,6 +130,7 @@ class DescriptionController extends \BaseController {
 		$description->locationX		 = Input::get('locationX');
 		$description->locationY		 = Input::get('locationY');
 		$description->user_id		 = Sentry::getUser()->id;
+		$description->status 		 = -1;
 		// if(Input::get('status'))
 		// 	$description->status 	 = 1;
 		// else

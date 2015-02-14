@@ -14,6 +14,14 @@
 			</tr>
 		</thead>
 		<tbody>
+			<tr>
+				<td class="col-xs-12 col-lg-8 bg-success">
+					<p>Order ID : {{$order->id}}</p>
+					<p>Contact Telephone : {{$order->telephone}}</p>
+					<p>Contact Address : {{$order->address}}</p>
+					<p>Total : ${{$order->total}}</p>
+				</td>
+			</tr>
 			@foreach($order->foods as $key => $food)
 			<tr index='{{$key}}'>
 				<td>{{$order->id}}</td>
@@ -35,6 +43,41 @@
 				</td>
 			</tr>
 			@endforeach
+		</tbody>
+	</table>
+
+	<hr>
+
+	<h1>Other Contacts</h1>
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<td class="col-xs-12 col-lg-8">
+					@foreach($contacts as $contact)
+					<ul class="list-group">
+						<li class="list-group-item">
+							<span class="badge">
+								{{$contact->telephone}}
+							</span>Telephone
+						</li>
+						<li class="list-group-item">
+							<span class="badge">
+								{{$contact->address}}
+							</span>address
+						</li>
+						<li class="list-group-item">
+							@if(!$contact->isDefault)
+								<button class="btn btn-success" chosed="false" name="setting-contact">chose</button>
+							@else
+								<span class="badge" chosed="true">
+									Chose
+								</span>
+							@endif
+						</li>
+					</ul>
+					@endforeach
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </div>
@@ -102,6 +145,15 @@
 		var change_quantity_list	= change_quantity.join(',');
 		$('#change_id_list').val(change_id_list);
 		$('#change_quantity_list').val(change_quantity_list);
+	});
+
+	$("[name='setting-contact']").on('click', function(){
+		var span_field = $(this).parent();
+		$(this).remove();
+		span_field.html("<span class='badge'chosed='true'>Chose</span>");
+		span_field = $("[chosed='true']").parent();
+		$("[chosed='true']").remove();
+		span_field.html("<button class='btn btn-success' chosed='false' name='setting-contact'>chose</button>");
 	});
 </script>
 @stop
