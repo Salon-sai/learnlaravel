@@ -2,55 +2,36 @@
 
 @section('main')
 <h1 class="page-header">Check Your Order</h1>
-<div class="table-responsive">
-	<table class="table table-striped">
-		<thead>
-			<th><h1 class="text-center">Food List</h1></th>
-		</thead>
-		<tbody>
-			@foreach($order->foods as $key => $food)
-			<tr index='{{$key}}'>
-				<td>
-					<ul class="list-group">
-						<li class="list-group-item ">
-							<span class="badge">${{$food->price}}</span>
-							{{$food->name}}
-							<div class="input-group">
-								<div class="input-group-btn">
-									<button name="add" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', '{{$key}}', 'add')"> + </button>
-								</div>
-								<input food-id="{{$food->id}}" type="text" value="{{$food->pivot->quantity}}" class="form-control" is-change='false' />
-								<div class="input-group-btn">
-									<button name="reduce" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', '{{$key}}', 'reduce')"> - </button>
-									<input type="button" class="btn btn-danger btn-mini" onclick="deleteFood('{{$key}}', '{{$order->id}}', '{{$food->id}}')" value="delete">
-								</div>
+<table class="table table-striped">
+	<thead>
+		<th><h1 class="text-center">Food List</h1></th>
+	</thead>
+	<tbody>
+		@foreach($order->foods as $key => $food)
+		<tr index='{{$key}}'>
+			<td>
+				<ul class="list-group">
+					<li class="list-group-item ">
+						<span class="badge">${{$food->price}}</span>
+						{{$food->name}}
+						<div class="input-group">
+							<div class="input-group-btn">
+								<button name="add" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', '{{$key}}', 'add')"> + </button>
 							</div>
-							
-						</li>
-					</ul>
-				</td>
-<!-- 				<td>{{$order->id}}</td>
-				<td>{{$food->name}}</td>
-				<td>{{$food->price}}</td>
-				<td>
-					<div class="input-group col-xs-2">
-						<div class="input-group-btn">
-							<button name="add" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', '{{$key}}', 'add')"> + </button>
+							<input food-id="{{$food->id}}" type="text" value="{{$food->pivot->quantity}}" class="form-control" is-change='false' />
+							<div class="input-group-btn">
+								<button name="reduce" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', '{{$key}}', 'reduce')"> - </button>
+								<input type="button" class="btn btn-danger btn-mini" onclick="deleteFood('{{$key}}', '{{$order->id}}', '{{$food->id}}')" value="delete">
+							</div>
 						</div>
-						<input food-id="{{$food->id}}" type="text" value="{{$food->pivot->quantity}}" class="form-control" is-change='false' />
-						<div class="input-group-btn">
-							<button name="reduce" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', '{{$key}}', 'reduce')"> - </button>
-						</div>
-					</div>
-				</td>
-				<td>
-					<input type="button" class="btn btn-danger btn-mini" onclick="deleteFood('{{$key}}', '{{$order->id}}', '{{$food->id}}')" value="delete">
-				</td> -->
-			</tr>
-			@endforeach
-		</tbody>
-	</table>
-</div>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		@endforeach
+	</tbody>
+</table>
+
 
 <hr>
 
@@ -61,12 +42,12 @@
 	<li class="list-group-item">
 		<span class="badge">
 			{{$contact->telephone}}
-		</span>Telephone
+		</span>Telephone:{{$contact->telephone}}
 	</li>
 	<li class="list-group-item">
 		<span class="badge">
 			{{$contact->address}}
-		</span>address
+		</span>Address:{{$contact->address}}
 	</li>
 	<li class="list-group-item">
 		@if(!$contact->isDefault)
