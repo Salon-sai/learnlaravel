@@ -104,6 +104,9 @@ class OrderController extends BaseController {
 				));
 			}
 			$contacts = Contact::where("openid", $openid)->get();
+			foreach ($contacts as $contact) {
+				Log::info('the contact address is '.$contact->address);
+			}
 			DB::table('food_order')->insert($insertlist);
 			//the second database opeartion
 			Log::info('success save food into order');
