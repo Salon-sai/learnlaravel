@@ -154,6 +154,7 @@ class OrderController extends BaseController {
 	{
 		Log::info('invoke to the order edit and order id is '.$id);
 		$order 		= Order::find($id);
+		$openid 	= Session::get('openid');
 		$contacts = Contact::where("openid", $openid)->get();
 		return View::make('customer.order.check')
 			->with(array('order' => $order, 'contacts' => $contacts));
@@ -171,7 +172,17 @@ class OrderController extends BaseController {
 		$beginTime 			= time();
 		$change_food_id 	= Input::get('change_ids');
 		$change_quantity 	= Input::get('change_quantity');
-		
+		$contact_id 		= Input::get('contact_id');
+		if($contact_id != ""){
+			$contact = Contact::find($contact_id);
+			DB::table("orders")
+				->where("id", $id)
+				->update(array(
+						"telephone" => $contact->telephone,
+						"address"	=> $contact->address
+					));
+		}
+
 		$id_list 			= explode(',', $change_food_id);
 		$quantity_list		= explode(',', $change_quantity);
 		Log::info('id_list is '.$change_food_id);

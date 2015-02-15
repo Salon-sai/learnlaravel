@@ -5,26 +5,31 @@
 <div class="table-responsive">
 	<table class="table table-striped">
 		<thead>
-			<tr>
-				<th>Order ID</th>
-				<th>Food Name</th>
-				<th>Food Price</th>
-				<th>Quantity</th>
-				<th><i class="icon-cog"></i></th>
-			</tr>
+			<th><h1 class="text-center">Food List</h1></th>
 		</thead>
 		<tbody>
-			<tr>
-				<td class="col-xs-12 col-lg-8 bg-success">
-					<p>Order ID : {{$order->id}}</p>
-					<p>Contact Telephone : {{$order->telephone}}</p>
-					<p>Contact Address : {{$order->address}}</p>
-					<p>Total : ${{$order->total}}</p>
-				</td>
-			</tr>
 			@foreach($order->foods as $key => $food)
 			<tr index='{{$key}}'>
-				<td>{{$order->id}}</td>
+				<td>
+					<ul class="list-group">
+						<li class="list-group-item ">
+							<span class="badge">${{$food->price}}</span>
+							{{$food->name}}
+							<div class="input-group">
+								<div class="input-group-btn">
+									<button name="add" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', '{{$key}}', 'add')"> + </button>
+								</div>
+								<input food-id="{{$food->id}}" type="text" value="{{$food->pivot->quantity}}" class="form-control" is-change='false' />
+								<div class="input-group-btn">
+									<button name="reduce" class="btn btn-default" onclick="changeQuantity('{{$food->pivot->quantity}}', '{{$key}}', 'reduce')"> - </button>
+									<input type="button" class="btn btn-danger btn-mini" onclick="deleteFood('{{$key}}', '{{$order->id}}', '{{$food->id}}')" value="delete">
+								</div>
+							</div>
+							
+						</li>
+					</ul>
+				</td>
+<!-- 				<td>{{$order->id}}</td>
 				<td>{{$food->name}}</td>
 				<td>{{$food->price}}</td>
 				<td>
@@ -40,7 +45,7 @@
 				</td>
 				<td>
 					<input type="button" class="btn btn-danger btn-mini" onclick="deleteFood('{{$key}}', '{{$order->id}}', '{{$food->id}}')" value="delete">
-				</td>
+				</td> -->
 			</tr>
 			@endforeach
 		</tbody>
@@ -52,7 +57,7 @@
 <h1>Other Contacts</h1>
 
 @foreach($contacts as $contact)
-<ul class="list-group">
+<ul class="list-group" contact-id="{{$contact->id}}">
 	<li class="list-group-item">
 		<span class="badge">
 			{{$contact->telephone}}
@@ -68,8 +73,8 @@
 			<button class="btn btn-success" chosed="false" name="setting-contact">chose</button>
 		@else
 			<span class="badge" chosed="true">
-				Chose
-			</span>
+				Chosed
+			</span>Chose
 		@endif
 	</li>
 </ul>
@@ -83,6 +88,7 @@
 		<input type="hidden" id='change_id_list' name="change_ids">
 		<input type="hidden" id='change_quantity_list' name="change_quantity">
 		<input type="hidden" id="order_id" name="order_id" value="{{$order->id}}">
+		<input type="hidden" id="contact_id" name="contact_id" value="">
 		<input order-id="{{$order->id}}" id="submit_order" type="submit" class="btn btn-primary btn-lg btn-block" value="submit the order">
 	{{Form::close()}}
 </nav>
@@ -142,12 +148,23 @@
 	});
 
 	$("[name='setting-contact']").on('click', function(){
-		var span_field = $(this).parent();
-		$(this).remove();
-		span_field.html("<span class='badge'chosed='true'>Chose</span>");
-		span_field = $("[chosed='true']").parent();
-		$("[chosed='true']").remove();
-		span_field.html("<button class='btn btn-success' chosed='false' name='setting-contact'>chose</button>");
+		settingContact($(this));
 	});
+
+	function settingContact(btn){
+		var click_span_field = btn.parent();
+		var contact_id = btn.parents("ul").attr("contact-id");
+		$("#contact_id").val(contact_id);
+		var chosed_span_field = $("[chosed='true']").parent();
+		click_span_field.html("<span class='badge' chosed='true'>Chosed</span>Chose");
+		chosed_span_field.html("<button class='btn btn-success' chosed='false' name='setting-contact'>chose</button>");
+		var not_chosed_span_field = $("[chosed='false']");
+		not_chosed_span_field.unbind('click');
+		not_chosed_span_field.bind({
+			click : function(){
+				settingContact($(this));
+			}
+		});
+	}
 </script>
 @stop
