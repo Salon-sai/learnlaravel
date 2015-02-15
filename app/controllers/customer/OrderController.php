@@ -103,12 +103,10 @@ class OrderController extends BaseController {
 					'updated_at'=> $time
 				));
 			}
-			// $contacts = Contact::where("openid", $openid)->get();
-			$contacts = Contact::where('openid', $openid)
-				->orderBy('isDefault')->get();
-			foreach ($contacts as $contact) {
-				Log::info('the contact address is '.$contact->address);
-			}
+			$contacts = Contact::where("openid", $openid)->get();
+			// foreach ($contacts as $contact) {
+			// 	Log::info('the contact address is '.$contact->address);
+			// }
 			DB::table('food_order')->insert($insertlist);
 			//the second database opeartion
 			Log::info('success save food into order');
@@ -156,8 +154,9 @@ class OrderController extends BaseController {
 	{
 		Log::info('invoke to the order edit and order id is '.$id);
 		$order 		= Order::find($id);
+		$contacts = Contact::where("openid", $openid)->get();
 		return View::make('customer.order.check')
-			->with('order', $order);
+			->with(array('order' => $order, 'contacts' => $contacts));
 	}
 
 	/**
