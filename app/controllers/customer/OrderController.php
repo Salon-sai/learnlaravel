@@ -103,7 +103,9 @@ class OrderController extends BaseController {
 					'updated_at'=> $time
 				));
 			}
-			$contacts = Contact::where("openid", $openid)->get();
+			// $contacts = Contact::where("openid", $openid)->get();
+			$contacts = Contact::where('openid', $openid)
+				->orderBy('isDefault')->get();
 			foreach ($contacts as $contact) {
 				Log::info('the contact address is '.$contact->address);
 			}
