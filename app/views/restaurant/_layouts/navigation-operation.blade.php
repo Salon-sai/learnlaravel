@@ -24,6 +24,11 @@
 			<ul class="nav nav-sidebar">
 				<li class="{{Request::is('r/category/') ? 'active' : null}}"><a href="{{URL::route('r.category.index')}}">Categories List</a></li>
 			</ul>
+			<ul class="nav nav-sidebar">
+				<li class="{{Request::is('r/food/sell/index') ? 'active' : null}}">
+					<a href="{{URL::route('r.food.sell.index')}}">Restaurant Sell</a>
+				</li>
+			</ul>
 		</div>
 	@endif
 @endif

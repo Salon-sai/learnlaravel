@@ -1,0 +1,29 @@
+{
+	"button":[
+		{
+			"type": "view",
+			"name": "Index",
+			"url" : "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6b67feeba41a14f3&redirect_uri=http://104.237.155.177/u/r&response_type=code&scope=snsapi_base#wechat_redirect"
+		},
+		{
+			"name": "Your Orders",
+			"sub_button": [
+				{
+					"type": "view",
+					"name": "View in the Web",
+					"url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6b67feeba41a14f3&redirect_uri=http://104.237.155.177/u/order&response_type=code&scope=snsapi_base#wechat_redirect" 
+				},
+				{
+					"type": "click",
+					"name": "View Order By Text",
+					"key": "getOrders"
+				}
+			]
+		},
+		{
+			"name": "Near Me",
+			"type": "location_select",
+			"key" : "rselfmenu_2_0"
+		}
+	]
+}

@@ -136,8 +136,17 @@ class OrderController extends \BaseController {
 				$order->status = 1;
 				break;
 			case 'finished':
+			{
 				$order->status = 2;
+				foreach ($order->foods as $food) {
+					$quantity = $food->pivot->quantity;
+					$food->current_sell += $quantity;
+					$food->total_sell += $quantity;
+					$food->current_total_store -= $quantity;
+					$food->save();
+				}
 				break;
+			}
 			default:
 				# code...
 				Log::info('invoke to the state default');

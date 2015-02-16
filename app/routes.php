@@ -78,6 +78,10 @@ Route::group(array(
 			'as'	=> 'r.order.status.change',
 			'uses'	=> 'App\Controllers\Restaurant\OrderController@changeOrderState'
 		));
+		Route::get("food/sell/index", array(
+			'as'	=> 'r.food.sell.index',
+			'uses'	=> 'App\Controllers\Restaurant\FoodController@restaurantSellStatus'
+		));
 });
 
 Route::group(array('prefix' => 'u', 'before' => array('weixin.check.echostr', 'weixin.check.oauth')), function(){

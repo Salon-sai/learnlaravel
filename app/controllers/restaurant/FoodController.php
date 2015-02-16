@@ -183,9 +183,17 @@ class FoodController extends \BaseController {
 			}
 			if(!$food->id){
 				$food->save();
+			}else{
+				$food->update();
 			}
 			if($flag)
 				$food->categories()->save(Category::find($categoryId));
 		}
+	}
+
+	public function restaurantSellStatus(){
+		$id = Sentry::getUser()->id;
+		$foods = Food::where('user_id', $id)->get();
+		return View::make("restaurant.sell.index")->with('foods', $foods);
 	}
 }

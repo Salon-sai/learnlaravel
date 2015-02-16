@@ -9,6 +9,5 @@ class RestaurantValidator extends Validator {
 		'scale'			=> 'required|numeric',
 		'location_label'=> 'required'
 	);
-
 }
 ?>
