@@ -5,10 +5,16 @@
 <h1 class="page-header">Sales status</h1>
 <div class="row">
 	<div class="col-md-6">
-		<canvas id="total_sell_chart" width="300" height="300"/>
+		<div class="text-center">
+			<canvas id="total_sell_chart" width="300" height="300"/>
+		</div>
+		<h4 class="text-center">Total Sell Quantity</h4>
 	</div>
 	<div class="col-md-6">
-		<canvas id="sell_money_chart" width="300" height="300"/>
+		<div class="text-center">
+			<canvas id="sell_money_chart" width="300" height="300"/>
+		</div>
+		<h4 class="text-center">Sum of Memoy</h4>
 	</div>
 </div>
 <h2>Detail Data</h2>
@@ -35,24 +41,26 @@
 </table>
 <table></table>
 <script type="text/javascript">
+	var color_Data = ["#F7464A", "#FF5A5E", "#46BFBD", "#5AD3D1", "#FDB45C", "#FFC870", "#949FB1", "#A8B3C5", "#4D5360", "#616774"];
+
 	var total_sell_Data = [
-		@foreach($foods as $food)
+		@foreach($foods as $key => $food)
 		{
-			value:{{$food->total_sell}},
-			label:"{{$food->name}}",
-			color:"#F7464A",
-			highlight: "#FF5A5E",
+			value: {{$food->total_sell}},
+			label: "{{$food->name}}",
+			color: color_Data[{{2 * $key}}],
+			highlight: color_Data[{{2 * $key + 1}}],
 		},
 		@endforeach
 	];
 
 	var sell_money_Data = [
-		@foreach ($foods as $food)
+		@foreach ($foods as $key => $food)
 		{
-			value:{{$food->total_sell * $food->total_sell}},
-			label:"{{$food->name}}",
-			color:"#F7464A",
-			highlight: "#FF5A5E",
+			value: {{$food->total_sell * $food->total_sell}},
+			label: "{{$food->name}}",
+			color: color_Data[{{2 * $key}}],
+			highlight: color_Data[{{2 * $key + 1}}],
 		},
 		@endforeach
 	];
