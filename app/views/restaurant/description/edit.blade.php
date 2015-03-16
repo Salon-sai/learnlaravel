@@ -188,10 +188,8 @@
 
 	function anti_geocoder(lnglatXY){
 		var MGeocoder;
-		AMap.service(["AMap.Geocoder"], function() {        
-		MGeocoder = new AMap.Geocoder({ 
-			radius: 1000,
-			extensions: "all"
+		AMap.service(['AMap.Geocoder'], function(){
+			MGeocoder 	= new AMap.Geocoder();
 		});
 		MGeocoder.getAddress(lnglatXY, function(status, result){
 			if(status === 'complete' && result.info === 'OK'){
