@@ -107,7 +107,7 @@
 			lang: 'zh_en'
 		});
 
-			addSingleMarker(initlnglatXY);
+		addSingleMarker(initlnglatXY);
 		//add single marker
 
 		var listener = new AMap.event.addListener(mapObj, 'click', function(e){
@@ -188,8 +188,10 @@
 
 	function anti_geocoder(lnglatXY){
 		var MGeocoder;
-		AMap.service(['AMap.Geocoder'], function(){
-			MGeocoder 	= new AMap.Geocoder();
+		AMap.service(["AMap.Geocoder"], function() {        
+		MGeocoder = new AMap.Geocoder({ 
+			radius: 1000,
+			extensions: "all"
 		});
 		MGeocoder.getAddress(lnglatXY, function(status, result){
 			if(status === 'complete' && result.info === 'OK'){
