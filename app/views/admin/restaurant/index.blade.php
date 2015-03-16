@@ -15,16 +15,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($restaurants as $restaurant)
-				<tr>
-					<td>
-						<a href="{{URL::route('admin.restaurant.show', $restaurant->id)}}">{{$restaurant->description->name}}</a>
-					</td>
-					<td>{{$restaurant->email}}</td>
-					<td>{{$restaurant->updated_at}}</td>
-					<td>{{$restaurant->last_login}}</td>
-				</tr>
-			@endforeach
+
 		</tbody>
 	</table>
 </div>
