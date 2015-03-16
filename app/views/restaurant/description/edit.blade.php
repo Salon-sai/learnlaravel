@@ -190,12 +190,13 @@
 		var MGeocoder;
 		AMap.service(['AMap.Geocoder'], function(){
 			MGeocoder 	= new AMap.Geocoder();
+			MGeocoder.getAddress(lnglatXY, function(status, result){
+				if(status === 'complete' && result.info === 'OK'){
+					anti_geocoder_CallBack(result);
+				}
+			});
 		});
-		MGeocoder.getAddress(lnglatXY, function(status, result){
-			if(status === 'complete' && result.info === 'OK'){
-				anti_geocoder_CallBack(result);
-			}
-		});
+
 	}
 
 	function anti_geocoder_CallBack(data){
