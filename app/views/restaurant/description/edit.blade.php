@@ -113,6 +113,7 @@
 		var listener = new AMap.event.addListener(mapObj, 'click', function(e){
 			addSingleMarker(e.lnglat);
 		});
+		mapObj.setFitView();
 	});
 
 	$("[name='status']").bootstrapSwitch();
