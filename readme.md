@@ -1,25 +1,39 @@
-## Laravel PHP Framework
+FoodOrder
+====================
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+install
+----------------------
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+0. The URL of FoodOrder is : "https://github.com/Salon-sai/learnlaravel"
+	个FoodOrder噶URL系呢个："https://github.com/Salon-sai/learnlaravel"
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+1. After cloning by git, you must use command : "composer update". The Project will autoload the dependent plug it need.
+   使用git之后，你用"composer update"，自动下载项目需要噶插件
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+2. You must give the permission to access of the bootstrap and vender files, if you use the linux system
+   如果你使用linux系统，必须更改bootstrap 同 vender 目录噶权限。
 
-## Official Documentation
+3. open the file "app/config/database.php". You can change the configuration of database in order to satisfy your nessacessary.
+   打开“app/config/database.php”文件。你可以根据自己情况修改数据库连接参数。
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
+3. using the comand "php artisan migrate --package=cartalyst/sentry", the Sentry will install the table in your database.
+   使用"php artisan migrate --package=cartalyst/sentry"，Sentry插件会自动安装插件需要噶表到数据库。
 
-### Contributing To Laravel
+4. using "php artisan migrate", migration will generate the table OA-System need into your database.
+   使用"php artisan migrate",项目会将自身需要的数据库表加载到数据库
 
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
+3. use the command "php artisan serve" to start the system with the php server.
+   使用"php artisan serve"开启测试项目，假如用apache或者nginx噶话，可以上laravel噶官网睇睇个配置啦~呢度唔多讲啦
 
-### License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+supervisord
+----------------------
+1. 生成配置文件
+$ echo_supervisord_conf > /etc/supervisord.conf
+
+2.修改配置文件
+vi /etc/supervisord.conf
+
+
+
+
