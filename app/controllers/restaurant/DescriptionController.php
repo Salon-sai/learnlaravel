@@ -30,8 +30,12 @@ class DescriptionController extends \BaseController {
 		if($validation->passes()){
 			$description = new Description;
 			$this->saveORupdateDescription($description);
-			
-			Notification::success('mofity the description success');
+			if($description->id != null){
+				$user = Sentry::getUser();
+				$user->description_id = $description->id;
+				$user->save();
+			}
+			Notification::success('store the description success');
 			Log::info('invoke to the description store');
 			return Redirect::route('r.order.index');
 		}
